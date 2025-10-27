@@ -57,32 +57,8 @@ class PaymentController extends Controller
 
             $transaction = $this->fedaPayService->createTransaction($order, $callbackUrl, $cancelUrl);
 
-            if (isset($transaction['v1/transaction'])) {
-                $transactionData = $transaction['v1/transaction'];
+            return redirect($transaction->url);
 
-                Log::info('Transaction created successfully', [
-                    'transaction_id' => $transactionData['id'],
-                    'transaction_data' => $transactionData,
-                ]);
-
-                $order->update([
-                    'transaction_id' => $transactionData['id'],
-                ]);
-
-                // Redirect to FedaPay payment page
-                if (isset($transactionData['url'])) {
-                    return redirect($transactionData['url']);
-                }
-
-                // Si pas d'URL, essayer avec le token
-                if (isset($transactionData['token'])) {
-                    $paymentUrl = 'https://checkout.fedapay.com/' . $transactionData['token'];
-                    return redirect($paymentUrl);
-                }
-            }
-
-            Log::error('No transaction data in response', ['response' => $transaction]);
-            return redirect()->back()->with('error', 'Impossible d\'initier le paiement. Veuillez réessayer.');
         } catch (\Exception $e) {
             Log::error('Payment initiation error', [
                 'message' => $e->getMessage(),
@@ -102,38 +78,34 @@ class PaymentController extends Controller
                 'request_data' => $request->all(),
             ]);
 
-            if ($request->has('transaction_id')) {
-                $transactionId = $request->transaction_id;
-                $transaction = $this->fedaPayService->getTransaction($transactionId);
 
-                if (isset($transaction['v1/transaction'])) {
-                    $transactionData = $transaction['v1/transaction'];
+            if ($request->has('id')) {
 
-                    Log::info('Transaction status', [
-                        'transaction_id' => $transactionId,
-                        'status' => $transactionData['status'],
-                    ]);
+                Log::info('Transaction status', [
+                    'transaction_id' => $request['id'],
+                    'status' => $request['status'],
+                ]);
 
-                    if ($transactionData['status'] === 'approved') {
+                if ($request['status'] == 'approved') {
+
+                    try {
                         $order->update([
                             'payment_status' => 'paid',
-                            'status' => 'processing',
+                            'transaction_id' => $request['id'],
                             'paid_at' => now(),
                         ]);
-
                         // Send confirmation email
-                        try {
-                            Mail::to($order->shipping_email)->send(new OrderConfirmation($order));
-                            Mail::to(config('mail.from.address'))->send(new OrderConfirmation($order, true));
-                        } catch (\Exception $e) {
-                            Log::error('Failed to send confirmation email', [
-                                'error' => $e->getMessage(),
-                            ]);
-                        }
-
-                        return redirect()->route('payment.success', $order);
+                        Mail::to($order->shipping_email)->send(new OrderConfirmation($order));
+                        Mail::to(config('mail.from.address'))->send(new OrderConfirmation($order, true));
+                    } catch (\Exception $e) {
+                        Log::error('Failed to send confirmation email', [
+                            'error' => $e->getMessage(),
+                        ]);
                     }
+
+                    return redirect()->route('payment.success', $order);
                 }
+
             }
 
             return redirect()->route('payment.failed', $order);
