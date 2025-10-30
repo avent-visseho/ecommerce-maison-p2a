@@ -144,19 +144,19 @@
 
                                 <div class="flex justify-between text-neutral-600">
                                     <span>Livraison</span>
-                                    <span class="font-semibold">2,000 FCFA</span>
+                                    <span class="font-semibold">A définir </span>
                                 </div>
 
                                 <div class="pt-4 border-t border-neutral-200">
                                     <div class="flex justify-between text-lg font-bold text-neutral-900">
                                         <span>Total</span>
-                                        <span class="text-primary-500">{{ number_format($total + 2000, 0, ',', ' ') }}
+                                        <span class="text-primary-500">{{ number_format($total , 0, ',', ' ') }}
                                             FCFA</span>
                                     </div>
                                 </div>
 
                                 <!-- Promo Code -->
-                                <div class="pt-4 border-t border-neutral-200">
+                                {{-- <div class="pt-4 border-t border-neutral-200">
                                     <label class="label text-sm">Code Promo</label>
                                     <div class="flex space-x-2">
                                         <input type="text" placeholder="Entrez votre code" class="input-field text-sm">
@@ -164,7 +164,7 @@
                                             Appliquer
                                         </button>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <!-- Checkout Button -->
                                 @auth

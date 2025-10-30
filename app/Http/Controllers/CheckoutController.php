@@ -31,7 +31,7 @@ class CheckoutController extends Controller
 
         $cart = $this->cartService->getCart();
         $subtotal = $this->cartService->getTotal();
-        $shipping = 2000; // Fixed shipping cost
+        $shipping = 0; // Fixed shipping cost
         $total = $subtotal + $shipping;
 
         return view('public.checkout.index', compact('cart', 'subtotal', 'shipping', 'total'));
@@ -58,7 +58,7 @@ class CheckoutController extends Controller
 
             $cart = $this->cartService->getCart();
             $subtotal = $this->cartService->getTotal();
-            $shipping = 2000;
+            $shipping = 0;
             $total = $subtotal + $shipping;
 
             // Create order

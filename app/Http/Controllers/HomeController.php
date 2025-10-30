@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        $totalFeatured = Product::active()->featured()->count();
         $featuredProducts = Product::active()
             ->featured()
             ->inStock()
@@ -31,7 +33,7 @@ class HomeController extends Controller
             ->take(8)
             ->get();
 
-        return view('public.home', compact('featuredProducts', 'categories', 'newProducts'));
+        return view('public.home', compact('featuredProducts', 'categories', 'newProducts', 'totalFeatured'));
     }
 
     public function about()
@@ -60,7 +62,7 @@ class HomeController extends Controller
         ]);
 
         // Here you can send email or save to database
-        // Mail::to('contact@lamaisonp2a.com')->send(new ContactMail($validated));
+         //Mail::to('contact@lamaisonp2a.com')->send(new ContactMail($validated));
 
         return redirect()->back()->with('success', 'Votre message a été envoyé avec succès. Nous vous répondrons bientôt.');
     }
