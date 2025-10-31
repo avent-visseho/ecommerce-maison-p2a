@@ -1,3 +1,34 @@
+{{-- Bienvenue chez La Maison P2A
+L’élégance au cœur de votre quotidien
+Fondée en 2019 par Patricia AA, passionnée de décoration d’intérieur, La Maison P2A est bien plus qu’une entreprise : c’est une vision, une sensibilité artistique nourrie par des voyages aux quatre coins du monde.
+Chaque création, chaque projet est pensé pour transformer les espaces en lieux de vie chaleureux, esthétiques et fonctionnels. Patricia AA, également formée en architecture d’intérieur, allie expertise technique et inspiration multiculturelle pour concevoir des ambiances uniques, où le design pur et sophistiqué rend le quotidien visuellement agréable.
+
+---
+
+✨ Nos univers
+
+1- Les Objets de décoration
+Des pièces uniques, pensées pour créer un cocon de douceur. Chaque objet est conçu avec soin pour apporter chaleur et harmonie à votre intérieur.
+
+2- La Décoration événementielle
+
+Mariages, baptêmes, anniversaires, événements professionnels… 
+
+La Maison P2A sublime vos moments précieux avec une décoration sur mesure, élégante et mémorable.
+
+3- La Coordination de projets 
+
+De la construction à la décoration finale, nous coordonnons l’ensemble des corps de métier pour donner vie à vos projets, dans le respect de votre cahier des charges.
+
+---
+
+🌍 Une inspiration venue d’ailleurs
+Les voyages de Patricia  AA sont une source inépuisable d’idées et de styles. Chaque destination influence les créations de La Maison P2A, apportant une touche d’exotisme, de raffinement et d’authenticité à vos espaces.
+ --}}
+
+
+
+
 @extends('layouts.public')
 
 @section('title', 'À Propos')
@@ -33,23 +64,96 @@
                 <div>
                     <span
                         class="inline-block px-4 py-2 bg-primary-50 text-primary-500 rounded-full text-sm font-medium mb-4">
-                        Depuis 2025
+                        Depuis 2019
                     </span>
-                    <h2 class="text-4xl font-bold text-neutral-900 mb-6">Une Passion Devenue Réalité</h2>
+                    <h2 class="text-4xl font-bold text-neutral-900 mb-6">Bienvenue chez La Maison P2A</h2>
+                    <p class="text-xl text-primary-500 font-semibold mb-6">L'élégance au cœur de votre quotidien</p>
                     <div class="space-y-4 text-neutral-600 leading-relaxed">
                         <p>
-                            La Maison P2A est née de la passion de créer des espaces qui racontent une histoire. Nous
-                            croyons que chaque intérieur doit refléter la personnalité et le style de vie de ses occupants.
+                            Fondée en 2019 par <strong>Patricia AA</strong>, passionnée de décoration d'intérieur, La Maison P2A est bien plus qu'une entreprise : c'est une vision, une sensibilité artistique nourrie par des voyages aux quatre coins du monde.
                         </p>
                         <p>
-                            Notre équipe d'experts en décoration travaille sans relâche pour dénicher les plus belles pièces
-                            et créer des ambiances uniques qui transforment les maisons en véritables havres de paix.
+                            Chaque création, chaque projet est pensé pour transformer les espaces en lieux de vie chaleureux, esthétiques et fonctionnels. Patricia AA, également formée en architecture d'intérieur, allie expertise technique et inspiration multiculturelle pour concevoir des ambiances uniques, où le design pur et sophistiqué rend le quotidien visuellement agréable.
                         </p>
-                        <p>
-                            Aujourd'hui, nous sommes fiers de servir plus de 500 clients satisfaits à travers le Bénin, en
-                            offrant une sélection soigneusement choisie de produits de qualité et des services de décoration
-                            personnalisés.
-                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Universe Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-neutral-900 mb-4">✨ Nos Univers</h2>
+                <p class="text-lg text-neutral-600 max-w-2xl mx-auto">
+                    Découvrez nos trois domaines d'expertise pour sublimer vos espaces et événements
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Universe 1 -->
+                <div class="bg-neutral-50 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 border border-neutral-200">
+                    <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-neutral-900 mb-4">Les Objets de décoration</h3>
+                    <p class="text-neutral-600 leading-relaxed">
+                        Des pièces uniques, pensées pour créer un cocon de douceur. Chaque objet est conçu avec soin pour apporter chaleur et harmonie à votre intérieur.
+                    </p>
+                </div>
+
+                <!-- Universe 2 -->
+                <div class="bg-neutral-50 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 border border-neutral-200">
+                    <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-neutral-900 mb-4">La Décoration événementielle</h3>
+                    <p class="text-neutral-600 leading-relaxed mb-4">
+                        Mariages, baptêmes, anniversaires, événements professionnels…
+                    </p>
+                    <p class="text-neutral-600 leading-relaxed">
+                        La Maison P2A sublime vos moments précieux avec une décoration sur mesure, élégante et mémorable.
+                    </p>
+                </div>
+
+                <!-- Universe 3 -->
+                <div class="bg-neutral-50 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 border border-neutral-200">
+                    <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-neutral-900 mb-4">La Coordination de projets</h3>
+                    <p class="text-neutral-600 leading-relaxed">
+                        De la construction à la décoration finale, nous coordonnons l'ensemble des corps de métier pour donner vie à vos projets, dans le respect de votre cahier des charges.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inspiration Section -->
+    <section class="py-20 bg-gradient-to-br from-primary-50 to-neutral-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+                <div class="order-2 lg:order-1">
+                    <h2 class="text-4xl font-bold text-neutral-900 mb-6">🌍 Une inspiration venue d'ailleurs</h2>
+                    <p class="text-lg text-neutral-600 leading-relaxed">
+                        Les voyages de <strong>Patricia AA</strong> sont une source inépuisable d'idées et de styles. Chaque destination influence les créations de La Maison P2A, apportant une touche d'exotisme, de raffinement et d'authenticité à vos espaces.
+                    </p>
+                </div>
+                <div class="order-1 lg:order-2 mb-12 lg:mb-0">
+                    <div class="relative">
+                        <div class="aspect-[4/3] rounded-2xl overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800"
+                                alt="Inspiration de voyage" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-6 -left-6 w-64 h-64 bg-primary-100 rounded-2xl -z-10"></div>
                     </div>
                 </div>
             </div>

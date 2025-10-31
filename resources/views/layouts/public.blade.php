@@ -40,6 +40,10 @@
                             class="px-4 py-2 text-sm font-medium text-neutral-900 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all {{ request()->routeIs('services') ? 'text-primary-500 bg-primary-50' : '' }}">
                             Services
                         </a>
+                        <a href="{{ route('blog.index') }}"
+                            class="px-4 py-2 text-sm font-medium text-neutral-900 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all {{ request()->routeIs('blog.*') ? 'text-primary-500 bg-primary-50' : '' }}">
+                            Blog
+                        </a>
                         <a href="{{ route('about') }}"
                             class="px-4 py-2 text-sm font-medium text-neutral-900 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all {{ request()->routeIs('about') ? 'text-primary-500 bg-primary-50' : '' }}">
                             À Propos
@@ -178,6 +182,8 @@
                     class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">Boutique</a>
                 <a href="{{ route('services') }}"
                     class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">Services</a>
+                <a href="{{ route('blog.index') }}"
+                    class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">Blog</a>
                 <a href="{{ route('about') }}"
                     class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">À
                     Propos</a>
@@ -280,6 +286,8 @@
                                 class="text-neutral-400 hover:text-white transition-colors">Boutique</a></li>
                         <li><a href="{{ route('services') }}"
                                 class="text-neutral-400 hover:text-white transition-colors">Services</a></li>
+                        <li><a href="{{ route('blog.index') }}"
+                                class="text-neutral-400 hover:text-white transition-colors">Blog</a></li>
                         <li><a href="{{ route('about') }}"
                                 class="text-neutral-400 hover:text-white transition-colors">À Propos</a></li>
                         <li><a href="{{ route('contact') }}"

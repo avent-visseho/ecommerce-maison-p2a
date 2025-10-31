@@ -5,6 +5,16 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\BlogPostController as AdminBlogPostController;
+use App\Http\Controllers\Admin\BlogCategoryController as AdminBlogCategoryController;
+use App\Http\Controllers\Admin\BlogCommentController as AdminBlogCommentController;
+use App\Http\Controllers\Admin\BlogDashboardController as AdminBlogDashboardController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\Blog\CategoryController as BlogCategoryController;
+use App\Http\Controllers\Blog\TagController as BlogTagController;
+use App\Http\Controllers\Blog\AuthorController as BlogAuthorController;
+use App\Http\Controllers\Blog\CommentController as BlogCommentController;
+use App\Http\Controllers\Blog\NewsletterController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Client\DashboardController as ClientDashboardController;
@@ -35,6 +45,24 @@ Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear
 
 // FedaPay Webhook (no auth required)
 Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('payment.webhook');
+
+// Blog Public Routes
+Route::prefix('blog')->name('blog.')->group(function () {
+    Route::get('/', [BlogController::class, 'index'])->name('index');
+    Route::get('/search', [BlogController::class, 'search'])->name('search');
+    Route::get('/category/{slug}', [BlogController::class, 'category'])->name('category');
+    Route::get('/tag/{slug}', [BlogController::class, 'tag'])->name('tag');
+    Route::get('/author/{id}', [BlogAuthorController::class, 'show'])->name('author');
+    Route::get('/{slug}', [BlogController::class, 'show'])->name('show');
+});
+
+// Blog Newsletter Routes
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::get('/newsletter/verify/{token}', [NewsletterController::class, 'verify'])->name('newsletter.verify');
+Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
+
+// Blog Comments (auth required)
+Route::post('/blog/comments', [BlogCommentController::class, 'store'])->name('blog.comments.store')->middleware('auth');
 
 // Protected Routes
 Route::middleware(['auth'])->group(function () {
@@ -94,6 +122,23 @@ Route::middleware(['auth'])->group(function () {
         Route::get('orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
         Route::put('orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.updateStatus');
         Route::put('orders/{order}/payment-status', [AdminOrderController::class, 'updatePaymentStatus'])->name('orders.updatePaymentStatus');
+
+        // Blog Management
+        Route::prefix('blog')->name('blog.')->group(function () {
+            Route::get('/dashboard', [AdminBlogDashboardController::class, 'index'])->name('dashboard');
+
+            // Posts
+            Route::resource('posts', AdminBlogPostController::class);
+
+            // Categories
+            Route::resource('categories', AdminBlogCategoryController::class);
+
+            // Comments
+            Route::get('/comments', [AdminBlogCommentController::class, 'index'])->name('comments.index');
+            Route::patch('/comments/{id}/approve', [AdminBlogCommentController::class, 'approve'])->name('comments.approve');
+            Route::patch('/comments/{id}/reject', [AdminBlogCommentController::class, 'reject'])->name('comments.reject');
+            Route::delete('/comments/{id}', [AdminBlogCommentController::class, 'destroy'])->name('comments.destroy');
+        });
     });
 });
 

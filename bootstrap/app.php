@@ -5,6 +5,7 @@ use App\Http\Middleware\CustomerMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Console\Scheduling\Schedule;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -17,6 +18,12 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => AdminMiddleware::class,
             'customer' => CustomerMiddleware::class,
         ]);
+    })
+    ->withSchedule(function (Schedule $schedule) {
+        // Publier les articles planifiés toutes les 5 minutes
+        $schedule->command('blog:publish-scheduled')
+            ->everyFiveMinutes()
+            ->withoutOverlapping();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

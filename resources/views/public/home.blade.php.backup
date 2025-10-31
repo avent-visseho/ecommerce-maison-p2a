@@ -1,8 +1,7 @@
 @extends('layouts.public')
 
 @section('title', 'Accueil')
-@section('description',
-    'Découvrez La Maison P2A, votre spécialiste en décoration d\'intérieur et événementielle.
+@section('description', 'Découvrez La Maison P2A, votre spécialiste en décoration d\'intérieur et événementielle.
     Produits de qualité et services personnalisés.')
 
 @section('content')
@@ -159,21 +158,18 @@
                     <div
                         class="group bg-neutral-50 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-neutral-200">
                         <div class="relative aspect-square overflow-hidden bg-neutral-100">
-                            <a href="{{ route('shop.show', $product->slug) }}">
-                                @if ($product->main_image)
-                                    <img src="{{ asset('storage/' . $product->main_image) }}" alt="{{ $product->name }}"
-                                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center">
-                                        <svg class="w-16 h-16 text-neutral-300" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                        </svg>
-                                    </div>
-                                @endif
-
-                            </a>
+                            @if ($product->main_image)
+                                <img src="{{ asset('storage/' . $product->main_image) }}" alt="{{ $product->name }}"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-neutral-300" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                            @endif
 
                             @if ($product->isOnSale())
                                 <span
@@ -346,13 +342,10 @@
                 </p>
             </div>
 
-            <div class="relative" x-data="{
+            <div x-data="{
                 activeSlide: 0,
                 totalSlides: 6,
                 autoplayInterval: null,
-                init() {
-                    this.startAutoplay();
-                },
                 startAutoplay() {
                     this.autoplayInterval = setInterval(() => {
                         this.next();
@@ -361,7 +354,6 @@
                 stopAutoplay() {
                     if (this.autoplayInterval) {
                         clearInterval(this.autoplayInterval);
-                        this.autoplayInterval = null;
                     }
                 },
                 next() {
@@ -373,52 +365,49 @@
                 goToSlide(index) {
                     this.activeSlide = index;
                 }
-            }" @mouseenter="stopAutoplay()" @mouseleave="startAutoplay()">
+            }"
+            x-init="startAutoplay()"
+            @mouseenter="stopAutoplay()"
+            @mouseleave="startAutoplay()"
+            class="relative">
 
                 <!-- Carousel Container -->
-                <div class="overflow-hidden">
+                <div class="overflow-hidden relative">
                     <div class="flex transition-transform duration-500 ease-in-out"
-                        :style="'transform: translateX(-' + (activeSlide * 100) + '%)'">
+                         :style="'transform: translateX(-' + (activeSlide * 100) + '%)'">
 
                         <!-- Testimonial 1 -->
                         <div class="w-full flex-shrink-0 px-4">
-                            <div
-                                class="bg-neutral-50 rounded-2xl p-8 md:p-12 border border-neutral-200 hover:shadow-xl transition-all duration-300 max-w-4xl mx-auto">
-                                <div class="flex items-center justify-center mb-6">
+                            <div class="bg-neutral-50 rounded-2xl p-8 border border-neutral-200 hover:shadow-lg transition-all duration-300 max-w-3xl mx-auto">
+                                <div class="flex items-center mb-4">
                                     <div class="flex space-x-1 text-yellow-400">
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
                                         </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
                                         </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
                                         </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
                                         </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
                                         </svg>
                                     </div>
                                 </div>
-                                <p class="text-neutral-600 text-lg text-center mb-8 leading-relaxed italic">"Excellent
-                                    service ! J'ai commandé des accessoires pour ma salle à manger et je suis vraiment
-                                    impressionnée par la qualité des produits. La livraison a été rapide et l'équipe très
-                                    professionnelle."</p>
-                                <div class="flex items-center justify-center">
-                                    <div
-                                        class="w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
-                                        AF</div>
-                                    <div class="text-center">
-                                        <h4 class="font-semibold text-neutral-900 text-lg">Aïcha Feliho</h4>
-                                        <p class="text-sm text-neutral-500">Cotonou</p>
+                                <p class="text-neutral-600 mb-6 leading-relaxed">
+                                    "Excellent service ! J'ai commandé des accessoires pour ma salle à manger et je suis vraiment impressionnée par la qualité des produits. La livraison a été rapide et l'équipe très professionnelle."
+                                </p>
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
+                                        AF
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-neutral-900">Aïcha Feliho</h4>
+                                        <p class="text-sm text-neutral-400">Cotonou</p>
                                     </div>
                                 </div>
                             </div>
@@ -426,219 +415,193 @@
 
                         <!-- Testimonial 2 -->
                         <div class="w-full flex-shrink-0 px-4">
-                            <div
-                                class="bg-neutral-50 rounded-2xl p-8 md:p-12 border border-neutral-200 hover:shadow-xl transition-all duration-300 max-w-4xl mx-auto">
-                                <div class="flex items-center justify-center mb-6">
-                                    <div class="flex space-x-1 text-yellow-400">
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <p class="text-neutral-600 text-lg text-center mb-8 leading-relaxed italic">"La Maison P2A
-                                    a organisé la décoration de mon mariage et c'était absolument magnifique ! Tout était
-                                    parfait, du début à la fin. Je recommande vivement leurs services événementiels."</p>
-                                <div class="flex items-center justify-center">
-                                    <div
-                                        class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
-                                        MS</div>
-                                    <div class="text-center">
-                                        <h4 class="font-semibold text-neutral-900 text-lg">Mariama Sanni</h4>
-                                        <p class="text-sm text-neutral-500">Porto-Novo</p>
-                                    </div>
+                            <div class="bg-neutral-50 rounded-2xl p-8 border border-neutral-200 hover:shadow-lg transition-all duration-300 max-w-3xl mx-auto">
+                    <div class="flex items-center mb-4">
+                        <div class="flex space-x-1 text-yellow-400">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-neutral-600 mb-6 leading-relaxed">
+                        "La Maison P2A a organisé la décoration de mon mariage et c'était absolument magnifique ! Tout était parfait, du début à la fin. Je recommande vivement leurs services événementiels."
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
+                            MS
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-neutral-900">Mariama Sanni</h4>
+                            <p class="text-sm text-neutral-400">Porto-Novo</p>
+                        </div>
+                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Testimonial 3 -->
                         <div class="w-full flex-shrink-0 px-4">
-                            <div
-                                class="bg-neutral-50 rounded-2xl p-8 md:p-12 border border-neutral-200 hover:shadow-xl transition-all duration-300 max-w-4xl mx-auto">
-                                <div class="flex items-center justify-center mb-6">
-                                    <div class="flex space-x-1 text-yellow-400">
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <p class="text-neutral-600 text-lg text-center mb-8 leading-relaxed italic">"Produits de
-                                    très bonne qualité et prix abordables. J'ai refait toute la décoration de mon salon avec
-                                    leurs articles. Le résultat est au-delà de mes espérances. Merci !"</p>
-                                <div class="flex items-center justify-center">
-                                    <div
-                                        class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
-                                        JD</div>
-                                    <div class="text-center">
-                                        <h4 class="font-semibold text-neutral-900 text-lg">Jean-Paul Dossou</h4>
-                                        <p class="text-sm text-neutral-500">Abomey-Calavi</p>
-                                    </div>
+                            <div class="bg-neutral-50 rounded-2xl p-8 border border-neutral-200 hover:shadow-lg transition-all duration-300 max-w-3xl mx-auto">
+                    <div class="flex items-center mb-4">
+                        <div class="flex space-x-1 text-yellow-400">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-neutral-600 mb-6 leading-relaxed">
+                        "Produits de très bonne qualité et prix abordables. J'ai refait toute la décoration de mon salon avec leurs articles. Le résultat est au-delà de mes espérances. Merci !"
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
+                            JD
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-neutral-900">Jean-Paul Dossou</h4>
+                            <p class="text-sm text-neutral-400">Abomey-Calavi</p>
+                        </div>
+                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Testimonial 4 -->
                         <div class="w-full flex-shrink-0 px-4">
-                            <div
-                                class="bg-neutral-50 rounded-2xl p-8 md:p-12 border border-neutral-200 hover:shadow-xl transition-all duration-300 max-w-4xl mx-auto">
-                                <div class="flex items-center justify-center mb-6">
-                                    <div class="flex space-x-1 text-yellow-400">
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <p class="text-neutral-600 text-lg text-center mb-8 leading-relaxed italic">"Service client
-                                    exceptionnel ! J'ai eu besoin de conseils pour choisir mes rideaux et l'équipe m'a
-                                    guidée avec patience et professionnalisme. Très satisfaite de mon achat."</p>
-                                <div class="flex items-center justify-center">
-                                    <div
-                                        class="w-14 h-14 bg-gradient-to-br from-pink-500 to-pink-600 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
-                                        ER</div>
-                                    <div class="text-center">
-                                        <h4 class="font-semibold text-neutral-900 text-lg">Élisabeth Rodrigues</h4>
-                                        <p class="text-sm text-neutral-500">Parakou</p>
-                                    </div>
+                            <div class="bg-neutral-50 rounded-2xl p-8 border border-neutral-200 hover:shadow-lg transition-all duration-300 max-w-3xl mx-auto">
+                    <div class="flex items-center mb-4">
+                        <div class="flex space-x-1 text-yellow-400">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-neutral-600 mb-6 leading-relaxed">
+                        "Service client exceptionnel ! J'ai eu besoin de conseils pour choisir mes rideaux et l'équipe m'a guidée avec patience et professionnalisme. Très satisfaite de mon achat."
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-pink-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
+                            ER
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-neutral-900">Élisabeth Rodrigues</h4>
+                            <p class="text-sm text-neutral-400">Parakou</p>
+                        </div>
+                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Testimonial 5 -->
                         <div class="w-full flex-shrink-0 px-4">
-                            <div
-                                class="bg-neutral-50 rounded-2xl p-8 md:p-12 border border-neutral-200 hover:shadow-xl transition-all duration-300 max-w-4xl mx-auto">
-                                <div class="flex items-center justify-center mb-6">
-                                    <div class="flex space-x-1 text-yellow-400">
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <p class="text-neutral-600 text-lg text-center mb-8 leading-relaxed italic">"Rapport
-                                    qualité-prix imbattable ! J'ai meublé tout mon bureau avec La Maison P2A et je suis ravi
-                                    du résultat. L'ambiance est professionnelle et chaleureuse à la fois."</p>
-                                <div class="flex items-center justify-center">
-                                    <div
-                                        class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
-                                        TK</div>
-                                    <div class="text-center">
-                                        <h4 class="font-semibold text-neutral-900 text-lg">Thomas Koffi</h4>
-                                        <p class="text-sm text-neutral-500">Cotonou</p>
-                                    </div>
+                            <div class="bg-neutral-50 rounded-2xl p-8 border border-neutral-200 hover:shadow-lg transition-all duration-300 max-w-3xl mx-auto">
+                    <div class="flex items-center mb-4">
+                        <div class="flex space-x-1 text-yellow-400">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-neutral-600 mb-6 leading-relaxed">
+                        "Rapport qualité-prix imbattable ! J'ai meublé tout mon bureau avec La Maison P2A et je suis ravi du résultat. L'ambiance est professionnelle et chaleureuse à la fois."
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
+                            TK
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-neutral-900">Thomas Koffi</h4>
+                            <p class="text-sm text-neutral-400">Cotonou</p>
+                        </div>
+                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Testimonial 6 -->
                         <div class="w-full flex-shrink-0 px-4">
-                            <div
-                                class="bg-neutral-50 rounded-2xl p-8 md:p-12 border border-neutral-200 hover:shadow-xl transition-all duration-300 max-w-4xl mx-auto">
-                                <div class="flex items-center justify-center mb-6">
-                                    <div class="flex space-x-1 text-yellow-400">
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <p class="text-neutral-600 text-lg text-center mb-8 leading-relaxed italic">"Une expérience
-                                    d'achat parfaite du début à la fin. Site web facile à utiliser, paiement sécurisé et
-                                    livraison dans les délais. Je recommande sans hésitation !"</p>
-                                <div class="flex items-center justify-center">
-                                    <div
-                                        class="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
-                                        SB</div>
-                                    <div class="text-center">
-                                        <h4 class="font-semibold text-neutral-900 text-lg">Sophie Bocco</h4>
-                                        <p class="text-sm text-neutral-500">Ouidah</p>
-                                    </div>
+                            <div class="bg-neutral-50 rounded-2xl p-8 border border-neutral-200 hover:shadow-lg transition-all duration-300 max-w-3xl mx-auto">
+                    <div class="flex items-center mb-4">
+                        <div class="flex space-x-1 text-yellow-400">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-neutral-600 mb-6 leading-relaxed">
+                        "Une expérience d'achat parfaite du début à la fin. Site web facile à utiliser, paiement sécurisé et livraison dans les délais. Je recommande sans hésitation !"
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
+                            SB
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-neutral-900">Sophie Bocco</h4>
+                            <p class="text-sm text-neutral-400">Ouidah</p>
+                        </div>
+                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
@@ -646,75 +609,28 @@
                 <button @click="prev()"
                     class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-12 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-primary-500 hover:bg-primary-500 hover:text-white transition-colors z-10">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                 </button>
                 <button @click="next()"
                     class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-12 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-primary-500 hover:bg-primary-500 hover:text-white transition-colors z-10">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
                 </button>
 
                 <!-- Indicators -->
                 <div class="flex justify-center gap-2 mt-8">
-                    <button @click="goToSlide(0)" class="w-3 h-3 rounded-full transition-all duration-300"
-                        :class="activeSlide === 0 ? 'bg-primary-500 w-8' : 'bg-neutral-300 hover:bg-neutral-400'"></button>
-                    <button @click="goToSlide(1)" class="w-3 h-3 rounded-full transition-all duration-300"
-                        :class="activeSlide === 1 ? 'bg-primary-500 w-8' : 'bg-neutral-300 hover:bg-neutral-400'"></button>
-                    <button @click="goToSlide(2)" class="w-3 h-3 rounded-full transition-all duration-300"
-                        :class="activeSlide === 2 ? 'bg-primary-500 w-8' : 'bg-neutral-300 hover:bg-neutral-400'"></button>
-                    <button @click="goToSlide(3)" class="w-3 h-3 rounded-full transition-all duration-300"
-                        :class="activeSlide === 3 ? 'bg-primary-500 w-8' : 'bg-neutral-300 hover:bg-neutral-400'"></button>
-                    <button @click="goToSlide(4)" class="w-3 h-3 rounded-full transition-all duration-300"
-                        :class="activeSlide === 4 ? 'bg-primary-500 w-8' : 'bg-neutral-300 hover:bg-neutral-400'"></button>
-                    <button @click="goToSlide(5)" class="w-3 h-3 rounded-full transition-all duration-300"
-                        :class="activeSlide === 5 ? 'bg-primary-500 w-8' : 'bg-neutral-300 hover:bg-neutral-400'"></button>
+                    <button @click="goToSlide(0)" class="w-3 h-3 rounded-full transition-all duration-300" :class="activeSlide === 0 ? 'bg-primary-500 w-8' : 'bg-neutral-300 hover:bg-neutral-400'"></button>
+                    <button @click="goToSlide(1)" class="w-3 h-3 rounded-full transition-all duration-300" :class="activeSlide === 1 ? 'bg-primary-500 w-8' : 'bg-neutral-300 hover:bg-neutral-400'"></button>
+                    <button @click="goToSlide(2)" class="w-3 h-3 rounded-full transition-all duration-300" :class="activeSlide === 2 ? 'bg-primary-500 w-8' : 'bg-neutral-300 hover:bg-neutral-400'"></button>
+                    <button @click="goToSlide(3)" class="w-3 h-3 rounded-full transition-all duration-300" :class="activeSlide === 3 ? 'bg-primary-500 w-8' : 'bg-neutral-300 hover:bg-neutral-400'"></button>
+                    <button @click="goToSlide(4)" class="w-3 h-3 rounded-full transition-all duration-300" :class="activeSlide === 4 ? 'bg-primary-500 w-8' : 'bg-neutral-300 hover:bg-neutral-400'"></button>
+                    <button @click="goToSlide(5)" class="w-3 h-3 rounded-full transition-all duration-300" :class="activeSlide === 5 ? 'bg-primary-500 w-8' : 'bg-neutral-300 hover:bg-neutral-400'"></button>
                 </div>
             </div>
         </div>
     </section>
-
-
-    {{-- Foire Aux Questions (FAQ)
-1. Quels types de projets La Maison P2A prend-elle en charge ?
-Nous intervenons sur trois types de projets :
-* Décoration d’intérieur (objets, aménagement, ambiance cocooning)
-* Décoration événementielle (mariages, baptêmes, anniversaires, événements professionnels)
-* Coordination de projets de construction avec décoration finale selon vos besoins.
-
----
-
-2. Proposez-vous des créations sur mesure ?
-Oui, chaque projet est personnalisé. Nous travaillons en étroite collaboration avec vous pour concevoir des objets ou des ambiances qui correspondent à votre style, vos envies et votre budget.
-
----
-
-3. Est-il possible de vous confier uniquement la décoration d’un événement ?
-Absolument. Que ce soit pour un événement privé ou professionnel, nous pouvons prendre en charge uniquement la partie décoration, selon le thème et les contraintes du lieu.
-
----
-
-4. Où êtes-vous basés et intervenez-vous à l’international ?
-Nous sommes basés en Île-de-France, mais nous pouvons intervenir dans toute la France et à l’étranger selon les projets. Les déplacements sont étudiés au cas par cas.
-
----
-
-5. Comment se déroule un premier contact ?
-Le premier échange permet de comprendre vos besoins, vos goûts et vos contraintes. Ensuite, nous vous proposons un devis personnalisé et un cahier des charges adapté à votre projet.
-
----
-
-6. Quels sont les délais moyens pour un projet ?
-Les délais varient selon la nature du projet :
-* Objets de décoration : quelques jours à quelques semaines
-* Événements : planification 1 à 3 mois à l’avance
-* Projets de construction : plusieurs mois selon l’ampleur
-
----
-
-7. Puis-je voir des exemples de vos réalisations ?
-Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos réseaux sociaux. N’hésitez pas à consulter la section “Réalisations” pour découvrir notre univers. --}}
 
     <!-- FAQ Section -->
     <section class="py-20 bg-neutral-50">
@@ -731,21 +647,15 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 1 ? null : 1"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Quels types de projets La Maison P2A prend-elle en charge ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">Quels sont les modes de paiement acceptés ?</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
-                            :class="{ 'rotate-180': activeAccordion === 1 }" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            :class="{ 'rotate-180': activeAccordion === 1 }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
                     <div x-show="activeAccordion === 1" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            <p class="mb-3">Nous intervenons sur trois types de projets :</p>
-                            <ul class="list-disc list-inside space-y-2 ml-2">
-                                <li>Décoration d'intérieur (objets, aménagement, ambiance cocooning)</li>
-                                <li>Décoration événementielle (mariages, baptêmes, anniversaires, événements professionnels)</li>
-                                <li>Coordination de projets de construction avec décoration finale selon vos besoins</li>
-                            </ul>
+                            Nous acceptons les paiements via FedaPay, ce qui vous permet de payer en toute sécurité par Mobile Money (MTN, Moov) ou par carte bancaire. Tous les paiements sont 100% sécurisés et cryptés.
                         </div>
                     </div>
                 </div>
@@ -754,16 +664,15 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 2 ? null : 2"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Proposez-vous des créations sur mesure ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">Quel est le délai de livraison ?</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
-                            :class="{ 'rotate-180': activeAccordion === 2 }" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            :class="{ 'rotate-180': activeAccordion === 2 }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
                     <div x-show="activeAccordion === 2" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            Oui, chaque projet est personnalisé. Nous travaillons en étroite collaboration avec vous pour concevoir des objets ou des ambiances qui correspondent à votre style, vos envies et votre budget.
+                            Les délais de livraison varient selon votre localisation : 24-48h pour Cotonou et ses environs, 3-5 jours pour les autres villes du Bénin. Nous vous notifions par SMS et email à chaque étape de la livraison.
                         </div>
                     </div>
                 </div>
@@ -772,16 +681,15 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 3 ? null : 3"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Est-il possible de vous confier uniquement la décoration d'un événement ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">Puis-je retourner un produit si je ne suis pas satisfait ?</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
-                            :class="{ 'rotate-180': activeAccordion === 3 }" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            :class="{ 'rotate-180': activeAccordion === 3 }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
                     <div x-show="activeAccordion === 3" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            Absolument. Que ce soit pour un événement privé ou professionnel, nous pouvons prendre en charge uniquement la partie décoration, selon le thème et les contraintes du lieu.
+                            Oui, vous disposez de 14 jours pour retourner un produit non utilisé dans son emballage d'origine. Les frais de retour sont à votre charge sauf en cas de produit défectueux ou d'erreur de notre part. Contactez notre service client pour initier un retour.
                         </div>
                     </div>
                 </div>
@@ -790,16 +698,15 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 4 ? null : 4"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Où êtes-vous basés et intervenez-vous à l'international ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">Proposez-vous des services de décoration personnalisés ?</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
-                            :class="{ 'rotate-180': activeAccordion === 4 }" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            :class="{ 'rotate-180': activeAccordion === 4 }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
                     <div x-show="activeAccordion === 4" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            Nous sommes basés en Île-de-France, mais nous pouvons intervenir dans toute la France et à l'étranger selon les projets. Les déplacements sont étudiés au cas par cas.
+                            Absolument ! Nous offrons des services de consultation en décoration d'intérieur et d'événements. Notre équipe d'experts peut vous aider à créer l'ambiance parfaite pour votre espace ou votre événement spécial. Contactez-nous pour un devis personnalisé.
                         </div>
                     </div>
                 </div>
@@ -808,16 +715,15 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 5 ? null : 5"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Comment se déroule un premier contact ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">Offrez-vous des réductions pour les achats en gros ?</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
-                            :class="{ 'rotate-180': activeAccordion === 5 }" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            :class="{ 'rotate-180': activeAccordion === 5 }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
                     <div x-show="activeAccordion === 5" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            Le premier échange permet de comprendre vos besoins, vos goûts et vos contraintes. Ensuite, nous vous proposons un devis personnalisé et un cahier des charges adapté à votre projet.
+                            Oui, nous proposons des tarifs préférentiels pour les commandes en gros, que ce soit pour des professionnels (hôtels, restaurants, bureaux) ou pour des événements. Contactez notre équipe commerciale pour obtenir un devis adapté à vos besoins.
                         </div>
                     </div>
                 </div>
@@ -826,21 +732,15 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 6 ? null : 6"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Quels sont les délais moyens pour un projet ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">Comment puis-je suivre ma commande ?</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
-                            :class="{ 'rotate-180': activeAccordion === 6 }" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            :class="{ 'rotate-180': activeAccordion === 6 }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
                     <div x-show="activeAccordion === 6" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            <p class="mb-3">Les délais varient selon la nature du projet :</p>
-                            <ul class="list-disc list-inside space-y-2 ml-2">
-                                <li>Objets de décoration : quelques jours à quelques semaines</li>
-                                <li>Événements : planification 1 à 3 mois à l'avance</li>
-                                <li>Projets de construction : plusieurs mois selon l'ampleur</li>
-                            </ul>
+                            Une fois votre commande passée, vous recevrez un email de confirmation avec un numéro de suivi. Vous pouvez suivre l'état de votre commande en temps réel depuis votre espace client sur notre site web. Vous recevrez également des notifications par SMS aux étapes importantes.
                         </div>
                     </div>
                 </div>
@@ -849,16 +749,15 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 7 ? null : 7"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Puis-je voir des exemples de vos réalisations ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">Les produits sont-ils garantis ?</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
-                            :class="{ 'rotate-180': activeAccordion === 7 }" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            :class="{ 'rotate-180': activeAccordion === 7 }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
                     <div x-show="activeAccordion === 7" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos réseaux sociaux. N'hésitez pas à consulter la section "Réalisations" pour découvrir notre univers.
+                            Tous nos produits sont garantis contre les défauts de fabrication. La durée de garantie varie selon le type de produit (généralement 6 mois à 2 ans). Nous nous engageons à remplacer ou réparer tout produit défectueux dans le cadre de la garantie.
                         </div>
                     </div>
                 </div>
@@ -866,11 +765,9 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
 
             <div class="mt-12 text-center">
                 <p class="text-neutral-600 mb-4">Vous avez d'autres questions ?</p>
-                <a href="{{ route('contact') }}"
-                    class="inline-flex items-center px-8 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition-colors shadow-lg hover:shadow-xl">
+                <a href="{{ route('contact') }}" class="inline-flex items-center px-8 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition-colors shadow-lg hover:shadow-xl">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                     </svg>
                     Contactez-nous
                 </a>

@@ -95,6 +95,49 @@
                             <span class="ml-auto badge badge-warning">{{ $pendingOrders }}</span>
                         @endif
                     </a>
+
+                    <div class="pt-4 pb-2">
+                        <h3 class="px-4 text-xs font-semibold text-neutral-400 uppercase tracking-wider">Blog</h3>
+                    </div>
+
+                    <div x-data="{ open: {{ request()->routeIs('admin.blog.*') ? 'true' : 'false' }} }">
+                        <button @click="open = !open"
+                            class="w-full sidebar-link {{ request()->routeIs('admin.blog.*') ? 'active' : '' }} flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                                </svg>
+                                <span>Gestion du Blog</span>
+                            </div>
+                            <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-90': open }"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+
+                        <div x-show="open" x-transition class="ml-11 mt-2 space-y-1">
+                            <a href="{{ route('admin.blog.dashboard') }}"
+                                class="sidebar-link text-sm {{ request()->routeIs('admin.blog.dashboard') ? 'active' : '' }}">
+                                Tableau de bord
+                            </a>
+                            <a href="{{ route('admin.blog.posts.index') }}"
+                                class="sidebar-link text-sm {{ request()->routeIs('admin.blog.posts.*') ? 'active' : '' }}">
+                                Articles
+                            </a>
+                            <a href="{{ route('admin.blog.categories.index') }}"
+                                class="sidebar-link text-sm {{ request()->routeIs('admin.blog.categories.*') ? 'active' : '' }}">
+                                Catégories
+                            </a>
+                            <a href="{{ route('admin.blog.comments.index') }}"
+                                class="sidebar-link text-sm {{ request()->routeIs('admin.blog.comments.*') ? 'active' : '' }}">
+                                Commentaires
+                                @if ($pendingComments = \App\Models\BlogComment::where('status', 'pending')->count())
+                                    <span class="ml-auto badge badge-warning text-xs">{{ $pendingComments }}</span>
+                                @endif
+                            </a>
+                        </div>
+                    </div>
                 </nav>
 
                 <!-- User Menu -->
