@@ -61,7 +61,7 @@
                             <div>
                                 <label for="phone" class="label">Téléphone</label>
                                 <input type="tel" id="phone" name="phone" value="{{ old('phone', $user->phone) }}"
-                                    placeholder="+229 XX XX XX XX"
+                                    placeholder="+229 01 90 01 68 79"
                                     class="input-field @error('phone') border-red-500 @enderror">
                                 @error('phone')
                                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>

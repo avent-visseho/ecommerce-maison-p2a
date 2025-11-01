@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="flex-1">
                                         <h3 class="font-semibold text-neutral-900 mb-1">Téléphone</h3>
-                                        <p class="text-neutral-600 text-sm">+229 XX XX XX XX</p>
+                                        <p class="text-neutral-600 text-sm">+229 01 90 01 68 79</p>
                                         <p class="text-neutral-400 text-xs mt-1">Lun - Sam: 9h - 18h</p>
                                     </div>
                                 </div>
@@ -86,7 +86,7 @@
                                     </div>
                                     <div class="flex-1">
                                         <h3 class="font-semibold text-neutral-900 mb-1">Email</h3>
-                                        <p class="text-neutral-600 text-sm">contact@lamaisonp2a.com</p>
+                                        <p class="text-neutral-600 text-sm">Lamaisonp2a@outlook.com</p>
                                         <p class="text-neutral-400 text-xs mt-1">Réponse sous 24h</p>
                                     </div>
                                 </div>
@@ -201,7 +201,7 @@
                                         <label for="phone" class="label">Téléphone</label>
                                         <input type="tel" id="phone" name="phone" value="{{ old('phone') }}"
                                             class="input-field @error('phone') border-red-500 @enderror"
-                                            placeholder="+229 XX XX XX XX">
+                                            placeholder="+229 01 90 01 68 79">
                                         @error('phone')
                                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                         @enderror

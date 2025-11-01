@@ -13,7 +13,7 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            [
+           /*  [
                 'name' => 'Mobilier',
                 'slug' => 'mobilier',
                 'description' => 'Meubles de qualité pour votre intérieur',
@@ -54,7 +54,7 @@ class CategorySeeder extends Seeder
                 'description' => 'Décoration pour événements spéciaux',
                 'is_active' => true,
                 'order' => 6,
-            ],
+            ], */
         ];
 
         foreach ($categories as $category) {
@@ -65,7 +65,7 @@ class CategorySeeder extends Seeder
         $mobilier = Category::where('slug', 'mobilier')->first();
 
         $subcategories = [
-            [
+            /* [
                 'name' => 'Canapés',
                 'slug' => 'canapes',
                 'parent_id' => $mobilier->id,
@@ -82,7 +82,7 @@ class CategorySeeder extends Seeder
                 'slug' => 'chaises',
                 'parent_id' => $mobilier->id,
                 'is_active' => true,
-            ],
+            ], */
         ];
 
         foreach ($subcategories as $subcategory) {

@@ -25,7 +25,7 @@ class ProductSeeder extends Seeder
         $luxe = Brand::where('slug', 'luxe-deco')->first();
 
         $products = [
-            [
+            /* [
                 'name' => 'Canapé Scandinave 3 places',
                 'description' => 'Canapé confortable au design épuré',
                 'long_description' => 'Ce magnifique canapé scandinave allie confort et élégance. Avec ses lignes épurées et son revêtement en tissu de qualité, il apportera une touche de modernité à votre salon.',
@@ -112,7 +112,7 @@ class ProductSeeder extends Seeder
                 'category_id' => $accessoires->id,
                 'brand_id' => $luxe->id,
                 'is_active' => true,
-            ],
+            ], */
         ];
 
         foreach ($products as $product) {

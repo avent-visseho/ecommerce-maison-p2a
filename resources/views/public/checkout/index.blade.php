@@ -82,7 +82,7 @@
                                             class="text-red-500">*</span></label>
                                     <input type="tel" id="shipping_phone" name="shipping_phone"
                                         value="{{ old('shipping_phone', auth()->user()->phone) }}" required
-                                        placeholder="+229 XX XX XX XX"
+                                        placeholder="+229 01 90 01 68 79"
                                         class="input-field @error('shipping_phone') border-red-500 @enderror">
                                     @error('shipping_phone')
                                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>

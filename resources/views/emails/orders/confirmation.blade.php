@@ -205,7 +205,7 @@
                                 Besoin d'aide ? Contactez-nous :
                             </p>
                             <p style="margin: 0; color: #2725a9; font-size: 14px; font-weight: 600;">
-                                contact@lamaisonp2a.com | +229 XX XX XX XX
+                                Lamaisonp2a@outlook.com | +229 01 90 01 68 79
                             </p>
                             <div style="margin: 24px 0 0 0;">
                                 <a href="#" style="display: inline-block; margin: 0 8px;">

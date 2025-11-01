@@ -13,7 +13,7 @@ class BrandSeeder extends Seeder
     public function run(): void
     {
         $brands = [
-            [
+           /*  [
                 'name' => 'Maison P2A',
                 'slug' => 'maison-p2a',
                 'description' => 'Notre collection exclusive',
@@ -42,7 +42,7 @@ class BrandSeeder extends Seeder
                 'slug' => 'classic-touch',
                 'description' => 'Élégance classique',
                 'is_active' => true,
-            ],
+            ], */
         ];
 
         foreach ($brands as $brand) {

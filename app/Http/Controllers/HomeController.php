@@ -62,7 +62,7 @@ class HomeController extends Controller
         ]);
 
         // Here you can send email or save to database
-         //Mail::to('contact@lamaisonp2a.com')->send(new ContactMail($validated));
+         //Mail::to('Lamaisonp2a@outlook.com')->send(new ContactMail($validated));
 
         return redirect()->back()->with('success', 'Votre message a été envoyé avec succès. Nous vous répondrons bientôt.');
     }
