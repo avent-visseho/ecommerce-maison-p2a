@@ -36,7 +36,7 @@
                         <div class="order-1 lg:order-2 mb-8 lg:mb-0">
                             <span
                                 class="inline-flex items-center px-4 py-2 bg-primary-50 text-primary-500 rounded-full text-sm font-medium mb-4">
-                              {{--   <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                {{--   <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                 </svg> --}}
@@ -108,7 +108,7 @@
                         <div class="order-1 mb-8 lg:mb-0">
                             <span
                                 class="inline-flex items-center px-4 py-2 bg-green-50 text-green-600 rounded-full text-sm font-medium mb-4">
-                               {{--  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                {{--  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                                 </svg> --}}
@@ -199,7 +199,7 @@
                             <p class="text-neutral-600 leading-relaxed mb-6">
                                 Besoin d'optimiser votre espace ?
                                 Notre équipe de consultants, vous accompagne dans vos choix de décoration et d'aménagement,
-                                avec des recommandations personnalisées et adaptées à votre style.
+                                avec des recommandations personnalisées et adaptées à votre style. <br>
                                 Processus de l'aide à la décision :
                             </p>
                             <ul class="space-y-3 mb-8">
@@ -287,12 +287,8 @@
                             <!-- Icon -->
                             <div class="mb-6 relative">
                                 <div
-                                    class="w-20 h-20 bg-gradient-to-br from-primary-100 to-primary-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                    <svg class="w-10 h-10 text-primary-600" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                                    </svg>
+                                    class="w-20 h-20  rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-md">
+                                    <img src="{{ asset('consultant.png') }}" alt="La Maison P2A" class="h-16 w-16">
                                 </div>
                                 <!-- Decorative circle -->
                                 <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary-200/50 rounded-full -z-10"></div>
@@ -323,30 +319,26 @@
                         </div>
 
                         <div
-                            class="relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-2 border-transparent hover:border-green-200">
+                            class="relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-2 border-transparent  hover:border-primary-200">
                             <!-- Number Badge -->
-                            <div
-                                class="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                           <div
+                                class="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl shadow-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
                                 <span class="text-white text-2xl font-bold">02</span>
                             </div>
 
                             <!-- Icon -->
                             <div class="mb-6 relative">
                                 <div
-                                    class="w-20 h-20 bg-gradient-to-br from-green-100 to-green-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                    <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                                    </svg>
+                                    class="w-20 h-20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-md">
+                                    <img src="{{ asset('simulation.png') }}" alt="La Maison P2A" class="h-16 w-16">
                                 </div>
                                 <!-- Decorative circle -->
-                                <div class="absolute -top-2 -right-2 w-8 h-8 bg-green-200/50 rounded-full -z-10"></div>
+                                 <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary-200/50 rounded-full -z-10"></div>
                             </div>
 
                             <!-- Content -->
                             <h3
-                                class="text-2xl font-bold text-neutral-900 mb-3 group-hover:text-green-600 transition-colors">
+                                class="text-2xl font-bold text-neutral-900 mb-3group-hover:text-primary-600 transition-colors">
                                 Conception
                             </h3>
                             <p class="text-neutral-600 text-sm leading-relaxed">
@@ -355,7 +347,7 @@
 
                             <!-- Bottom accent -->
                             <div
-                                class="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-green-500 to-green-400 rounded-b-3xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300">
+                                class="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary-500 to-primary-400 rounded-b-3xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300">
                             </div>
                         </div>
                     </div>
@@ -370,32 +362,26 @@
                         </div>
 
                         <div
-                            class="relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-2 border-transparent hover:border-blue-200">
+                            class="relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-2 border-transparent  hover:border-primary-200">
                             <!-- Number Badge -->
-                            <div
-                                class="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                           <div
+                                class="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl shadow-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
                                 <span class="text-white text-2xl font-bold">03</span>
                             </div>
 
                             <!-- Icon -->
                             <div class="mb-6 relative">
                                 <div
-                                    class="w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                    <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
+                                    class="w-20 h-20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-md">
+                                    <img src="{{ asset('reparateur.png') }}" alt="La Maison P2A" class="h-16 w-16">
                                 </div>
                                 <!-- Decorative circle -->
-                                <div class="absolute -top-2 -right-2 w-8 h-8 bg-blue-200/50 rounded-full -z-10"></div>
+                                 <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary-200/50 rounded-full -z-10"></div>
                             </div>
 
                             <!-- Content -->
                             <h3
-                                class="text-2xl font-bold text-neutral-900 mb-3 group-hover:text-blue-600 transition-colors">
+                                class="text-2xl font-bold text-neutral-900 mb-3 group-hover:text-primary-600 transition-colors">
                                 Réalisation
                             </h3>
                             <p class="text-neutral-600 text-sm leading-relaxed">
@@ -403,8 +389,8 @@
                             </p>
 
                             <!-- Bottom accent -->
-                            <div
-                                class="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-500 to-blue-400 rounded-b-3xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300">
+                           <div
+                                class="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary-500 to-primary-400 rounded-b-3xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300">
                             </div>
                         </div>
                     </div>
@@ -412,30 +398,26 @@
                     <!-- Step 4: Livraison -->
                     <div class="group relative">
                         <div
-                            class="relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-2 border-transparent hover:border-purple-200">
+                            class="relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-2 border-transparent hover:border-primary-200">
                             <!-- Number Badge -->
-                            <div
-                                class="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl shadow-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                          <div
+                                class="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl shadow-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
                                 <span class="text-white text-2xl font-bold">04</span>
                             </div>
 
                             <!-- Icon -->
                             <div class="mb-6 relative">
                                 <div
-                                    class="w-20 h-20 bg-gradient-to-br from-purple-100 to-purple-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                    <svg class="w-10 h-10 text-purple-600" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                                    </svg>
+                                    class="w-20 h-20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-md">
+                                    <img src="{{ asset('livraison-rapide.png') }}" alt="La Maison P2A" class="h-16 w-16">
                                 </div>
                                 <!-- Decorative circle -->
-                                <div class="absolute -top-2 -right-2 w-8 h-8 bg-purple-200/50 rounded-full -z-10"></div>
+                                <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary-200/50 rounded-full -z-10"></div>
                             </div>
 
                             <!-- Content -->
                             <h3
-                                class="text-2xl font-bold text-neutral-900 mb-3 group-hover:text-purple-600 transition-colors">
+                                class="text-2xl font-bold text-neutral-900 mb-3 group-hover:text-primary-600 transition-colors">
                                 Livraison
                             </h3>
                             <p class="text-neutral-600 text-sm leading-relaxed">
@@ -443,8 +425,8 @@
                             </p>
 
                             <!-- Bottom accent -->
-                            <div
-                                class="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-purple-500 to-purple-400 rounded-b-3xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300">
+                           <div
+                                class="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary-500 to-primary-400 rounded-b-3xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300">
                             </div>
                         </div>
                     </div>

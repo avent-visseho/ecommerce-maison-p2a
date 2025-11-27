@@ -1,4 +1,5 @@
-/* Aurora Font - Pour les titres */
+/* Aurora Font - Pour les titres (DÉSACTIVÉ - Remplacé par Gilmer) */
+/*
 @font-face {
     font-family: 'Aurora';
     src: url('/fonts/aurora-regular.woff2') format('woff2');
@@ -6,8 +7,9 @@
     font-style: normal;
     font-display: swap;
 }
+*/
 
-/* Gilmer Font - Pour les textes courants */
+/* Gilmer Font - Pour les textes courants ET les titres */
 @font-face {
     font-family: 'Gilmer';
     src: url('/fonts/gilmer-light.woff2') format('woff2');
@@ -49,9 +51,9 @@
         @apply bg-neutral-100 text-neutral-900 font-sans antialiased;
     }
 
-    /* Appliquer Aurora à tous les titres */
+    /* Appliquer Gilmer à tous les titres */
     h1, h2, h3, h4, h5, h6 {
-        @apply font-heading;
+        @apply font-sans;
     }
 }
 

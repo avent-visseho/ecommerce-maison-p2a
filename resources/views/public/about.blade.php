@@ -161,22 +161,18 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div class="bg-white rounded-2xl p-8 text-center hover:shadow-lg transition-all">
                     <div class="w-16 h-16 flex items-center justify-center mx-auto mb-6"> {{--  bg-primary-100 rounded-2xl --}}
-                        <svg class="w-16 h-16 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                        </svg>
+                        <img
+                        src="{{ asset('service.png') }}" alt="La Maison P2A" class="h-16 w-16">
                     </div>
                     <h3 class="text-xl font-bold text-neutral-900 mb-3">Qualité</h3>
-                    <p class="text-neutral-600">Nous privilégions des matières nobles tells que le bois, les tissus
+                    <p class="text-neutral-600">Nous privilégions des matières nobles telles que le bois, les tissus
                         artisanaux locaux…pour offrir une qualité supérieure respectueuse de l’environnement</p>
                 </div>
 
                 <div class="bg-white rounded-2xl p-8 text-center hover:shadow-lg transition-all">
                     <div class="w-16 h-16  flex items-center justify-center mx-auto mb-6"> {{-- bg-green-100 rounded-2xl --}}
-                        <svg class="w-16 h-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
+                       <img
+                        src="{{ asset('service-client.png') }}" alt="La Maison P2A" class="h-16 w-16">
                     </div>
                     <h3 class="text-xl font-bold text-neutral-900 mb-3">Service Client</h3>
                     <p class="text-neutral-600">- Une équipe spécialisée par domaine, attentive et dotée d’une approche
@@ -185,10 +181,8 @@
 
                 <div class="bg-white rounded-2xl p-8 text-center hover:shadow-lg transition-all">
                     <div class="w-16 h-16 flex items-center justify-center mx-auto mb-6"> {{--  bg-blue-100 rounded-2xl --}}
-                        <svg class="w-16 h-16 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                        </svg>
+                        <img
+                        src="{{ asset('innovation.png') }}" alt="La Maison P2A" class="h-16 w-16">
                     </div>
                     <h3 class="text-xl font-bold text-neutral-900 mb-3">Innovation</h3>
                     <p class="text-neutral-600">Des créations à la pointe du design pour sublimer vos espaces avec élégance
@@ -197,10 +191,8 @@
 
                 <div class="bg-white rounded-2xl p-8 text-center hover:shadow-lg transition-all">
                     <div class="w-16 h-16  flex items-center justify-center mx-auto mb-6"> {{-- bg-purple-100 rounded-2xl --}}
-                        <svg class="w-16 h-16 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
+                        <img
+                        src="{{ asset('passion.png') }}" alt="La Maison P2A" class="h-16 w-16">
                     </div>
                     <h3 class="text-xl font-bold text-neutral-900 mb-3">Passion</h3>
                     <p class="text-neutral-600">Nous réalisons chaque création avec un savoir-faire unique et une attention

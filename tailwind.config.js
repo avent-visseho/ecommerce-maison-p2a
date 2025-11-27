@@ -13,7 +13,6 @@ export default {
         extend: {
             fontFamily: {
                 sans: ["Gilmer", ...defaultTheme.fontFamily.sans],
-                heading: ["Aurora", ...defaultTheme.fontFamily.serif],
             },
             colors: {
                 primary: {
