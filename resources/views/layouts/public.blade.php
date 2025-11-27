@@ -20,10 +20,7 @@
                 <!-- Logo -->
                 <div class="flex items-center space-x-8">
                     <a href="{{ route('home') }}" class="flex items-center space-x-3">
-                        <div class="w-12 h-12 bg-primary-500 rounded-xl flex items-center justify-center">
-                            <span class="text-xl font-bold text-white">P2A</span>
-                        </div>
-                        <span class="text-xl font-bold text-neutral-900 hidden sm:block">La Maison P2A</span>
+                        <img src="{{ asset('logo.jpg') }}" alt="La Maison P2A" class="h-16 w-auto object-contain">
                     </a>
 
                     <!-- Desktop Menu -->
@@ -244,12 +241,9 @@
                 <!-- Company Info -->
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center space-x-3 mb-4">
-                        <div class="w-12 h-12 bg-primary-500 rounded-xl flex items-center justify-center">
-                            <span class="text-xl font-bold text-white">P2A</span>
-                        </div>
-                        <span class="text-xl font-bold">La Maison P2A</span>
+                        <img src="{{ asset('logo.jpg') }}" alt="La Maison P2A" class="h-16 w-auto object-contain">
                     </div>
-                    <p class="text-neutral-400 mb-4 max-w-md">
+                    <p class="text-white mb-4 max-w-md">
                         Votre partenaire privilégié pour la décoration d'intérieur et l'organisation d'événements.
                         Créons ensemble des espaces qui vous ressemblent.
                     </p>
@@ -283,22 +277,22 @@
                     <h3 class="text-lg font-semibold mb-4">Liens Rapides</h3>
                     <ul class="space-y-2">
                         <li><a href="{{ route('shop.index') }}"
-                                class="text-neutral-400 hover:text-white transition-colors">Boutique</a></li>
+                                class="text-white hover:text-white transition-colors">Boutique</a></li>
                         <li><a href="{{ route('services') }}"
-                                class="text-neutral-400 hover:text-white transition-colors">Services</a></li>
+                                class="text-white hover:text-white transition-colors">Services</a></li>
                         <li><a href="{{ route('blog.index') }}"
-                                class="text-neutral-400 hover:text-white transition-colors">Blog</a></li>
+                                class="text-white hover:text-white transition-colors">Blog</a></li>
                         <li><a href="{{ route('about') }}"
-                                class="text-neutral-400 hover:text-white transition-colors">À Propos</a></li>
+                                class="text-white hover:text-white transition-colors">À Propos</a></li>
                         <li><a href="{{ route('contact') }}"
-                                class="text-neutral-400 hover:text-white transition-colors">Contact</a></li>
+                                class="text-white hover:text-white transition-colors">Contact</a></li>
                     </ul>
                 </div>
 
                 <!-- Contact Info -->
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Contact</h3>
-                    <ul class="space-y-3 text-neutral-400">
+                    <ul class="space-y-3 text-white">
                         <li class="flex items-start">
                             <svg class="w-5 h-5 mr-2 mt-0.5" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
@@ -307,7 +301,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
-                            <span>Cotonou, Bénin</span>
+                            <span>17 Rue François René Châteaubriand; 78370 Plaisir (France)</span>
                         </li>
                         <li class="flex items-start">
                             <svg class="w-5 h-5 mr-2 mt-0.5" fill="none" stroke="currentColor"
@@ -323,7 +317,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                             </svg>
-                            <span>+229 01 90 01 68 79</span>
+                            <span>0033 0782215485</span>
                         </li>
                     </ul>
                 </div>
@@ -332,15 +326,15 @@
             <!-- Bottom Bar -->
             <div class="pt-8 border-t border-neutral-800">
                 <div class="flex flex-col md:flex-row items-center justify-between">
-                    <p class="text-sm text-neutral-400">
+                    <p class="text-sm text-white">
                         &copy; {{ date('Y') }} La Maison P2A. Tous droits réservés.
                     </p>
                     <div class="flex items-center space-x-6 mt-4 md:mt-0">
                         <a href="#"
-                            class="text-sm text-neutral-400 hover:text-white transition-colors">Politique de
+                            class="text-sm text-white hover:text-white transition-colors">Politique de
                             confidentialité</a>
                         <a href="#"
-                            class="text-sm text-neutral-400 hover:text-white transition-colors">Conditions
+                            class="text-sm text-white hover:text-white transition-colors">Conditions
                             d'utilisation</a>
                     </div>
                 </div>

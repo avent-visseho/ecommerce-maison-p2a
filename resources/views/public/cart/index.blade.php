@@ -59,7 +59,7 @@
                                                 </a>
                                             </h3>
                                             <p class="text-sm text-neutral-400 mb-3">
-                                                Prix unitaire: {{ number_format($item['price'], 0, ',', ' ') }} FCFA
+                                                Prix unitaire: {{ number_format($item['price'], 0, ',', ' ') }} €
                                             </p>
 
                                             <div class="flex items-center space-x-4">
@@ -111,7 +111,7 @@
                                         <!-- Subtotal -->
                                         <div class="text-right">
                                             <p class="text-xl font-bold text-neutral-900">
-                                                {{ number_format($item['price'] * $item['quantity'], 0, ',', ' ') }} FCFA
+                                                {{ number_format($item['price'] * $item['quantity'], 0, ',', ' ') }} €
                                             </p>
                                         </div>
                                     </div>
@@ -139,7 +139,7 @@
                             <div class="card-body space-y-4">
                                 <div class="flex justify-between text-neutral-600">
                                     <span>Sous-total</span>
-                                    <span class="font-semibold">{{ number_format($total, 0, ',', ' ') }} FCFA</span>
+                                    <span class="font-semibold">{{ number_format($total, 0, ',', ' ') }} €</span>
                                 </div>
 
                                 <div class="flex justify-between text-neutral-600">
@@ -151,7 +151,7 @@
                                     <div class="flex justify-between text-lg font-bold text-neutral-900">
                                         <span>Total</span>
                                         <span class="text-primary-500">{{ number_format($total , 0, ',', ' ') }}
-                                            FCFA</span>
+                                            €</span>
                                     </div>
                                 </div>
 

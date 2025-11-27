@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\SiteVisit;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -67,6 +68,25 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
+        // Statistiques des visiteurs
+        $totalVisits = SiteVisit::count();
+        $visitsToday = SiteVisit::today()->count();
+        $visitsThisWeek = SiteVisit::thisWeek()->count();
+        $visitsThisMonth = SiteVisit::thisMonth()->count();
+        $uniqueVisitors = SiteVisit::distinct('ip_address')->count('ip_address');
+        $uniqueVisitorsToday = SiteVisit::today()->distinct('ip_address')->count('ip_address');
+
+        // Visites par jour pour le graphique (30 derniers jours)
+        $dailyVisits = SiteVisit::select(
+                DB::raw('DATE(visited_at) as date'),
+                DB::raw('COUNT(*) as visits'),
+                DB::raw('COUNT(DISTINCT ip_address) as unique_visits')
+            )
+            ->where('visited_at', '>=', now()->subDays(30))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
         return view('admin.dashboard', compact(
             'totalRevenue',
             'totalOrders',
@@ -76,7 +96,14 @@ class DashboardController extends Controller
             'lowStockProducts',
             'revenueData',
             'ordersByStatus',
-            'topProducts'
+            'topProducts',
+            'totalVisits',
+            'visitsToday',
+            'visitsThisWeek',
+            'visitsThisMonth',
+            'uniqueVisitors',
+            'uniqueVisitorsToday',
+            'dailyVisits'
         ));
     }
 }

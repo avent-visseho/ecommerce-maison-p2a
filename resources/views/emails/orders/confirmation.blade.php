@@ -8,8 +8,8 @@
 </head>
 
 <body
-    style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f4f5f7;">
-    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f5f7; padding: 40px 0;">
+    style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f0f0f0;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f0f0f0; padding: 40px 0;">
         <tr>
             <td align="center">
                 <table width="600" cellpadding="0" cellspacing="0"
@@ -17,10 +17,10 @@
                     <!-- Header -->
                     <tr>
                         <td
-                            style="background: linear-gradient(135deg, #2725a9 0%, #1f1d87 100%); padding: 40px; text-align: center;">
+                            style="background: linear-gradient(135deg, #e8bf5e 0%, #a05e18 100%); padding: 40px; text-align: center;">
                             <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: bold;">La Maison P2A
                             </h1>
-                            <p style="color: #e7eaf6; margin: 10px 0 0 0; font-size: 14px;">Confirmation de votre
+                            <p style="color: #fde788; margin: 10px 0 0 0; font-size: 14px;">Confirmation de votre
                                 commande</p>
                         </td>
                     </tr>
@@ -35,9 +35,9 @@
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                             </div>
-                            <h2 style="color: #0c0d10; margin: 0 0 12px 0; font-size: 24px; font-weight: bold;">Merci
+                            <h2 style="color: #000000; margin: 0 0 12px 0; font-size: 24px; font-weight: bold;">Merci
                                 pour votre commande !</h2>
-                            <p style="color: #606266; margin: 0; font-size: 16px; line-height: 1.6;">
+                            <p style="color: #40464b; margin: 0; font-size: 16px; line-height: 1.6;">
                                 Bonjour <strong>{{ $order->shipping_name }}</strong>,<br>
                                 Nous avons bien reçu votre commande et nous la préparons avec soin.
                             </p>
@@ -52,7 +52,7 @@
                                 <tr>
                                     <td>
                                         <h3
-                                            style="color: #0c0d10; margin: 0 0 16px 0; font-size: 18px; font-weight: 600;">
+                                            style="color: #000000; margin: 0 0 16px 0; font-size: 18px; font-weight: 600;">
                                             Détails de la commande</h3>
                                     </td>
                                 </tr>
@@ -60,24 +60,24 @@
                                     <td style="padding-bottom: 12px;">
                                         <table width="100%" cellpadding="0" cellspacing="0">
                                             <tr>
-                                                <td style="color: #606266; font-size: 14px; padding-bottom: 8px;">Numéro
+                                                <td style="color: #40464b; font-size: 14px; padding-bottom: 8px;">Numéro
                                                     de commande:</td>
                                                 <td align="right"
-                                                    style="color: #0c0d10; font-size: 14px; font-weight: 600; padding-bottom: 8px;">
+                                                    style="color: #000000; font-size: 14px; font-weight: 600; padding-bottom: 8px;">
                                                     {{ $order->order_number }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="color: #606266; font-size: 14px; padding-bottom: 8px;">Date:
+                                                <td style="color: #40464b; font-size: 14px; padding-bottom: 8px;">Date:
                                                 </td>
                                                 <td align="right"
-                                                    style="color: #0c0d10; font-size: 14px; font-weight: 600; padding-bottom: 8px;">
+                                                    style="color: #000000; font-size: 14px; font-weight: 600; padding-bottom: 8px;">
                                                     {{ $order->created_at->format('d/m/Y à H:i') }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="color: #606266; font-size: 14px;">Total:</td>
+                                                <td style="color: #40464b; font-size: 14px;">Total:</td>
                                                 <td align="right"
-                                                    style="color: #2725a9; font-size: 18px; font-weight: bold;">
-                                                    {{ number_format($order->total, 0, ',', ' ') }} FCFA</td>
+                                                    style="color: #e8bf5e; font-size: 18px; font-weight: bold;">
+                                                    {{ number_format($order->total, 0, ',', ' ') }} €</td>
                                             </tr>
                                         </table>
                                     </td>
@@ -89,26 +89,26 @@
                     <!-- Products -->
                     <tr>
                         <td style="padding: 0 40px 40px 40px;">
-                            <h3 style="color: #0c0d10; margin: 0 0 20px 0; font-size: 18px; font-weight: 600;">Articles
+                            <h3 style="color: #000000; margin: 0 0 20px 0; font-size: 18px; font-weight: 600;">Articles
                                 commandés</h3>
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 @foreach ($order->items as $item)
                                     <tr>
-                                        <td style="padding: 16px 0; border-bottom: 1px solid #dddfe7;">
+                                        <td style="padding: 16px 0; border-bottom: 1px solid #d0d0d0;">
                                             <table width="100%" cellpadding="0" cellspacing="0">
                                                 <tr>
                                                     <td width="80%">
                                                         <p
-                                                            style="margin: 0; color: #0c0d10; font-size: 14px; font-weight: 600;">
+                                                            style="margin: 0; color: #000000; font-size: 14px; font-weight: 600;">
                                                             {{ $item->product_name }}</p>
-                                                        <p style="margin: 4px 0 0 0; color: #606266; font-size: 13px;">
+                                                        <p style="margin: 4px 0 0 0; color: #40464b; font-size: 13px;">
                                                             Quantité: {{ $item->quantity }} ×
-                                                            {{ number_format($item->price, 0, ',', ' ') }} FCFA</p>
+                                                            {{ number_format($item->price, 0, ',', ' ') }} €</p>
                                                     </td>
                                                     <td width="20%" align="right">
                                                         <p
-                                                            style="margin: 0; color: #0c0d10; font-size: 14px; font-weight: 600;">
-                                                            {{ number_format($item->subtotal, 0, ',', ' ') }} FCFA</p>
+                                                            style="margin: 0; color: #000000; font-size: 14px; font-weight: 600;">
+                                                            {{ number_format($item->subtotal, 0, ',', ' ') }} €</p>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -124,24 +124,24 @@
                         <td style="padding: 0 40px 40px 40px;">
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
-                                    <td style="padding: 8px 0; color: #606266; font-size: 14px;">Sous-total</td>
+                                    <td style="padding: 8px 0; color: #40464b; font-size: 14px;">Sous-total</td>
                                     <td align="right"
-                                        style="padding: 8px 0; color: #0c0d10; font-size: 14px; font-weight: 600;">
-                                        {{ number_format($order->subtotal, 0, ',', ' ') }} FCFA</td>
+                                        style="padding: 8px 0; color: #000000; font-size: 14px; font-weight: 600;">
+                                        {{ number_format($order->subtotal, 0, ',', ' ') }} €</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 8px 0; color: #606266; font-size: 14px;">Livraison</td>
+                                    <td style="padding: 8px 0; color: #40464b; font-size: 14px;">Livraison</td>
                                     <td align="right"
-                                        style="padding: 8px 0; color: #0c0d10; font-size: 14px; font-weight: 600;">
-                                        {{ number_format($order->shipping, 0, ',', ' ') }} FCFA</td>
+                                        style="padding: 8px 0; color: #000000; font-size: 14px; font-weight: 600;">
+                                        {{ number_format($order->shipping, 0, ',', ' ') }} €</td>
                                 </tr>
-                                <tr style="border-top: 2px solid #dddfe7;">
+                                <tr style="border-top: 2px solid #d0d0d0;">
                                     <td
-                                        style="padding: 16px 0 0 0; color: #0c0d10; font-size: 16px; font-weight: bold;">
+                                        style="padding: 16px 0 0 0; color: #000000; font-size: 16px; font-weight: bold;">
                                         Total</td>
                                     <td align="right"
-                                        style="padding: 16px 0 0 0; color: #2725a9; font-size: 20px; font-weight: bold;">
-                                        {{ number_format($order->total, 0, ',', ' ') }} FCFA</td>
+                                        style="padding: 16px 0 0 0; color: #e8bf5e; font-size: 20px; font-weight: bold;">
+                                        {{ number_format($order->total, 0, ',', ' ') }} €</td>
                                 </tr>
                             </table>
                         </td>
@@ -151,13 +151,13 @@
                     <tr>
                         <td style="padding: 0 40px 40px 40px;">
                             <table width="100%" cellpadding="0" cellspacing="0"
-                                style="background-color: #e7eaf6; border-radius: 12px; padding: 24px;">
+                                style="background-color: #fde788; border-radius: 12px; padding: 24px;">
                                 <tr>
                                     <td>
                                         <h3
-                                            style="color: #0c0d10; margin: 0 0 16px 0; font-size: 16px; font-weight: 600;">
+                                            style="color: #000000; margin: 0 0 16px 0; font-size: 16px; font-weight: 600;">
                                             Adresse de livraison</h3>
-                                        <p style="margin: 0; color: #0c0d10; font-size: 14px; line-height: 1.6;">
+                                        <p style="margin: 0; color: #000000; font-size: 14px; line-height: 1.6;">
                                             <strong>{{ $order->shipping_name }}</strong><br>
                                             {{ $order->shipping_address }}<br>
                                             {{ $order->shipping_city }}<br>
@@ -174,11 +174,11 @@
                     <tr>
                         <td style="padding: 0 40px 40px 40px;">
                             <div
-                                style="background-color: #f3ebf8; border-left: 4px solid #2725a9; border-radius: 8px; padding: 20px;">
-                                <h3 style="color: #0c0d10; margin: 0 0 12px 0; font-size: 16px; font-weight: 600;">
+                                style="background-color: #fef9ec; border-left: 4px solid #e8bf5e; border-radius: 8px; padding: 20px;">
+                                <h3 style="color: #000000; margin: 0 0 12px 0; font-size: 16px; font-weight: 600;">
                                     Prochaines étapes</h3>
                                 <ul
-                                    style="margin: 0; padding-left: 20px; color: #606266; font-size: 14px; line-height: 1.8;">
+                                    style="margin: 0; padding-left: 20px; color: #40464b; font-size: 14px; line-height: 1.8;">
                                     <li>Nous préparons votre commande avec soin</li>
                                     <li>Vous recevrez un email de confirmation d'expédition</li>
                                     <li>Livraison estimée : 2-5 jours ouvrables</li>
@@ -192,7 +192,7 @@
                     <tr>
                         <td style="padding: 0 40px 40px 40px; text-align: center;">
                             <a href="{{ route('client.orders.show', $order) }}"
-                                style="display: inline-block; background-color: #2725a9; color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 12px; font-size: 16px; font-weight: 600;">
+                                style="display: inline-block; background-color: #e8bf5e; color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 12px; font-size: 16px; font-weight: 600;">
                                 Suivre ma commande
                             </a>
                         </td>

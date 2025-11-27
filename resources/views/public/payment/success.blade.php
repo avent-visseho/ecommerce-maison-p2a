@@ -29,7 +29,7 @@
                         <div>
                             <p class="text-sm text-neutral-500 mb-1">Montant payé</p>
                             <p class="text-2xl font-bold text-primary-500">{{ number_format($order->total, 0, ',', ' ') }}
-                                FCFA</p>
+                                €</p>
                         </div>
                         <div>
                             <p class="text-sm text-neutral-500 mb-1">Date du paiement</p>

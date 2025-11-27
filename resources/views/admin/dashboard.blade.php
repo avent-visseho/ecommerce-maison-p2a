@@ -12,7 +12,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-neutral-400 mb-1">Revenus Total</p>
-                        <h3 class="text-2xl font-bold text-neutral-900">{{ number_format($totalRevenue, 0, ',', ' ') }} FCFA
+                        <h3 class="text-2xl font-bold text-neutral-900">{{ number_format($totalRevenue, 0, ',', ' ') }} €
                         </h3>
                         <p class="text-sm text-green-600 mt-2 flex items-center">
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -97,6 +97,95 @@
             </div>
         </div>
 
+        <!-- Visitor Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Total Visits -->
+            <div class="stat-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-neutral-400 mb-1">Total Visites</p>
+                        <h3 class="text-2xl font-bold text-neutral-900">{{ number_format($totalVisits, 0, ',', ' ') }}</h3>
+                        <p class="text-sm text-primary-600 mt-2 flex items-center">
+                            <span>{{ number_format($uniqueVisitors, 0, ',', ' ') }} uniques</span>
+                        </p>
+                    </div>
+                    <div class="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center">
+                        <svg class="w-7 h-7 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visits Today -->
+            <div class="stat-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-neutral-400 mb-1">Visites Aujourd'hui</p>
+                        <h3 class="text-2xl font-bold text-neutral-900">{{ number_format($visitsToday, 0, ',', ' ') }}</h3>
+                        <p class="text-sm text-indigo-600 mt-2 flex items-center">
+                            <span>{{ number_format($uniqueVisitorsToday, 0, ',', ' ') }} uniques</span>
+                        </p>
+                    </div>
+                    <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center">
+                        <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visits This Week -->
+            <div class="stat-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-neutral-400 mb-1">Visites Cette Semaine</p>
+                        <h3 class="text-2xl font-bold text-neutral-900">{{ number_format($visitsThisWeek, 0, ',', ' ') }}</h3>
+                        <p class="text-sm text-teal-600 mt-2 flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                            </svg>
+                            <span>Hebdomadaire</span>
+                        </p>
+                    </div>
+                    <div class="w-14 h-14 bg-teal-100 rounded-xl flex items-center justify-center">
+                        <svg class="w-7 h-7 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visits This Month -->
+            <div class="stat-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-neutral-400 mb-1">Visites Ce Mois</p>
+                        <h3 class="text-2xl font-bold text-neutral-900">{{ number_format($visitsThisMonth, 0, ',', ' ') }}</h3>
+                        <p class="text-sm text-pink-600 mt-2 flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                            </svg>
+                            <span>Mensuel</span>
+                        </p>
+                    </div>
+                    <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center">
+                        <svg class="w-7 h-7 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Charts Row -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Revenue Chart -->
@@ -150,7 +239,7 @@
                                 </div>
                                 <div class="text-right">
                                     <p class="font-semibold text-neutral-900">
-                                        {{ number_format($order->total, 0, ',', ' ') }} FCFA</p>
+                                        {{ number_format($order->total, 0, ',', ' ') }} €</p>
                                     @if ($order->status === 'pending')
                                         <span class="badge badge-warning">En attente</span>
                                     @elseif($order->status === 'processing')
@@ -258,7 +347,7 @@
                             beginAtZero: true,
                             ticks: {
                                 callback: function(value) {
-                                    return value.toLocaleString() + ' FCFA';
+                                    return value.toLocaleString() + ' €';
                                 }
                             },
                             grid: {

@@ -20,10 +20,7 @@
             <div class="relative z-10 flex flex-col justify-between p-12 text-white w-full">
                 <div>
                     <a href="{{ route('home') }}" class="inline-flex items-center space-x-3">
-                        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center">
-                            <span class="text-2xl font-bold text-primary-500">P2A</span>
-                        </div>
-                        <span class="text-2xl font-bold">La Maison P2A</span>
+                        <img src="{{ asset('logo.jpg') }}" alt="La Maison P2A" class="h-16 w-auto object-contain">
                     </a>
                 </div>
 
@@ -58,10 +55,7 @@
                 <!-- Mobile Logo -->
                 <div class="lg:hidden mb-8 text-center">
                     <a href="{{ route('home') }}" class="inline-flex items-center space-x-3">
-                        <div class="w-12 h-12 bg-primary-500 rounded-xl flex items-center justify-center">
-                            <span class="text-xl font-bold text-white">P2A</span>
-                        </div>
-                        <span class="text-2xl font-bold text-neutral-900">La Maison P2A</span>
+                        <img src="{{ asset('logo.jpg') }}" alt="La Maison P2A" class="h-16 w-auto object-contain">
                     </a>
                 </div>
 

@@ -7,29 +7,32 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="relative bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 overflow-hidden">
+    <section class="relative bg-neutral-300 overflow-hidden">
         <div class="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-10"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class="text-white space-y-8 animate-fade-in">
                     <div>
                         <span
-                            class="inline-block px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium mb-4">
-                            ✨ Nouveau : Collection Printemps 2025
+                            class="inline-block px-4 py-2 bg-primary-500/20 backdrop-blur-sm rounded-full text-sm font-medium mb-4 text-primary-100">
+                             Nouveau: collection printemps/été 2026
                         </span>
                         <h1 class="text-5xl lg:text-6xl font-bold leading-tight mb-6">
-                            Transformez votre
-                            <span class="text-accent-light">espace de vie</span>
+                            Sublimez vos
+                            <span
+                                class="text-primary-500 bg-gradient-to-r from-primary-100 via-primary-500 to-primary-800 bg-clip-text text-transparent">espaces
+                                et vos événements</span>
                         </h1>
-                        <p class="text-xl text-primary-100 max-w-xl">
-                            Découvrez notre collection exclusive de décoration d'intérieur et créez l'atmosphère parfaite
-                            pour votre maison.
+                        <p class="text-xl text-neutral-50 max-w-xl">
+                            Découvrez notre univers de décoration d’intérieur et laissez-vous inspirer par nos créations
+                            événementielles sur-mesure. Ambiances uniques, élégance et personnalisation sont au cœur de
+                            notre savoir-faire
                         </p>
                     </div>
 
                     <div class="flex flex-col sm:flex-row gap-4">
                         <a href="{{ route('shop.index') }}"
-                            class="inline-flex items-center justify-center px-8 py-4 bg-white text-primary-500 rounded-xl font-semibold hover:bg-neutral-50 transition-all shadow-lg hover:shadow-xl">
+                            class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-primary-100 via-primary-500 to-primary-800 text-neutral-900 rounded-xl font-semibold hover:shadow-2xl transition-all shadow-lg hover:scale-105">
                             <span>Explorer la boutique</span>
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -37,23 +40,23 @@
                             </svg>
                         </a>
                         <a href="{{ route('services') }}"
-                            class="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-semibold hover:bg-white/20 transition-all border border-white/20">
+                            class="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-semibold hover:bg-white/20 transition-all border border-primary-500/30">
                             Nos Services
                         </a>
                     </div>
 
                     <!-- Stats -->
-                    <div class="grid grid-cols-3 gap-8 pt-8 border-t border-white/20">
+                    <div class="grid grid-cols-3 gap-8 pt-8 border-t border-primary-500/30">
                         <div>
-                            <p class="text-3xl font-bold">500+</p>
+                            <p class="text-3xl font-bold text-primary-500">500+</p>
                             <p class="text-primary-100 text-sm">Clients Satisfaits</p>
                         </div>
                         <div>
-                            <p class="text-3xl font-bold">{{ $featuredProducts->count() }}+</p>
+                            <p class="text-3xl font-bold text-primary-500">{{ $featuredProducts->count() }}+</p>
                             <p class="text-primary-100 text-sm">Produits</p>
                         </div>
                         <div>
-                            <p class="text-3xl font-bold">5⭐</p>
+                            <p class="text-3xl font-bold text-primary-500">5⭐</p>
                             <p class="text-primary-100 text-sm">Note Moyenne</p>
                         </div>
                     </div>
@@ -93,7 +96,7 @@
             <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
                 <path
                     d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z"
-                    fill="#f4f5f7" />
+                    fill="#f0f0f0" />
             </svg>
         </div>
     </section>
@@ -108,28 +111,36 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 @foreach ($categories as $category)
                     <a href="{{ route('shop.index', ['category' => $category->id]) }}"
-                        class="group bg-white rounded-2xl p-6 hover:shadow-lg transition-all duration-300 border border-neutral-200 hover:border-primary-500">
-                        <div
-                            class="w-16 h-16 mx-auto mb-4 bg-primary-50 rounded-xl flex items-center justify-center group-hover:bg-primary-500 transition-colors">
-                            @if ($category->image)
-                                <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
-                                    class="w-10 h-10 object-contain">
-                            @else
-                                <svg class="w-8 h-8 text-primary-500 group-hover:text-white transition-colors"
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="group relative h-96 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+
+                        @if ($category->image)
+                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
+                                class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        @else
+                            <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-primary-500 via-primary-600 to-primary-800"></div>
+                        @endif
+
+                        <!-- Overlay sombre -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-black/80 group-hover:via-black/40 transition-all duration-300"></div>
+
+                        <!-- Contenu -->
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+                            <h3 class="text-2xl font-bold text-white mb-2 drop-shadow-lg group-hover:text-primary-100 transition-colors">
+                                {{ $category->name }}
+                            </h3>
+                            <p class="text-white/90 text-sm font-medium">{{ $category->products_count }} produits</p>
+
+                            <!-- Icône décorative -->
+                            <div class="mt-4 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-primary-500/80 transition-all">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                                        d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                 </svg>
-                            @endif
+                            </div>
                         </div>
-                        <h3
-                            class="text-center font-semibold text-neutral-900 group-hover:text-primary-500 transition-colors">
-                            {{ $category->name }}
-                        </h3>
-                        <p class="text-center text-xs text-neutral-400 mt-1">{{ $category->products_count }} produits</p>
                     </a>
                 @endforeach
             </div>
@@ -141,7 +152,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-end justify-between mb-12">
                 <div>
-                    <h2 class="text-4xl font-bold text-neutral-900 mb-4">Produits en Vedette</h2>
+                    <h2 class="text-4xl font-bold text-neutral-900 mb-4">Nouveaux Produits</h2>
                     <p class="text-lg text-neutral-400">Découvrez notre sélection coup de cœur</p>
                 </div>
                 <a href="{{ route('shop.index') }}"
@@ -215,14 +226,14 @@
                                         <div class="flex items-center space-x-2">
                                             <span
                                                 class="text-lg font-bold text-primary-500">{{ number_format($product->sale_price, 0, ',', ' ') }}
-                                                FCFA</span>
+                                                €</span>
                                             <span
                                                 class="text-sm text-neutral-400 line-through">{{ number_format($product->price, 0, ',', ' ') }}</span>
                                         </div>
                                     @else
                                         <span
                                             class="text-lg font-bold text-neutral-900">{{ number_format($product->price, 0, ',', ' ') }}
-                                            FCFA</span>
+                                            €</span>
                                     @endif
                                 </div>
 
@@ -317,7 +328,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-20 bg-gradient-to-br from-primary-500 to-primary-700 relative overflow-hidden">
+    <section class="py-20 bg-neutral-300 relative overflow-hidden">
         <div class="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-10"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
             <h2 class="text-4xl lg:text-5xl font-bold mb-6">Prêt à Transformer Votre Espace ?</h2>
@@ -325,11 +336,12 @@
                 Découvrez notre collection complète et trouvez l'inspiration pour votre prochain projet de décoration
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="{{ route('shop.index') }}" class="btn-primary bg-white text-primary-500 hover:bg-neutral-50">
+                <a href="{{ route('shop.index') }}"
+                    class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-primary-100 via-primary-500 to-primary-800 text-neutral-900 rounded-xl font-semibold hover:shadow-2xl transition-all shadow-lg hover:scale-105">
                     Voir la Boutique
                 </a>
                 <a href="{{ route('contact') }}"
-                    class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-semibold hover:bg-white/20 transition-all border border-white/20">
+                    class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-semibold hover:bg-white/20 transition-all border border-primary-500/30">
                     Nous Contacter
                 </a>
             </div>
@@ -675,47 +687,6 @@
         </div>
     </section>
 
-
-    {{-- Foire Aux Questions (FAQ)
-1. Quels types de projets La Maison P2A prend-elle en charge ?
-Nous intervenons sur trois types de projets :
-* Décoration d’intérieur (objets, aménagement, ambiance cocooning)
-* Décoration événementielle (mariages, baptêmes, anniversaires, événements professionnels)
-* Coordination de projets de construction avec décoration finale selon vos besoins.
-
----
-
-2. Proposez-vous des créations sur mesure ?
-Oui, chaque projet est personnalisé. Nous travaillons en étroite collaboration avec vous pour concevoir des objets ou des ambiances qui correspondent à votre style, vos envies et votre budget.
-
----
-
-3. Est-il possible de vous confier uniquement la décoration d’un événement ?
-Absolument. Que ce soit pour un événement privé ou professionnel, nous pouvons prendre en charge uniquement la partie décoration, selon le thème et les contraintes du lieu.
-
----
-
-4. Où êtes-vous basés et intervenez-vous à l’international ?
-Nous sommes basés en Île-de-France, mais nous pouvons intervenir dans toute la France et à l’étranger selon les projets. Les déplacements sont étudiés au cas par cas.
-
----
-
-5. Comment se déroule un premier contact ?
-Le premier échange permet de comprendre vos besoins, vos goûts et vos contraintes. Ensuite, nous vous proposons un devis personnalisé et un cahier des charges adapté à votre projet.
-
----
-
-6. Quels sont les délais moyens pour un projet ?
-Les délais varient selon la nature du projet :
-* Objets de décoration : quelques jours à quelques semaines
-* Événements : planification 1 à 3 mois à l’avance
-* Projets de construction : plusieurs mois selon l’ampleur
-
----
-
-7. Puis-je voir des exemples de vos réalisations ?
-Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos réseaux sociaux. N’hésitez pas à consulter la section “Réalisations” pour découvrir notre univers. --}}
-
     <!-- FAQ Section -->
     <section class="py-20 bg-neutral-50">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -731,7 +702,8 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 1 ? null : 1"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Quels types de projets La Maison P2A prend-elle en charge ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">Quels types de projets La Maison P2A prend-elle
+                            en charge ?</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
                             :class="{ 'rotate-180': activeAccordion === 1 }" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
@@ -743,7 +715,8 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                             <p class="mb-3">Nous intervenons sur trois types de projets :</p>
                             <ul class="list-disc list-inside space-y-2 ml-2">
                                 <li>Décoration d'intérieur (objets, aménagement, ambiance cocooning)</li>
-                                <li>Décoration événementielle (mariages, baptêmes, anniversaires, événements professionnels)</li>
+                                <li>Décoration événementielle (mariages, baptêmes, anniversaires, événements professionnels)
+                                </li>
                                 <li>Coordination de projets de construction avec décoration finale selon vos besoins</li>
                             </ul>
                         </div>
@@ -763,7 +736,9 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                     </button>
                     <div x-show="activeAccordion === 2" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            Oui, chaque projet est personnalisé. Nous travaillons en étroite collaboration avec vous pour concevoir des objets ou des ambiances qui correspondent à votre style, vos envies et votre budget.
+                            Oui, chaque projet est personnalisé. Nous travaillons en étroite collaboration avec vous pour
+                            concevoir des objets ou des ambiances qui correspondent à votre style, vos envies et votre
+                            budget.
                         </div>
                     </div>
                 </div>
@@ -772,7 +747,8 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 3 ? null : 3"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Est-il possible de vous confier uniquement la décoration d'un événement ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">Est-il possible de vous confier uniquement la
+                            décoration d'un événement ?</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
                             :class="{ 'rotate-180': activeAccordion === 3 }" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
@@ -781,7 +757,8 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                     </button>
                     <div x-show="activeAccordion === 3" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            Absolument. Que ce soit pour un événement privé ou professionnel, nous pouvons prendre en charge uniquement la partie décoration, selon le thème et les contraintes du lieu.
+                            Absolument. Que ce soit pour un événement privé ou professionnel, nous pouvons prendre en charge
+                            uniquement la partie décoration, selon le thème et les contraintes du lieu.
                         </div>
                     </div>
                 </div>
@@ -790,7 +767,8 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 4 ? null : 4"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Où êtes-vous basés et intervenez-vous à l'international ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">Où êtes-vous basés et intervenez-vous à
+                            l'international ?</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
                             :class="{ 'rotate-180': activeAccordion === 4 }" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
@@ -799,7 +777,8 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                     </button>
                     <div x-show="activeAccordion === 4" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            Nous sommes basés en Île-de-France, mais nous pouvons intervenir dans toute la France et à l'étranger selon les projets. Les déplacements sont étudiés au cas par cas.
+                            Nous sommes basés en Île-de-France, mais nous pouvons intervenir dans toute la France et à
+                            l'étranger selon les projets. Les déplacements sont étudiés au cas par cas.
                         </div>
                     </div>
                 </div>
@@ -817,7 +796,8 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                     </button>
                     <div x-show="activeAccordion === 5" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            Le premier échange permet de comprendre vos besoins, vos goûts et vos contraintes. Ensuite, nous vous proposons un devis personnalisé et un cahier des charges adapté à votre projet.
+                            Le premier échange permet de comprendre vos besoins, vos goûts et vos contraintes. Ensuite, nous
+                            vous proposons un devis personnalisé et un cahier des charges adapté à votre projet.
                         </div>
                     </div>
                 </div>
@@ -826,7 +806,8 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 6 ? null : 6"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Quels sont les délais moyens pour un projet ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">Quels sont les délais moyens pour un projet
+                            ?</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
                             :class="{ 'rotate-180': activeAccordion === 6 }" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
@@ -849,7 +830,8 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 7 ? null : 7"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Puis-je voir des exemples de vos réalisations ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">Puis-je voir des exemples de vos réalisations
+                            ?</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
                             :class="{ 'rotate-180': activeAccordion === 7 }" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
@@ -858,7 +840,8 @@ Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos ré
                     </button>
                     <div x-show="activeAccordion === 7" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos réseaux sociaux. N'hésitez pas à consulter la section "Réalisations" pour découvrir notre univers.
+                            Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos réseaux sociaux.
+                            N'hésitez pas à consulter la section "Réalisations" pour découvrir notre univers.
                         </div>
                     </div>
                 </div>

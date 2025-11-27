@@ -94,10 +94,10 @@
                             <div class="flex items-baseline space-x-3">
                                 <span
                                     class="text-4xl font-bold text-primary-500">{{ number_format($product->sale_price, 0, ',', ' ') }}
-                                    FCFA</span>
+                                    €</span>
                                 <span
                                     class="text-2xl text-neutral-400 line-through">{{ number_format($product->price, 0, ',', ' ') }}
-                                    FCFA</span>
+                                    €</span>
                                 <span class="px-3 py-1 bg-red-500 text-white text-sm font-bold rounded-full">
                                     -{{ round((($product->price - $product->sale_price) / $product->price) * 100) }}%
                                 </span>
@@ -105,7 +105,7 @@
                         @else
                             <span
                                 class="text-4xl font-bold text-neutral-900">{{ number_format($product->price, 0, ',', ' ') }}
-                                FCFA</span>
+                                €</span>
                         @endif
                     </div>
 
@@ -404,7 +404,7 @@
                                 <div>
                                     <h3 class="text-lg font-semibold text-neutral-900 mb-3">Livraison</h3>
                                     <p class="text-neutral-600">Livraison gratuite pour toute commande supérieure à 50,000
-                                        FCFA. Délai de livraison : 2-5 jours ouvrables dans tout le Bénin.</p>
+                                        €. Délai de livraison : 2-5 jours ouvrables dans tout le Bénin.</p>
                                 </div>
                                 <div>
                                     <h3 class="text-lg font-semibold text-neutral-900 mb-3">Retours</h3>
@@ -442,7 +442,7 @@
                                         </h3>
                                         <span
                                             class="text-lg font-bold text-neutral-900">{{ number_format($relatedProduct->effective_price, 0, ',', ' ') }}
-                                            FCFA</span>
+                                            €</span>
                                     </div>
                                 </div>
                             @endforeach

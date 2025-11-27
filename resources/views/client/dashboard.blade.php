@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <p class="text-sm text-neutral-400 mb-1">Total Dépensé</p>
-                <h3 class="text-2xl font-bold text-neutral-900">{{ number_format($totalSpent, 0, ',', ' ') }} FCFA</h3>
+                <h3 class="text-2xl font-bold text-neutral-900">{{ number_format($totalSpent, 0, ',', ' ') }} €</h3>
             </div>
         </div>
 
@@ -121,7 +121,7 @@
                                     <td>
                                         <span
                                             class="font-semibold text-neutral-900">{{ number_format($order->total, 0, ',', ' ') }}
-                                            FCFA</span>
+                                            €</span>
                                     </td>
                                     <td>
                                         @if ($order->status === 'pending')

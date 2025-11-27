@@ -22,11 +22,8 @@
                 <!-- Logo -->
                 <div class="flex items-center justify-between h-16 px-6 border-b border-neutral-200">
                     <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center">
-                            <span class="text-lg font-bold text-white">P2A</span>
-                        </div>
+                        <img src="{{ asset('logo.jpg') }}" alt="La Maison P2A" class="h-12 w-auto object-contain">
                         <div>
-                            <span class="text-lg font-bold text-neutral-900">La Maison P2A</span>
                             <span class="block text-xs text-neutral-400">Administration</span>
                         </div>
                     </a>

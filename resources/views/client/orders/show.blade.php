@@ -144,12 +144,12 @@
                                                     class="font-semibold">{{ $item->quantity }}</span></span>
                                             <span class="text-neutral-600">Prix: <span
                                                     class="font-semibold">{{ number_format($item->price, 0, ',', ' ') }}
-                                                    FCFA</span></span>
+                                                    €</span></span>
                                         </div>
                                     </div>
                                     <div class="text-right">
                                         <p class="font-bold text-neutral-900">
-                                            {{ number_format($item->subtotal, 0, ',', ' ') }} FCFA</p>
+                                            {{ number_format($item->subtotal, 0, ',', ' ') }} €</p>
                                     </div>
                                 </div>
                             </div>
@@ -199,22 +199,22 @@
                     <div class="card-body space-y-4">
                         <div class="flex justify-between text-neutral-600">
                             <span>Sous-total</span>
-                            <span class="font-semibold">{{ number_format($order->subtotal, 0, ',', ' ') }} FCFA</span>
+                            <span class="font-semibold">{{ number_format($order->subtotal, 0, ',', ' ') }} €</span>
                         </div>
                         <div class="flex justify-between text-neutral-600">
                             <span>Livraison</span>
-                            <span class="font-semibold">{{ number_format($order->shipping, 0, ',', ' ') }} FCFA</span>
+                            <span class="font-semibold">{{ number_format($order->shipping, 0, ',', ' ') }} €</span>
                         </div>
                         @if ($order->tax > 0)
                             <div class="flex justify-between text-neutral-600">
                                 <span>Taxes</span>
-                                <span class="font-semibold">{{ number_format($order->tax, 0, ',', ' ') }} FCFA</span>
+                                <span class="font-semibold">{{ number_format($order->tax, 0, ',', ' ') }} €</span>
                             </div>
                         @endif
                         <div class="pt-4 border-t border-neutral-200">
                             <div class="flex justify-between text-xl font-bold">
                                 <span class="text-neutral-900">Total</span>
-                                <span class="text-primary-500">{{ number_format($order->total, 0, ',', ' ') }} FCFA</span>
+                                <span class="text-primary-500">{{ number_format($order->total, 0, ',', ' ') }} €</span>
                             </div>
                         </div>
                     </div>

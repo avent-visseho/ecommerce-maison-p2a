@@ -198,7 +198,7 @@
                                 <td>
                                     <span
                                         class="font-medium text-neutral-900">{{ number_format($item->price, 0, ',', ' ') }}
-                                        FCFA</span>
+                                        €</span>
                                 </td>
                                 <td>
                                     <span class="badge badge-primary">x{{ $item->quantity }}</span>
@@ -206,7 +206,7 @@
                                 <td class="text-right">
                                     <span
                                         class="font-semibold text-neutral-900">{{ number_format($item->subtotal, 0, ',', ' ') }}
-                                        FCFA</span>
+                                        €</span>
                                 </td>
                             </tr>
                         @endforeach
@@ -221,23 +221,23 @@
                         <div class="flex justify-between text-sm">
                             <span class="text-neutral-400">Sous-total</span>
                             <span class="font-medium text-neutral-900">{{ number_format($order->subtotal, 0, ',', ' ') }}
-                                FCFA</span>
+                                €</span>
                         </div>
                         @if ($order->tax > 0)
                             <div class="flex justify-between text-sm">
                                 <span class="text-neutral-400">Taxes</span>
                                 <span class="font-medium text-neutral-900">{{ number_format($order->tax, 0, ',', ' ') }}
-                                    FCFA</span>
+                                    €</span>
                             </div>
                         @endif
                         <div class="flex justify-between text-sm">
                             <span class="text-neutral-400">Livraison</span>
                             <span class="font-medium text-neutral-900">{{ number_format($order->shipping, 0, ',', ' ') }}
-                                FCFA</span>
+                                €</span>
                         </div>
                         <div class="flex justify-between text-lg font-bold pt-2 border-t border-neutral-200">
                             <span class="text-neutral-900">Total</span>
-                            <span class="text-primary-500">{{ number_format($order->total, 0, ',', ' ') }} FCFA</span>
+                            <span class="text-primary-500">{{ number_format($order->total, 0, ',', ' ') }} €</span>
                         </div>
                     </div>
                 </div>

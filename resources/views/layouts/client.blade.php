@@ -18,10 +18,7 @@
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center space-x-8">
                     <a href="{{ route('home') }}" class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center">
-                            <span class="text-lg font-bold text-white">P2A</span>
-                        </div>
-                        <span class="text-lg font-bold text-neutral-900 hidden sm:block">La Maison P2A</span>
+                        <img src="{{ asset('logo.jpg') }}" alt="La Maison P2A" class="h-12 w-auto object-contain">
                     </a>
                 </div>
 

@@ -211,12 +211,12 @@
                                     <div>
                                         @if ($product->sale_price)
                                             <p class="font-semibold text-green-600">
-                                                {{ number_format($product->sale_price, 0, ',', ' ') }} FCFA</p>
+                                                {{ number_format($product->sale_price, 0, ',', ' ') }} €</p>
                                             <p class="text-xs text-neutral-400 line-through">
-                                                {{ number_format($product->price, 0, ',', ' ') }} FCFA</p>
+                                                {{ number_format($product->price, 0, ',', ' ') }} €</p>
                                         @else
                                             <p class="font-semibold text-neutral-900">
-                                                {{ number_format($product->price, 0, ',', ' ') }} FCFA</p>
+                                                {{ number_format($product->price, 0, ',', ' ') }} €</p>
                                         @endif
                                     </div>
                                 </td>

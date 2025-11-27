@@ -259,14 +259,14 @@
                                                     <div class="flex items-center space-x-2">
                                                         <span
                                                             class="text-lg font-bold text-primary-500">{{ number_format($product->sale_price, 0, ',', ' ') }}
-                                                            FCFA</span>
+                                                            €</span>
                                                         <span
                                                             class="text-sm text-neutral-400 line-through">{{ number_format($product->price, 0, ',', ' ') }}</span>
                                                     </div>
                                                 @else
                                                     <span
                                                         class="text-lg font-bold text-neutral-900">{{ number_format($product->price, 0, ',', ' ') }}
-                                                        FCFA</span>
+                                                        €</span>
                                                 @endif
                                             </div>
 

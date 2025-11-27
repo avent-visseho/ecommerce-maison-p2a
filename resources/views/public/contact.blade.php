@@ -46,8 +46,8 @@
                                     </div>
                                     <div class="flex-1">
                                         <h3 class="font-semibold text-neutral-900 mb-1">Adresse</h3>
-                                        <p class="text-neutral-600 text-sm">Cotonou, Bénin</p>
-                                        <p class="text-neutral-600 text-sm">Quartier des Cocotiers</p>
+                                        <p class="text-neutral-600 text-sm">17 Rue François René Châteaubriand 78370 Plaisir (France)</p>
+                                       {{--  <p class="text-neutral-600 text-sm">Quartier des Cocotiers</p> --}}
                                     </div>
                                 </div>
                             </div>
@@ -66,6 +66,7 @@
                                     </div>
                                     <div class="flex-1">
                                         <h3 class="font-semibold text-neutral-900 mb-1">Téléphone</h3>
+                                        <p class="text-neutral-600 text-sm">0033 0782215485</p>
                                         <p class="text-neutral-600 text-sm">+229 01 90 01 68 79</p>
                                         <p class="text-neutral-400 text-xs mt-1">Lun - Sam: 9h - 18h</p>
                                     </div>
@@ -133,7 +134,8 @@
                                         d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z" />
                                 </svg>
                             </a>
-                            <a href="#"
+                            <a href="#"17 Rue François René Châteaubriand 
+78370 Plaisir (France)
                                 class="w-10 h-10 bg-neutral-100 rounded-lg flex items-center justify-center hover:bg-primary-500 hover:text-white transition-all">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                     <path

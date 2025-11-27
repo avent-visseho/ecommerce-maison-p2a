@@ -167,7 +167,7 @@
                                                 <p class="text-xs text-neutral-400">Quantité: {{ $item['quantity'] }}</p>
                                             </div>
                                             <p class="text-sm font-semibold text-neutral-900">
-                                                {{ number_format($item['price'] * $item['quantity'], 0, ',', ' ') }} FCFA
+                                                {{ number_format($item['price'] * $item['quantity'], 0, ',', ' ') }} €
                                             </p>
                                         </div>
                                     @endforeach
@@ -178,20 +178,20 @@
                                     <div class="flex justify-between text-neutral-600">
                                         <span>Sous-total</span>
                                         <span class="font-semibold">{{ number_format($subtotal, 0, ',', ' ') }}
-                                            FCFA</span>
+                                            €</span>
                                     </div>
 
                                     <div class="flex justify-between text-neutral-600">
                                         <span>Livraison</span>
                                         <span class="font-semibold">{{ number_format($shipping, 0, ',', ' ') }}
-                                            FCFA</span>
+                                            €</span>
                                     </div>
 
                                     <div class="pt-3 border-t border-neutral-200">
                                         <div class="flex justify-between text-xl font-bold">
                                             <span class="text-neutral-900">Total</span>
                                             <span class="text-primary-500">{{ number_format($total, 0, ',', ' ') }}
-                                                FCFA</span>
+                                                €</span>
                                         </div>
                                     </div>
                                 </div>

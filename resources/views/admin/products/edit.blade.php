@@ -107,13 +107,13 @@
                 <div class="card-body space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                            <label for="price" class="label">Prix (FCFA) <span class="text-red-500">*</span></label>
+                            <label for="price" class="label">Prix (€) <span class="text-red-500">*</span></label>
                             <div class="relative">
                                 <input type="number" id="price" name="price"
                                     value="{{ old('price', $product->price) }}" required min="0" step="1"
                                     class="input-field @error('price') border-red-500 @enderror">
                                 <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                                    <span class="text-neutral-400 text-sm">FCFA</span>
+                                    <span class="text-neutral-400 text-sm">€</span>
                                 </div>
                             </div>
                             @error('price')
@@ -122,13 +122,13 @@
                         </div>
 
                         <div>
-                            <label for="sale_price" class="label">Prix Promo (FCFA)</label>
+                            <label for="sale_price" class="label">Prix Promo (€)</label>
                             <div class="relative">
                                 <input type="number" id="sale_price" name="sale_price"
                                     value="{{ old('sale_price', $product->sale_price) }}" min="0" step="1"
                                     class="input-field @error('sale_price') border-red-500 @enderror">
                                 <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                                    <span class="text-neutral-400 text-sm">FCFA</span>
+                                    <span class="text-neutral-400 text-sm">€</span>
                                 </div>
                             </div>
                             @error('sale_price')

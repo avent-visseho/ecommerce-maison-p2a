@@ -1,4 +1,44 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+/* Aurora Font - Pour les titres */
+@font-face {
+    font-family: 'Aurora';
+    src: url('/fonts/aurora-regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Gilmer Font - Pour les textes courants */
+@font-face {
+    font-family: 'Gilmer';
+    src: url('/fonts/gilmer-light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Gilmer';
+    src: url('/fonts/gilmer-regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Gilmer';
+    src: url('/fonts/gilmer-medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Gilmer';
+    src: url('/fonts/gilmer-bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -7,6 +47,11 @@
 @layer base {
     body {
         @apply bg-neutral-100 text-neutral-900 font-sans antialiased;
+    }
+
+    /* Appliquer Aurora à tous les titres */
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-heading;
     }
 }
 

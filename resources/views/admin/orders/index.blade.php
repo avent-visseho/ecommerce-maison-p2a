@@ -198,7 +198,7 @@
                                 </td>
                                 <td>
                                     <p class="font-semibold text-neutral-900">
-                                        {{ number_format($order->total, 0, ',', ' ') }} FCFA</p>
+                                        {{ number_format($order->total, 0, ',', ' ') }} €</p>
                                 </td>
                                 <td>
                                     @if ($order->payment_status === 'paid')

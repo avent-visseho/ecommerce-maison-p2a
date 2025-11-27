@@ -368,7 +368,7 @@ MAIL_FROM_ADDRESS=noreply@lamaisonp2a.com
 MAIL_FROM_NAME="La Maison P2A"
 ```
 
-## ✨ FONCTIONNALITÉS IMPLÉMENTÉES
+##  FONCTIONNALITÉS IMPLÉMENTÉES
 
 ### 1. Articles (Posts) ✅
 - ✅ CRUD complet

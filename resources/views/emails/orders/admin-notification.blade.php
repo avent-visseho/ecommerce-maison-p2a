@@ -90,7 +90,7 @@
                                                 </td>
                                                 <td align="right"
                                                     style="color: #2725a9; font-size: 18px; font-weight: bold; padding-top: 8px;">
-                                                    {{ number_format($order->total, 0, ',', ' ') }} FCFA</td>
+                                                    {{ number_format($order->total, 0, ',', ' ') }} €</td>
                                             </tr>
                                         </table>
                                     </td>
