@@ -213,6 +213,7 @@
                         <input type="file" id="main_image" name="main_image" accept="image/*"
                             class="input-field @error('main_image') border-red-500 @enderror">
                         <p class="mt-1 text-xs text-neutral-400">Laissez vide pour conserver l'image actuelle</p>
+                        <div id="mainImagePreviewContainer" class="mt-4 hidden"></div>
                         @error('main_image')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -223,12 +224,82 @@
                         <input type="file" id="images" name="images[]" accept="image/*" multiple
                             class="input-field @error('images') border-red-500 @enderror">
                         <p class="mt-1 text-xs text-neutral-400">Remplacera toutes les images existantes de la galerie</p>
+                        <div id="galleryPreviewContainer" class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 hidden"></div>
                         @error('images')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
             </div>
+
+            @push('scripts')
+                <script>
+                    // Preview main image
+                    document.getElementById('main_image').addEventListener('change', function(e) {
+                        const file = e.target.files[0];
+                        const container = document.getElementById('mainImagePreviewContainer');
+
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                container.innerHTML = `
+                                    <div class="relative inline-block">
+                                        <img src="${e.target.result}" class="max-h-64 rounded-lg border-2 border-green-500" alt="Preview">
+                                        <button type="button" onclick="clearMainImageEdit()"
+                                            class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                            </svg>
+                                        </button>
+                                        <span class="absolute bottom-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">Nouvelle image</span>
+                                    </div>
+                                `;
+                                container.classList.remove('hidden');
+                            };
+                            reader.readAsDataURL(file);
+                        } else {
+                            container.innerHTML = '';
+                            container.classList.add('hidden');
+                        }
+                    });
+
+                    // Preview gallery images
+                    document.getElementById('images').addEventListener('change', function(e) {
+                        const files = e.target.files;
+                        const container = document.getElementById('galleryPreviewContainer');
+                        container.innerHTML = '';
+
+                        if (files.length > 0) {
+                            container.classList.remove('hidden');
+                            Array.from(files).forEach((file, index) => {
+                                const reader = new FileReader();
+                                reader.onload = function(e) {
+                                    const div = document.createElement('div');
+                                    div.className = 'relative group';
+                                    div.innerHTML = `
+                                        <img src="${e.target.result}" class="h-32 w-full object-cover rounded-lg border-2 border-green-500" alt="Preview ${index + 1}">
+                                        <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                                            <span class="text-white text-sm font-medium">Nouvelle image ${index + 1}</span>
+                                        </div>
+                                        <span class="absolute bottom-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">Nouveau</span>
+                                    `;
+                                    container.appendChild(div);
+                                };
+                                reader.readAsDataURL(file);
+                            });
+                        } else {
+                            container.classList.add('hidden');
+                        }
+                    });
+
+                    function clearMainImageEdit() {
+                        document.getElementById('main_image').value = '';
+                        const container = document.getElementById('mainImagePreviewContainer');
+                        container.innerHTML = '';
+                        container.classList.add('hidden');
+                    }
+                </script>
+            @endpush
 
             <!-- Options -->
             <div class="card">

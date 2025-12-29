@@ -9,11 +9,6 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -26,6 +21,21 @@ class CommentController extends Controller
 
         if (!$post->allow_comments) {
             return back()->with('error', 'Les commentaires sont désactivés pour cet article.');
+        }
+
+        // Validation supplémentaire pour les réponses
+        if (!empty($validated['parent_id'])) {
+            $parentComment = BlogComment::findOrFail($validated['parent_id']);
+
+            // Vérifier que le parent appartient au même article
+            if ($parentComment->blog_post_id != $validated['blog_post_id']) {
+                return back()->with('error', 'Commentaire parent invalide.');
+            }
+
+            // Empêcher les réponses de réponses (max 1 niveau d'imbrication)
+            if ($parentComment->parent_id !== null) {
+                return back()->with('error', 'Vous ne pouvez pas répondre à une réponse.');
+            }
         }
 
         $validated['user_id'] = auth()->id();

@@ -1,9 +1,7 @@
 @extends('layouts.public')
 
-@section('title', 'Accueil')
-@section('description',
-    'Découvrez La Maison P2A, votre spécialiste en décoration d\'intérieur et événementielle.
-    Produits de qualité et services personnalisés.')
+@section('title', __('home.title'))
+@section('description', __('home.meta_description'))
 
 @section('content')
     <!-- Hero Section -->
@@ -15,25 +13,22 @@
                     <div>
                         <span
                             class="inline-block px-4 py-2 bg-primary-500/20 backdrop-blur-sm rounded-full text-sm font-medium mb-4 text-primary-100">
-                             Nouveau: collection printemps/été 2026
+                            {{ __('home.new_collection') }}
                         </span>
                         <h1 class="text-5xl lg:text-6xl font-bold leading-tight mb-6">
-                            Sublimez vos
+                            {{ __('home.hero_title_1') }}
                             <span
-                                class="text-primary-500 bg-gradient-to-r from-primary-100 via-primary-500 to-primary-800 bg-clip-text text-transparent">espaces
-                                et vos événements</span>
+                                class="text-primary-500 bg-gradient-to-r from-primary-100 via-primary-500 to-primary-800 bg-clip-text text-transparent">{{ __('home.hero_title_2') }}</span>
                         </h1>
                         <p class="text-xl text-neutral-50 max-w-xl">
-                            Découvrez notre univers de décoration d’intérieur et laissez-vous inspirer par nos créations
-                            événementielles sur-mesure. Ambiances uniques, élégance et personnalisation sont au cœur de
-                            notre savoir-faire
+                            {{ __('home.hero_description') }}
                         </p>
                     </div>
 
                     <div class="flex flex-col sm:flex-row gap-4">
                         <a href="{{ route('shop.index') }}"
                             class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-primary-100 via-primary-500 to-primary-800 text-neutral-900 rounded-xl font-semibold hover:shadow-2xl transition-all shadow-lg hover:scale-105">
-                            <span>Explorer la boutique</span>
+                            <span>{{ __('home.explore_shop') }}</span>
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -41,7 +36,7 @@
                         </a>
                         <a href="{{ route('services') }}"
                             class="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-semibold hover:bg-white/20 transition-all border border-primary-500/30">
-                            Nos Services
+                            {{ __('home.our_services') }}
                         </a>
                     </div>
 
@@ -49,15 +44,15 @@
                     <div class="grid grid-cols-3 gap-8 pt-8 border-t border-primary-500/30">
                         <div>
                             <p class="text-3xl font-bold text-primary-500">500+</p>
-                            <p class="text-primary-100 text-sm">Clients Satisfaits</p>
+                            <p class="text-primary-100 text-sm">{{ __('home.happy_clients') }}</p>
                         </div>
                         <div>
                             <p class="text-3xl font-bold text-primary-500">{{ $featuredProducts->count() }}+</p>
-                            <p class="text-primary-100 text-sm">Produits</p>
+                            <p class="text-primary-100 text-sm">{{ __('home.products') }}</p>
                         </div>
                         <div>
                             <p class="text-3xl font-bold text-primary-500">5⭐</p>
-                            <p class="text-primary-100 text-sm">Note Moyenne</p>
+                            <p class="text-primary-100 text-sm">{{ __('home.avg_rating') }}</p>
                         </div>
                     </div>
                 </div>
@@ -105,9 +100,9 @@
     <section class="py-20 bg-neutral-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-neutral-900 mb-4">Explorez nos Catégories</h2>
+                <h2 class="text-4xl font-bold text-neutral-900 mb-4">{{ __('home.explore_categories') }}</h2>
                 <p class="text-lg text-neutral-400 max-w-2xl mx-auto">
-                    Parcourez notre sélection soigneusement organisée pour trouver exactement ce dont vous avez besoin
+                    {{ __('home.categories_description') }}
                 </p>
             </div>
 
@@ -120,21 +115,27 @@
                             <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
                                 class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         @else
-                            <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-primary-500 via-primary-600 to-primary-800"></div>
+                            <div
+                                class="absolute inset-0 w-full h-full bg-gradient-to-br from-primary-500 via-primary-600 to-primary-800">
+                            </div>
                         @endif
 
                         <!-- Overlay sombre -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-black/80 group-hover:via-black/40 transition-all duration-300"></div>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-black/80 group-hover:via-black/40 transition-all duration-300">
+                        </div>
 
                         <!-- Contenu -->
                         <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
-                            <h3 class="text-2xl font-bold text-white mb-2 drop-shadow-lg group-hover:text-primary-100 transition-colors">
+                            <h3
+                                class="text-2xl font-bold text-white mb-2 drop-shadow-lg group-hover:text-primary-100 transition-colors">
                                 {{ $category->name }}
                             </h3>
-                            <p class="text-white/90 text-sm font-medium">{{ $category->products_count }} produits</p>
+                            <p class="text-white/90 text-sm font-medium">{{ __('home.x_products', ['count' => $category->products_count]) }}</p>
 
                             <!-- Icône décorative -->
-                            <div class="mt-4 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-primary-500/80 transition-all">
+                            <div
+                                class="mt-4 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-primary-500/80 transition-all">
                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -152,12 +153,12 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-end justify-between mb-12">
                 <div>
-                    <h2 class="text-4xl font-bold text-neutral-900 mb-4">Nouveaux Produits</h2>
-                    <p class="text-lg text-neutral-400">Découvrez notre sélection coup de cœur</p>
+                    <h2 class="text-4xl font-bold text-neutral-900 mb-4">{{ __('home.new_products') }}</h2>
+                    <p class="text-lg text-neutral-400">{{ __('home.featured_description') }}</p>
                 </div>
                 <a href="{{ route('shop.index') }}"
                     class="hidden md:flex items-center text-primary-500 hover:text-primary-600 font-medium">
-                    Voir tout
+                    {{ __('home.view_all') }}
                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -195,8 +196,7 @@
 
                             @if ($product->isOutOfStock())
                                 <div class="absolute inset-0 bg-neutral-900/80 flex items-center justify-center">
-                                    <span class="px-4 py-2 bg-white text-neutral-900 rounded-lg font-semibold">Rupture de
-                                        stock</span>
+                                    <span class="px-4 py-2 bg-white text-neutral-900 rounded-lg font-semibold">{{ __('common.out_of_stock') }}</span>
                                 </div>
                             @endif
 
@@ -258,7 +258,7 @@
 
             <div class="text-center mt-12 md:hidden">
                 <a href="{{ route('shop.index') }}" class="btn-primary inline-flex items-center">
-                    Voir tous les produits
+                    {{ __('home.view_all_products_mobile') }}
                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -272,47 +272,44 @@
     <section class="py-20 bg-neutral-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-neutral-900 mb-4">Pourquoi Choisir La Maison P2A ?</h2>
+                <h2 class="text-4xl font-bold text-neutral-900 mb-4">{{ __('home.why_choose_us') }}</h2>
                 <p class="text-lg text-neutral-400 max-w-2xl mx-auto">
-                    Nous nous engageons à vous offrir la meilleure expérience possible
+                    {{ __('home.why_choose_us_description') }}
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div class="text-center">
                     <div class="w-20 h-20  rounded-2xl flex items-center justify-center mx-auto mb-6">
-                         <img
-                        src="{{ asset('service.png') }}" alt="La Maison P2A" class="h-16 w-16">
+                        <img src="{{ asset('service.png') }}" alt="La Maison P2A" class="h-16 w-16">
                     </div>
-                    <h3 class="text-xl font-bold text-neutral-900 mb-3">Qualité Premium</h3>
-                    <p class="text-neutral-400">Produits soigneusement sélectionnés pour leur qualité exceptionnelle</p>
+                    <h3 class="text-xl font-bold text-neutral-900 mb-3">{{ __('home.premium_quality') }}</h3>
+                    <p class="text-neutral-400">{{ __('home.premium_description') }}</p>
+                </div>
+
+                <div class="text-center">
+
+                    <div class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <img src="{{ asset('service-client.png') }}" alt="La Maison P2A" class="h-16 w-16">
+                    </div>
+                    <h3 class="text-xl font-bold text-neutral-900 mb-3">{{ __('home.support_247') }}</h3>
+                    <p class="text-neutral-400">{{ __('home.support_description') }}</p>
                 </div>
 
                 <div class="text-center">
                     <div class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                         <img
-                        src="{{ asset('service-client.png') }}" alt="La Maison P2A" class="h-16 w-16">
+                        <img src="{{ asset('paiement-securise.png') }}" alt="La Maison P2A" class="h-16 w-16">
                     </div>
-                    <h3 class="text-xl font-bold text-neutral-900 mb-3">Livraison Rapide</h3>
-                    <p class="text-neutral-400">Livraison sécurisée et rapide dans tout le Bénin</p>
+                    <h3 class="text-xl font-bold text-neutral-900 mb-3">{{ __('home.secure_payment') }}</h3>
+                    <p class="text-neutral-400">{{ __('home.secure_payment_description') }}</p>
                 </div>
 
                 <div class="text-center">
                     <div class="w-20 h-20  rounded-2xl flex items-center justify-center mx-auto mb-6 relative">
-                         <img
-                        src="{{ asset('livraison-rapide.png') }}" alt="La Maison P2A" class="h-16 w-16">
+                        <img src="{{ asset('livraison-rapide.png') }}" alt="La Maison P2A" class="h-16 w-16">
                     </div>
-                    <h3 class="text-xl font-bold text-neutral-900 mb-3">Support 24/7</h3>
-                    <p class="text-neutral-400">Notre équipe est là pour vous accompagner à tout moment</p>
-                </div>
-
-                <div class="text-center">
-                    <div class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                       <img
-                        src="{{ asset('paiement-securise.png') }}" alt="La Maison P2A" class="h-16 w-16">
-                    </div>
-                    <h3 class="text-xl font-bold text-neutral-900 mb-3">Paiement Sécurisé</h3>
-                    <p class="text-neutral-400">Transactions 100% sécurisées avec FedaPay</p>
+                    <h3 class="text-xl font-bold text-neutral-900 mb-3">{{ __('home.fast_delivery') }}</h3>
+                    <p class="text-neutral-400">{{ __('home.fast_delivery_description') }}</p>
                 </div>
             </div>
         </div>
@@ -322,18 +319,18 @@
     <section class="py-20 bg-neutral-300 relative overflow-hidden">
         <div class="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-10"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-            <h2 class="text-4xl lg:text-5xl font-bold mb-6">Prêt à Transformer Votre Espace ?</h2>
+            <h2 class="text-4xl lg:text-5xl font-bold mb-6">{{ __('home.ready_to_transform') }}</h2>
             <p class="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-                Découvrez notre collection complète et trouvez l'inspiration pour votre prochain projet de décoration
+                {{ __('home.cta_description') }}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="{{ route('shop.index') }}"
                     class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-primary-100 via-primary-500 to-primary-800 text-neutral-900 rounded-xl font-semibold hover:shadow-2xl transition-all shadow-lg hover:scale-105">
-                    Voir la Boutique
+                    {{ __('home.view_shop') }}
                 </a>
                 <a href="{{ route('contact') }}"
                     class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-semibold hover:bg-white/20 transition-all border border-primary-500/30">
-                    Nous Contacter
+                    {{ __('home.contact_us') }}
                 </a>
             </div>
         </div>
@@ -343,9 +340,9 @@
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-neutral-900 mb-4">Ce Que Disent Nos Clients</h2>
+                <h2 class="text-4xl font-bold text-neutral-900 mb-4">{{ __('home.what_clients_say') }}</h2>
                 <p class="text-lg text-neutral-400 max-w-2xl mx-auto">
-                    Découvrez les témoignages de ceux qui ont fait confiance à La Maison P2A
+                    {{ __('home.testimonials_description') }}
                 </p>
             </div>
 
@@ -682,9 +679,9 @@
     <section class="py-20 bg-neutral-50">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-neutral-900 mb-4">Questions Fréquentes</h2>
+                <h2 class="text-4xl font-bold text-neutral-900 mb-4">{{ __('home.faq_title') }}</h2>
                 <p class="text-lg text-neutral-400">
-                    Trouvez les réponses aux questions les plus courantes
+                    {{ __('home.faq_description') }}
                 </p>
             </div>
 
@@ -693,8 +690,7 @@
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 1 ? null : 1"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Quels types de projets La Maison P2A prend-elle
-                            en charge ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">{{ __('home.faq_q1') }}</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
                             :class="{ 'rotate-180': activeAccordion === 1 }" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
@@ -703,12 +699,11 @@
                     </button>
                     <div x-show="activeAccordion === 1" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            <p class="mb-3">Nous intervenons sur trois types de projets :</p>
+                            <p class="mb-3">{{ __('home.faq_a1_intro') }}</p>
                             <ul class="list-disc list-inside space-y-2 ml-2">
-                                <li>Décoration d'intérieur (objets, aménagement, ambiance cocooning)</li>
-                                <li>Décoration événementielle (mariages, baptêmes, anniversaires, événements professionnels)
-                                </li>
-                                <li>Coordination de projets de construction avec décoration finale selon vos besoins</li>
+                                <li>{{ __('home.faq_a1_1') }}</li>
+                                <li>{{ __('home.faq_a1_2') }}</li>
+                                <li>{{ __('home.faq_a1_3') }}</li>
                             </ul>
                         </div>
                     </div>
@@ -718,7 +713,7 @@
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 2 ? null : 2"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Proposez-vous des créations sur mesure ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">{{ __('home.faq_q2') }}</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
                             :class="{ 'rotate-180': activeAccordion === 2 }" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
@@ -727,9 +722,7 @@
                     </button>
                     <div x-show="activeAccordion === 2" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            Oui, chaque projet est personnalisé. Nous travaillons en étroite collaboration avec vous pour
-                            concevoir des objets ou des ambiances qui correspondent à votre style, vos envies et votre
-                            budget.
+                            {{ __('home.faq_a2') }}
                         </div>
                     </div>
                 </div>
@@ -738,8 +731,7 @@
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 3 ? null : 3"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Est-il possible de vous confier uniquement la
-                            décoration d'un événement ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">{{ __('home.faq_q3') }}</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
                             :class="{ 'rotate-180': activeAccordion === 3 }" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
@@ -748,8 +740,7 @@
                     </button>
                     <div x-show="activeAccordion === 3" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            Absolument. Que ce soit pour un événement privé ou professionnel, nous pouvons prendre en charge
-                            uniquement la partie décoration, selon le thème et les contraintes du lieu.
+                            {{ __('home.faq_a3') }}
                         </div>
                     </div>
                 </div>
@@ -758,8 +749,7 @@
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 4 ? null : 4"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Où êtes-vous basés et intervenez-vous à
-                            l'international ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">{{ __('home.faq_q4') }}</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
                             :class="{ 'rotate-180': activeAccordion === 4 }" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
@@ -768,8 +758,7 @@
                     </button>
                     <div x-show="activeAccordion === 4" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            Nous sommes basés en Île-de-France, mais nous pouvons intervenir dans toute la France et à
-                            l'étranger selon les projets. Les déplacements sont étudiés au cas par cas.
+                            {{ __('home.faq_a4') }}
                         </div>
                     </div>
                 </div>
@@ -778,7 +767,7 @@
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 5 ? null : 5"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Comment se déroule un premier contact ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">{{ __('home.faq_q5') }}</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
                             :class="{ 'rotate-180': activeAccordion === 5 }" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
@@ -787,8 +776,7 @@
                     </button>
                     <div x-show="activeAccordion === 5" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            Le premier échange permet de comprendre vos besoins, vos goûts et vos contraintes. Ensuite, nous
-                            vous proposons un devis personnalisé et un cahier des charges adapté à votre projet.
+                            {{ __('home.faq_a5') }}
                         </div>
                     </div>
                 </div>
@@ -797,8 +785,7 @@
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 6 ? null : 6"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Quels sont les délais moyens pour un projet
-                            ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">{{ __('home.faq_q6') }}</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
                             :class="{ 'rotate-180': activeAccordion === 6 }" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
@@ -807,11 +794,11 @@
                     </button>
                     <div x-show="activeAccordion === 6" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            <p class="mb-3">Les délais varient selon la nature du projet :</p>
+                            <p class="mb-3">{{ __('home.faq_a6_intro') }}</p>
                             <ul class="list-disc list-inside space-y-2 ml-2">
-                                <li>Objets de décoration : quelques jours à quelques semaines</li>
-                                <li>Événements : planification 1 à 3 mois à l'avance</li>
-                                <li>Projets de construction : plusieurs mois selon l'ampleur</li>
+                                <li>{{ __('home.faq_a6_1') }}</li>
+                                <li>{{ __('home.faq_a6_2') }}</li>
+                                <li>{{ __('home.faq_a6_3') }}</li>
                             </ul>
                         </div>
                     </div>
@@ -821,8 +808,7 @@
                 <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
                     <button @click="activeAccordion = activeAccordion === 7 ? null : 7"
                         class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors">
-                        <span class="font-semibold text-neutral-900 pr-8">Puis-je voir des exemples de vos réalisations
-                            ?</span>
+                        <span class="font-semibold text-neutral-900 pr-8">{{ __('home.faq_q7') }}</span>
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 transition-transform duration-200"
                             :class="{ 'rotate-180': activeAccordion === 7 }" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
@@ -831,22 +817,21 @@
                     </button>
                     <div x-show="activeAccordion === 7" x-collapse>
                         <div class="px-6 pb-5 text-neutral-600 leading-relaxed">
-                            Oui, nous mettons régulièrement à jour notre portfolio sur le site et nos réseaux sociaux.
-                            N'hésitez pas à consulter la section "Réalisations" pour découvrir notre univers.
+                            {{ __('home.faq_a7') }}
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="mt-12 text-center">
-                <p class="text-neutral-600 mb-4">Vous avez d'autres questions ?</p>
+                <p class="text-neutral-600 mb-4">{{ __('home.other_questions') }}</p>
                 <a href="{{ route('contact') }}"
                     class="inline-flex items-center px-8 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition-colors shadow-lg hover:shadow-xl">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    Contactez-nous
+                    {{ __('home.contact_us') }}
                 </a>
             </div>
         </div>

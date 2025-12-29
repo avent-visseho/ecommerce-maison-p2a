@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Panier')
+@section('title', __('cart.title'))
 
 @section('content')
     <!-- Page Header -->
@@ -8,8 +8,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-4xl font-bold text-neutral-900 mb-2">Panier d'Achat</h1>
-                    <p class="text-neutral-400">{{ count($cart) }} article(s) dans votre panier</p>
+                    <h1 class="text-4xl font-bold text-neutral-900 mb-2">{{ __('cart.shopping_cart') }}</h1>
+                    <p class="text-neutral-400">{{ __('cart.items_in_cart', ['count' => count($cart)]) }}</p>
                 </div>
                 <a href="{{ route('shop.index') }}"
                     class="hidden md:flex items-center text-primary-500 hover:text-primary-600 font-medium">
@@ -17,7 +17,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
-                    Continuer les achats
+                    {{ __('cart.continue_shopping') }}
                 </a>
             </div>
         </div>
@@ -29,7 +29,7 @@
                 <div class="lg:grid lg:grid-cols-3 lg:gap-8">
                     <!-- Cart Items -->
                     <div class="lg:col-span-2 space-y-4">
-                        @foreach ($cart as $id => $item)
+                        @foreach ($cart as $cartKey => $item)
                             <div class="card">
                                 <div class="card-body">
                                     <div class="flex items-start space-x-4">
@@ -58,18 +58,25 @@
                                                     {{ $item['name'] }}
                                                 </a>
                                             </h3>
+
+                                            @if(isset($item['variant_name']) && $item['variant_name'])
+                                                <p class="text-sm text-primary-500 font-medium mb-1">
+                                                    {{ $item['variant_name'] }}
+                                                </p>
+                                            @endif
+
                                             <p class="text-sm text-neutral-400 mb-3">
-                                                Prix unitaire: {{ number_format($item['price'], 0, ',', ' ') }} €
+                                                {{ __('cart.unit_price') }}: {{ number_format($item['price'], 0, ',', ' ') }} €
                                             </p>
 
                                             <div class="flex items-center space-x-4">
                                                 <!-- Quantity Selector -->
-                                                <form action="{{ route('cart.update', $id) }}" method="POST"
+                                                <form action="{{ route('cart.update', $cartKey) }}" method="POST"
                                                     class="flex items-center border border-neutral-200 rounded-lg">
                                                     @csrf
                                                     @method('PUT')
                                                     <button type="button"
-                                                        onclick="updateQuantity({{ $id }}, {{ $item['quantity'] - 1 }})"
+                                                        onclick="updateQuantity('{{ $cartKey }}', {{ $item['quantity'] - 1 }})"
                                                         class="px-3 py-2 hover:bg-neutral-50 transition-colors">
                                                         <svg class="w-4 h-4" fill="none" stroke="currentColor"
                                                             viewBox="0 0 24 24">
@@ -82,7 +89,7 @@
                                                         class="w-12 text-center border-0 focus:ring-0 font-semibold text-sm py-2"
                                                         onchange="this.form.submit()">
                                                     <button type="button"
-                                                        onclick="updateQuantity({{ $id }}, {{ $item['quantity'] + 1 }})"
+                                                        onclick="updateQuantity('{{ $cartKey }}', {{ $item['quantity'] + 1 }})"
                                                         class="px-3 py-2 hover:bg-neutral-50 transition-colors">
                                                         <svg class="w-4 h-4" fill="none" stroke="currentColor"
                                                             viewBox="0 0 24 24">
@@ -93,18 +100,18 @@
                                                 </form>
 
                                                 <!-- Remove Button -->
-                                                <form action="{{ route('cart.remove', $id) }}" method="POST">
+                                                <form action="{{ route('cart.remove', $cartKey) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
                                                         class="text-sm text-red-500 hover:text-red-700 font-medium">
-                                                        Retirer
+                                                        {{ __('cart.remove') }}
                                                     </button>
                                                 </form>
                                             </div>
 
                                             @if ($item['quantity'] >= $item['stock'])
-                                                <p class="text-xs text-orange-600 mt-2">Stock maximum atteint</p>
+                                                <p class="text-xs text-orange-600 mt-2">{{ __('cart.max_stock_reached') }}</p>
                                             @endif
                                         </div>
 
@@ -123,9 +130,9 @@
                         <form action="{{ route('cart.clear') }}" method="POST" class="mt-6">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir vider le panier ?')"
+                            <button type="submit" onclick="return confirm('{{ __('cart.confirm_clear') }}')"
                                 class="text-sm text-red-500 hover:text-red-700 font-medium">
-                                Vider le panier
+                                {{ __('cart.clear_cart') }}
                             </button>
                         </form>
                     </div>
@@ -134,22 +141,22 @@
                     <div class="mt-8 lg:mt-0">
                         <div class="card sticky top-24">
                             <div class="card-header">
-                                <h3 class="text-lg font-semibold text-neutral-900">Résumé de la Commande</h3>
+                                <h3 class="text-lg font-semibold text-neutral-900">{{ __('cart.order_summary') }}</h3>
                             </div>
                             <div class="card-body space-y-4">
                                 <div class="flex justify-between text-neutral-600">
-                                    <span>Sous-total</span>
+                                    <span>{{ __('cart.subtotal') }}</span>
                                     <span class="font-semibold">{{ number_format($total, 0, ',', ' ') }} €</span>
                                 </div>
 
                                 <div class="flex justify-between text-neutral-600">
-                                    <span>Livraison</span>
-                                    <span class="font-semibold">A définir </span>
+                                    <span>{{ __('cart.shipping') }}</span>
+                                    <span class="font-semibold">{{ __('cart.to_be_determined') }}</span>
                                 </div>
 
                                 <div class="pt-4 border-t border-neutral-200">
                                     <div class="flex justify-between text-lg font-bold text-neutral-900">
-                                        <span>Total</span>
+                                        <span>{{ __('cart.total') }}</span>
                                         <span class="text-primary-500">{{ number_format($total , 0, ',', ' ') }}
                                             €</span>
                                     </div>
@@ -169,18 +176,18 @@
                                 <!-- Checkout Button -->
                                 @auth
                                     <a href="{{ route('checkout.index') }}" class="block w-full btn-primary text-center">
-                                        Passer la commande
+                                        {{ __('cart.place_order') }}
                                     </a>
                                 @else
                                     <a href="{{ route('login') }}" class="block w-full btn-primary text-center">
-                                        Se connecter pour commander
+                                        {{ __('cart.login_to_order') }}
                                     </a>
                                 @endauth
 
                                 <!-- Continue Shopping -->
                                 <a href="{{ route('shop.index') }}"
                                     class="block text-center text-sm text-primary-500 hover:text-primary-600 font-medium">
-                                    Continuer les achats
+                                    {{ __('cart.continue_shopping') }}
                                 </a>
 
                                 <!-- Trust Badges -->
@@ -191,7 +198,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                         </svg>
-                                        Paiement 100% sécurisé
+                                        {{ __('cart.secure_payment_100') }}
                                     </div>
                                     <div class="flex items-center text-sm text-neutral-600">
                                         <svg class="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor"
@@ -199,7 +206,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                                         </svg>
-                                        Livraison rapide 2-5 jours
+                                        {{ __('cart.fast_delivery') }}
                                     </div>
                                     <div class="flex items-center text-sm text-neutral-600">
                                         <svg class="w-5 h-5 text-purple-600 mr-2" fill="none" stroke="currentColor"
@@ -207,7 +214,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                         </svg>
-                                        Retours sous 14 jours
+                                        {{ __('cart.returns_14_days') }}
                                     </div>
                                 </div>
                             </div>
@@ -224,17 +231,16 @@
                                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
                     </div>
-                    <h2 class="text-3xl font-bold text-neutral-900 mb-4">Votre panier est vide</h2>
+                    <h2 class="text-3xl font-bold text-neutral-900 mb-4">{{ __('cart.empty_cart') }}</h2>
                     <p class="text-neutral-400 mb-8 max-w-md mx-auto">
-                        Vous n'avez pas encore ajouté de produits à votre panier. Parcourez notre boutique pour découvrir
-                        nos produits.
+                        {{ __('cart.empty_cart_message') }}
                     </p>
                     <a href="{{ route('shop.index') }}" class="btn-primary inline-flex items-center">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
-                        Découvrir la boutique
+                        {{ __('cart.discover_shop') }}
                     </a>
                 </div>
             @endif

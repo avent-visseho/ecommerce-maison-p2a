@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
-@section('title', 'Boutique')
-@section('description', 'Explorez notre collection complète de produits de décoration d\'intérieur')
+@section('title', __('shop.title'))
+@section('description', __('shop.meta_description'))
 
 @section('content')
     <!-- Page Header -->
@@ -9,17 +9,17 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div>
-                    <h1 class="text-4xl font-bold text-neutral-900 mb-2">Notre Boutique</h1>
-                    <p class="text-neutral-400">Découvrez {{ $products->total() }} produits exceptionnels</p>
+                    <h1 class="text-4xl font-bold text-neutral-900 mb-2">{{ __('shop.our_shop') }}</h1>
+                    <p class="text-neutral-400">{{ __('shop.discover_x_products', ['count' => $products->total()]) }}</p>
                 </div>
 
                 <!-- Breadcrumb -->
                 <nav class="flex items-center space-x-2 text-sm text-neutral-400 mt-4 md:mt-0">
-                    <a href="{{ route('home') }}" class="hover:text-neutral-900">Accueil</a>
+                    <a href="{{ route('home') }}" class="hover:text-neutral-900">{{ __('common.home') }}</a>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
-                    <span class="text-neutral-900 font-medium">Boutique</span>
+                    <span class="text-neutral-900 font-medium">{{ __('common.shop') }}</span>
                 </nav>
             </div>
         </div>
@@ -34,11 +34,11 @@
                         <!-- Search -->
                         <div class="card">
                             <div class="card-body">
-                                <h3 class="text-lg font-semibold text-neutral-900 mb-4">Rechercher</h3>
+                                <h3 class="text-lg font-semibold text-neutral-900 mb-4">{{ __('shop.search') }}</h3>
                                 <form method="GET" action="{{ route('shop.index') }}">
                                     <div class="relative">
                                         <input type="text" name="search" value="{{ request('search') }}"
-                                            placeholder="Rechercher un produit..." class="input-field pl-10">
+                                            placeholder="{{ __('shop.search_placeholder') }}" class="input-field pl-10">
                                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                             <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor"
                                                 viewBox="0 0 24 24">
@@ -54,11 +54,11 @@
                         <!-- Categories -->
                         <div class="card">
                             <div class="card-body">
-                                <h3 class="text-lg font-semibold text-neutral-900 mb-4">Catégories</h3>
+                                <h3 class="text-lg font-semibold text-neutral-900 mb-4">{{ __('shop.categories') }}</h3>
                                 <div class="space-y-2">
                                     <a href="{{ route('shop.index') }}"
                                         class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-neutral-50 transition-colors {{ !request('category') ? 'bg-primary-50 text-primary-500' : 'text-neutral-900' }}">
-                                        <span class="text-sm font-medium">Toutes les catégories</span>
+                                        <span class="text-sm font-medium">{{ __('shop.all_categories') }}</span>
                                         <span
                                             class="badge badge-primary">{{ \App\Models\Product::active()->count() }}</span>
                                     </a>
@@ -77,7 +77,7 @@
                         <!-- Brands -->
                         <div class="card">
                             <div class="card-body">
-                                <h3 class="text-lg font-semibold text-neutral-900 mb-4">Marques</h3>
+                                <h3 class="text-lg font-semibold text-neutral-900 mb-4">{{ __('shop.brands') }}</h3>
                                 <div class="space-y-2">
                                     @foreach ($brands as $brand)
                                         <label
@@ -96,7 +96,7 @@
                         <!-- Price Range -->
                         <div class="card">
                             <div class="card-body">
-                                <h3 class="text-lg font-semibold text-neutral-900 mb-4">Prix</h3>
+                                <h3 class="text-lg font-semibold text-neutral-900 mb-4">{{ __('shop.price') }}</h3>
                                 <form method="GET" action="{{ route('shop.index') }}" class="space-y-4">
                                     @if (request('category'))
                                         <input type="hidden" name="category" value="{{ request('category') }}">
@@ -109,17 +109,17 @@
                                     @endif
 
                                     <div>
-                                        <label class="label text-xs">Prix minimum</label>
+                                        <label class="label text-xs">{{ __('shop.min_price') }}</label>
                                         <input type="number" name="min_price" value="{{ request('min_price') }}"
                                             placeholder="0" class="input-field text-sm">
                                     </div>
                                     <div>
-                                        <label class="label text-xs">Prix maximum</label>
+                                        <label class="label text-xs">{{ __('shop.max_price') }}</label>
                                         <input type="number" name="max_price" value="{{ request('max_price') }}"
                                             placeholder="1000000" class="input-field text-sm">
                                     </div>
                                     <button type="submit" class="w-full btn-primary text-sm">
-                                        Appliquer
+                                        {{ __('shop.apply') }}
                                     </button>
                                 </form>
                             </div>
@@ -129,7 +129,7 @@
                         @if (request()->hasAny(['category', 'brand', 'min_price', 'max_price', 'search']))
                             <a href="{{ route('shop.index') }}"
                                 class="block text-center text-sm text-red-500 hover:text-red-600 font-medium">
-                                Réinitialiser les filtres
+                                {{ __('shop.reset_filters') }}
                             </a>
                         @endif
                     </div>
@@ -143,7 +143,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                         </svg>
-                        <span>Filtres</span>
+                        <span>{{ __('shop.filters') }}</span>
                     </button>
                 </div>
 
@@ -152,9 +152,11 @@
                     <!-- Toolbar -->
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <p class="text-sm text-neutral-400">
-                            Affichage de <span
-                                class="font-semibold text-neutral-900">{{ $products->firstItem() ?? 0 }}-{{ $products->lastItem() ?? 0 }}</span>
-                            sur <span class="font-semibold text-neutral-900">{{ $products->total() }}</span> produits
+                            {!! __('shop.showing_x_to_y_of_z', [
+                                'from' => $products->firstItem() ?? 0,
+                                'to' => $products->lastItem() ?? 0,
+                                'total' => $products->total()
+                            ]) !!}
                         </p>
 
                         <form method="GET" action="{{ route('shop.index') }}" class="flex items-center space-x-2">
@@ -162,17 +164,15 @@
                                 <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                             @endforeach
 
-                            <label class="text-sm text-neutral-400 whitespace-nowrap">Trier par:</label>
+                            <label class="text-sm text-neutral-400 whitespace-nowrap">{{ __('shop.sort_by') }}:</label>
                             <select name="sort" onchange="this.form.submit()" class="input-field text-sm py-2">
-                                <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>Plus récents
+                                <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>{{ __('shop.latest') }}
                                 </option>
-                                <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Prix
-                                    croissant</option>
-                                <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Prix
-                                    décroissant</option>
-                                <option value="name_asc" {{ request('sort') == 'name_asc' ? 'selected' : '' }}>Nom A-Z
+                                <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>{{ __('shop.price_asc') }}</option>
+                                <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>{{ __('shop.price_desc') }}</option>
+                                <option value="name_asc" {{ request('sort') == 'name_asc' ? 'selected' : '' }}>{{ __('shop.name_asc') }}
                                 </option>
-                                <option value="name_desc" {{ request('sort') == 'name_desc' ? 'selected' : '' }}>Nom Z-A
+                                <option value="name_desc" {{ request('sort') == 'name_desc' ? 'selected' : '' }}>{{ __('shop.name_desc') }}
                                 </option>
                             </select>
                         </form>
@@ -209,7 +209,7 @@
                                         @if ($product->is_featured)
                                             <span
                                                 class="absolute top-4 right-4 px-3 py-1 bg-primary-500 text-white text-xs font-bold rounded-full">
-                                                ⭐ Vedette
+                                                ⭐ {{ __('shop.featured_product') }}
                                             </span>
                                         @endif
 
@@ -217,7 +217,7 @@
                                             <div
                                                 class="absolute inset-0 bg-neutral-900/80 flex items-center justify-center">
                                                 <span
-                                                    class="px-4 py-2 bg-white text-neutral-900 rounded-lg font-semibold">Rupture</span>
+                                                    class="px-4 py-2 bg-white text-neutral-900 rounded-lg font-semibold">{{ __('shop.out_of_stock') }}</span>
                                             </div>
                                         @endif
 
@@ -255,18 +255,9 @@
 
                                         <div class="flex items-center justify-between">
                                             <div>
-                                                @if ($product->isOnSale())
-                                                    <div class="flex items-center space-x-2">
-                                                        <span
-                                                            class="text-lg font-bold text-primary-500">{{ number_format($product->sale_price, 0, ',', ' ') }}
-                                                            €</span>
-                                                        <span
-                                                            class="text-sm text-neutral-400 line-through">{{ number_format($product->price, 0, ',', ' ') }}</span>
-                                                    </div>
-                                                @else
-                                                    <span
-                                                        class="text-lg font-bold text-neutral-900">{{ number_format($product->price, 0, ',', ' ') }}
-                                                        €</span>
+                                                <span class="text-lg font-bold text-neutral-900">{{ $product->price_display }}</span>
+                                                @if($product->hasVariants())
+                                                    <span class="block text-xs text-neutral-400 mt-1">Plusieurs variantes</span>
                                                 @endif
                                             </div>
 
@@ -304,11 +295,10 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                             </svg>
-                            <h3 class="text-2xl font-bold text-neutral-900 mb-2">Aucun produit trouvé</h3>
-                            <p class="text-neutral-400 mb-6">Essayez d'ajuster vos filtres pour trouver ce que vous
-                                cherchez</p>
+                            <h3 class="text-2xl font-bold text-neutral-900 mb-2">{{ __('shop.no_products') }}</h3>
+                            <p class="text-neutral-400 mb-6">{{ __('shop.no_products_description') }}</p>
                             <a href="{{ route('shop.index') }}" class="btn-primary inline-flex items-center">
-                                Voir tous les produits
+                                {{ __('shop.view_all_products') }}
                             </a>
                         </div>
                     @endif
@@ -323,7 +313,7 @@
         <div class="fixed inset-y-0 right-0 max-w-sm w-full bg-white shadow-xl overflow-y-auto">
             <div class="p-6">
                 <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-2xl font-bold text-neutral-900">Filtres</h2>
+                    <h2 class="text-2xl font-bold text-neutral-900">{{ __('shop.filters') }}</h2>
                     <button @click="mobileFiltersOpen = false" class="p-2 hover:bg-neutral-100 rounded-lg">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\CheckMaintenanceMode;
 use App\Http\Middleware\CustomerMiddleware;
+use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\TrackVisitor;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -20,8 +22,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'customer' => CustomerMiddleware::class,
         ]);
 
-        // Ajouter le middleware de tracking des visiteurs aux routes web
+        // Ajouter le middleware de tracking des visiteurs et de maintenance aux routes web
         $middleware->web(append: [
+            CheckMaintenanceMode::class,
+            SetLocale::class,
             TrackVisitor::class,
         ]);
     })

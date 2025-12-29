@@ -1,18 +1,16 @@
     @extends('layouts.public')
 
-    @section('title', 'Nos Services')
-    @section('description',
-        'Découvrez nos services de décoration d\'intérieur, aménagement d\'espaces et organisation
-        d\'événements')
+    @section('title', __('services.title'))
+    @section('description', __('services.meta_description'))
 
     @section('content')
         <!-- Hero Section -->
         <section class="bg-gradient-to-br from-primary-50 to-neutral-50 py-20">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto">
-                    <h1 class="text-5xl font-bold text-neutral-900 mb-6">Nos Services</h1>
+                    <h1 class="text-5xl font-bold text-neutral-900 mb-6">{{ __('services.hero_title') }}</h1>
                     <p class="text-xl text-neutral-600 leading-relaxed">
-                        Des solutions complètes pour tous vos projets de décoration et d'aménagement
+                        {{ __('services.hero_description') }}
                     </p>
                 </div>
             </div>
@@ -40,15 +38,11 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                 </svg> --}}
-                                Décoration d'Intérieur
+                                {{ __('services.interior_design') }}
                             </span>
-                            <h2 class="text-4xl font-bold text-neutral-900 mb-6">Votre Intérieur, votre Art de Vivre</h2>
+                            <h2 class="text-4xl font-bold text-neutral-900 mb-6">{{ __('services.interior_title') }}</h2>
                             <p class="text-neutral-600 leading-relaxed mb-6">
-                                Nous imaginons et réalisons des intérieurs sur mesure, pensés pour refléter votre style de
-                                vie et sublimer chaque espace.
-                                Notre équipe vous accompagne à chaque étape de la conception à la réalisation avec une
-                                exigence constante de qualité, de créativité et de discrétion. <br>
-                                Nos prestations incluent :
+                                {!! __('services.interior_desc') !!}
                             </p>
                             <ul class="space-y-3 mb-8">
                                 <li class="flex items-start">
@@ -57,7 +51,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
                                     </svg>
-                                    <span class="text-neutral-600">Conseil en décoration et aménagement</span>
+                                    <span class="text-neutral-600">{{ __('services.interior_item1') }}</span>
                                 </li>
                                 <li class="flex items-start">
                                     <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none"
@@ -65,7 +59,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
                                     </svg>
-                                    <span class="text-neutral-600">Création de planches d'ambiance et visuels 3D</span>
+                                    <span class="text-neutral-600">{{ __('services.interior_item2') }}</span>
                                 </li>
                                 <li class="flex items-start">
                                     <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none"
@@ -73,7 +67,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
                                     </svg>
-                                    <span class="text-neutral-600">Sélection de matériaux, mobilier et accessoires</span>
+                                    <span class="text-neutral-600">{{ __('services.interior_item3') }}</span>
                                 </li>
                                 <li class="flex items-start">
                                     <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none"
@@ -81,11 +75,11 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
                                     </svg>
-                                    <span class="text-neutral-600">Coordination des travaux et suivi de chantier</span>
+                                    <span class="text-neutral-600">{{ __('services.interior_item4') }}</span>
                                 </li>
                             </ul>
                             <a href="#" class="btn-primary inline-flex items-center">
-                                Demander un devis
+                                {{ __('services.request_quote') }}
                                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -112,21 +106,12 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                                 </svg> --}}
-                                Décoration Événementielle
+                                {{ __('services.event_decoration') }}
                             </span>
-                            <h2 class="text-4xl font-bold text-neutral-900 mb-6">Votre Événement, un souvenir inoubliable
+                            <h2 class="text-4xl font-bold text-neutral-900 mb-6">{{ __('services.event_title') }}
                             </h2>
                             <p class="text-neutral-600 leading-relaxed mb-6">
-                                Notre équipe dédiée transforme vos instants précieux en souvenirs inoubliables, dans un
-                                univers où la beauté et la magie se rencontrent.
-
-                                Chaque événement est une promesse d'émotion, une parenthèse hors du temps:
-
-                                Mariage, célébration intime ou réception prestigieuse.
-
-                                Nous réalisons vos désirs les plus incroyables en imaginant des décors poétiques et
-                                immersifs, où chaque détail raconte votre histoire et éveille les sens. <br> Notre
-                                savoir-faire :
+                                {!! __('services.event_desc') !!}
                             </p>
                             <ul class="space-y-3 mb-8">
                                 <li class="flex items-start">
@@ -135,8 +120,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
                                     </svg>
-                                    <span class="text-neutral-600">Scénographie sur mesure inspirée de vos désirs
-                                        d'exception</span>
+                                    <span class="text-neutral-600">{{ __('services.event_item1') }}</span>
                                 </li>
                                 <li class="flex items-start">
                                     <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none"
@@ -144,8 +128,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
                                     </svg>
-                                    <span class="text-neutral-600">Location de mobilier et accessoires élégants et
-                                        originaux</span>
+                                    <span class="text-neutral-600">{{ __('services.event_item2') }}</span>
                                 </li>
                                 <li class="flex items-start">
                                     <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none"
@@ -153,8 +136,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
                                     </svg>
-                                    <span class="text-neutral-600">Mise en scène, installation et démontage en toute
-                                        discrétion</span>
+                                    <span class="text-neutral-600">{{ __('services.event_item3') }}</span>
                                 </li>
                                 <li class="flex items-start">
                                     <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none"
@@ -162,11 +144,11 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
                                     </svg>
-                                    <span class="text-neutral-600">Coordination fluide pour un jour J féerique</span>
+                                    <span class="text-neutral-600">{{ __('services.event_item4') }}</span>
                                 </li>
                             </ul>
                             <a href="#" class="btn-primary inline-flex items-center">
-                                Planifier un événement
+                                {{ __('services.plan_event') }}
                                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -193,14 +175,11 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                                 </svg> --}}
-                                Conseil en Aménagement
+                                {{ __('services.consultation') }}
                             </span>
-                            <h2 class="text-4xl font-bold text-neutral-900 mb-6">Nos Conseils d'Experts</h2>
+                            <h2 class="text-4xl font-bold text-neutral-900 mb-6">{{ __('services.consultation_title') }}</h2>
                             <p class="text-neutral-600 leading-relaxed mb-6">
-                                Besoin d'optimiser votre espace ?
-                                Notre équipe de consultants, vous accompagne dans vos choix de décoration et d'aménagement,
-                                avec des recommandations personnalisées et adaptées à votre style. <br>
-                                Processus de l'aide à la décision :
+                                {!! __('services.consultation_desc') !!}
                             </p>
                             <ul class="space-y-3 mb-8">
                                 <li class="flex items-start">
@@ -209,8 +188,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
                                     </svg>
-                                    <span class="text-neutral-600">Déplacement sur les lieux (domicile, bureau, showroom…)
-                                        ou rendez-vous en visioconférence</span>
+                                    <span class="text-neutral-600">{{ __('services.consultation_item1') }}</span>
                                 </li>
                                 <li class="flex items-start">
                                     <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none"
@@ -218,7 +196,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
                                     </svg>
-                                    <span class="text-neutral-600">Analyse approfondie des espaces</span>
+                                    <span class="text-neutral-600">{{ __('services.consultation_item2') }}</span>
                                 </li>
                                 <li class="flex items-start">
                                     <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none"
@@ -226,8 +204,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
                                     </svg>
-                                    <span class="text-neutral-600">Sélection de produits et matériaux en accord avec votre
-                                        budget</span>
+                                    <span class="text-neutral-600">{{ __('services.consultation_item3') }}</span>
                                 </li>
                                 <li class="flex items-start">
                                     <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none"
@@ -235,11 +212,11 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
                                     </svg>
-                                    <span class="text-neutral-600">Rapport final avec nos recommandations</span>
+                                    <span class="text-neutral-600">{{ __('services.consultation_item4') }}</span>
                                 </li>
                             </ul>
                             <a href="#" class="btn-primary inline-flex items-center">
-                                Réserver une consultation
+                                {{ __('services.book_consultation') }}
                                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -259,9 +236,9 @@
 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold text-neutral-900 mb-4">Notre Processus</h2>
+                    <h2 class="text-4xl font-bold text-neutral-900 mb-4">{{ __('services.our_process') }}</h2>
                     <p class="text-lg text-neutral-600 max-w-2xl mx-auto">
-                        Une approche structurée pour garantir votre satisfaction
+                        {{ __('services.process_description') }}
                     </p>
                 </div>
 
@@ -297,10 +274,10 @@
                             <!-- Content -->
                             <h3
                                 class="text-2xl font-bold text-neutral-900 mb-3 group-hover:text-primary-600 transition-colors">
-                                Consultation
+                                {{ __('services.step1') }}
                             </h3>
                             <p class="text-neutral-600 text-sm leading-relaxed">
-                                Nous écoutons vos besoins et vos envies pour comprendre votre vision et vos attentes
+                                {{ __('services.step1_desc') }}
                             </p>
 
                             <!-- Bottom accent -->
@@ -339,10 +316,10 @@
                             <!-- Content -->
                             <h3
                                 class="text-2xl font-bold text-neutral-900 mb-3group-hover:text-primary-600 transition-colors">
-                                Conception
+                                {{ __('services.step2') }}
                             </h3>
                             <p class="text-neutral-600 text-sm leading-relaxed">
-                                Création de concepts personnalisés avec planches d'ambiance et visualisations 3D
+                                {{ __('services.step2_desc') }}
                             </p>
 
                             <!-- Bottom accent -->
@@ -382,10 +359,10 @@
                             <!-- Content -->
                             <h3
                                 class="text-2xl font-bold text-neutral-900 mb-3 group-hover:text-primary-600 transition-colors">
-                                Réalisation
+                                {{ __('services.step3') }}
                             </h3>
                             <p class="text-neutral-600 text-sm leading-relaxed">
-                                Mise en œuvre de votre projet avec coordination des travaux et suivi de chantier
+                                {{ __('services.step3_desc') }}
                             </p>
 
                             <!-- Bottom accent -->
@@ -418,10 +395,10 @@
                             <!-- Content -->
                             <h3
                                 class="text-2xl font-bold text-neutral-900 mb-3 group-hover:text-primary-600 transition-colors">
-                                Livraison
+                                {{ __('services.step4') }}
                             </h3>
                             <p class="text-neutral-600 text-sm leading-relaxed">
-                                Installation et touches finales pour un résultat parfait et à votre image
+                                {{ __('services.step4_desc') }}
                             </p>
 
                             <!-- Bottom accent -->
@@ -458,13 +435,13 @@
         <section class="py-20 bg-gradient-to-br from-primary-500 to-primary-700 relative overflow-hidden">
             <div class="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-10"></div>
             <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-                <h2 class="text-4xl font-bold mb-6">Commençons Votre Projet</h2>
+                <h2 class="text-4xl font-bold mb-6">{{ __('services.cta_title') }}</h2>
                 <p class="text-xl text-primary-100 mb-8">
-                    Prenez rendez-vous avec notre équipe et concrétisons ensemble vos idées
+                    {{ __('services.cta_description') }}
                 </p>
                 <a href="{{ route('contact') }}"
                     class="btn-primary bg-white text-primary-500 hover:bg-neutral-50 inline-flex items-center">
-                    Prendre Rendez-vous
+                    {{ __('services.book_appointment') }}
                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M13 7l5 5m0 0l-5 5m5-5H6" />

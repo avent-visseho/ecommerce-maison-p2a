@@ -16,21 +16,21 @@ class HomeController extends Controller
             ->featured()
             ->inStock()
             ->with(['category', 'brand'])
-            ->take(8)
+            ->take(18)
             ->get();
 
         $categories = Category::active()
             ->parent()
             ->withCount('products')
             ->orderBy('order')
-            ->take(6)
+            //->take(6)
             ->get();
 
         $newProducts = Product::active()
             ->inStock()
             ->with(['category', 'brand'])
             ->latest()
-            ->take(8)
+            ->take(18)
             ->get();
 
         return view('public.home', compact('featuredProducts', 'categories', 'newProducts', 'totalFeatured'));

@@ -1,6 +1,6 @@
 @extends('layouts.client')
 
-@section('title', 'Commande #' . $order->order_number)
+@section('title', __('client.order_show.order') . ' #' . $order->order_number)
 
 @section('content')
     <div class="space-y-6">
@@ -10,7 +10,7 @@
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            Retour à mes commandes
+            {{ __('client.order_show.back_to_orders') }}
         </a>
 
         <!-- Order Header -->
@@ -18,24 +18,24 @@
             <div class="card-body">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
-                        <h1 class="text-2xl font-bold text-neutral-900 mb-2">Commande {{ $order->order_number }}</h1>
-                        <p class="text-neutral-400">Passée le {{ $order->created_at->format('d F Y à H:i') }}</p>
+                        <h1 class="text-2xl font-bold text-neutral-900 mb-2">{{ __('client.order_show.order') }} {{ $order->order_number }}</h1>
+                        <p class="text-neutral-400">{{ __('client.order_show.placed_on') }} {{ $order->created_at->format('d F Y à H:i') }}</p>
                     </div>
                     <div class="flex flex-col items-start md:items-end space-y-2">
                         @if ($order->status === 'pending')
-                            <span class="badge badge-warning text-base">En attente</span>
+                            <span class="badge badge-warning text-base">{{ __('client.order_show.pending') }}</span>
                         @elseif($order->status === 'processing')
-                            <span class="badge badge-info text-base">En cours</span>
+                            <span class="badge badge-info text-base">{{ __('client.order_show.processing') }}</span>
                         @elseif($order->status === 'completed')
-                            <span class="badge badge-success text-base">Complété</span>
+                            <span class="badge badge-success text-base">{{ __('client.order_show.completed') }}</span>
                         @else
-                            <span class="badge badge-danger text-base">Annulé</span>
+                            <span class="badge badge-danger text-base">{{ __('client.order_show.cancelled') }}</span>
                         @endif
 
                         @if ($order->payment_status === 'paid')
-                            <span class="badge badge-success">Payé</span>
+                            <span class="badge badge-success">{{ __('client.order_show.paid') }}</span>
                         @elseif($order->payment_status === 'pending')
-                            <span class="badge badge-warning">Paiement en attente</span>
+                            <span class="badge badge-warning">{{ __('client.order_show.payment_pending') }}</span>
                         @endif
                     </div>
                 </div>
@@ -46,7 +46,7 @@
         @if ($order->status !== 'cancelled')
             <div class="card">
                 <div class="card-body">
-                    <h3 class="font-semibold text-neutral-900 mb-6">Suivi de commande</h3>
+                    <h3 class="font-semibold text-neutral-900 mb-6">{{ __('client.order_show.order_tracking') }}</h3>
                     <div class="relative">
                         <div class="absolute top-5 left-0 right-0 h-0.5 bg-neutral-200">
                             <div class="h-full bg-primary-500 transition-all duration-500"
@@ -62,7 +62,7 @@
                                             d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                <p class="text-xs font-medium text-neutral-900">Confirmée</p>
+                                <p class="text-xs font-medium text-neutral-900">{{ __('client.order_show.confirmed') }}</p>
                                 <p class="text-xs text-neutral-400">{{ $order->created_at->format('d/m') }}</p>
                             </div>
                             <div class="flex flex-col items-center">
@@ -80,9 +80,9 @@
                                         </svg>
                                     @endif
                                 </div>
-                                <p class="text-xs font-medium text-neutral-900">En préparation</p>
+                                <p class="text-xs font-medium text-neutral-900">{{ __('client.order_show.in_preparation') }}</p>
                                 @if ($order->status === 'processing' || $order->status === 'completed')
-                                    <p class="text-xs text-neutral-400">En cours</p>
+                                    <p class="text-xs text-neutral-400">{{ __('client.order_show.in_progress') }}</p>
                                 @endif
                             </div>
                             <div class="flex flex-col items-center">
@@ -100,7 +100,7 @@
                                         </svg>
                                     @endif
                                 </div>
-                                <p class="text-xs font-medium text-neutral-900">Livrée</p>
+                                <p class="text-xs font-medium text-neutral-900">{{ __('client.order_show.delivered') }}</p>
                                 @if ($order->completed_at)
                                     <p class="text-xs text-neutral-400">{{ $order->completed_at->format('d/m') }}</p>
                                 @endif
@@ -116,7 +116,7 @@
             <div class="lg:col-span-2 space-y-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="text-lg font-semibold text-neutral-900">Articles commandés</h3>
+                        <h3 class="text-lg font-semibold text-neutral-900">{{ __('client.order_show.ordered_items') }}</h3>
                     </div>
                     <div class="divide-y divide-neutral-200">
                         @foreach ($order->items as $item)
@@ -140,9 +140,9 @@
                                         <h4 class="font-semibold text-neutral-900 mb-1">{{ $item->product_name }}</h4>
                                         <p class="text-sm text-neutral-400 mb-2">SKU: {{ $item->product_sku }}</p>
                                         <div class="flex items-center space-x-4 text-sm">
-                                            <span class="text-neutral-600">Quantité: <span
+                                            <span class="text-neutral-600">{{ __('client.order_show.quantity') }}: <span
                                                     class="font-semibold">{{ $item->quantity }}</span></span>
-                                            <span class="text-neutral-600">Prix: <span
+                                            <span class="text-neutral-600">{{ __('client.order_show.price') }}: <span
                                                     class="font-semibold">{{ number_format($item->price, 0, ',', ' ') }}
                                                     €</span></span>
                                         </div>
@@ -160,7 +160,7 @@
                 <!-- Shipping Address -->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="text-lg font-semibold text-neutral-900">Adresse de livraison</h3>
+                        <h3 class="text-lg font-semibold text-neutral-900">{{ __('client.order_show.shipping_address') }}</h3>
                     </div>
                     <div class="card-body">
                         <div class="space-y-2">
@@ -194,26 +194,26 @@
             <div class="space-y-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="text-lg font-semibold text-neutral-900">Résumé</h3>
+                        <h3 class="text-lg font-semibold text-neutral-900">{{ __('client.order_show.summary') }}</h3>
                     </div>
                     <div class="card-body space-y-4">
                         <div class="flex justify-between text-neutral-600">
-                            <span>Sous-total</span>
+                            <span>{{ __('client.order_show.subtotal') }}</span>
                             <span class="font-semibold">{{ number_format($order->subtotal, 0, ',', ' ') }} €</span>
                         </div>
                         <div class="flex justify-between text-neutral-600">
-                            <span>Livraison</span>
+                            <span>{{ __('client.order_show.shipping') }}</span>
                             <span class="font-semibold">{{ number_format($order->shipping, 0, ',', ' ') }} €</span>
                         </div>
                         @if ($order->tax > 0)
                             <div class="flex justify-between text-neutral-600">
-                                <span>Taxes</span>
+                                <span>{{ __('client.order_show.taxes') }}</span>
                                 <span class="font-semibold">{{ number_format($order->tax, 0, ',', ' ') }} €</span>
                             </div>
                         @endif
                         <div class="pt-4 border-t border-neutral-200">
                             <div class="flex justify-between text-xl font-bold">
-                                <span class="text-neutral-900">Total</span>
+                                <span class="text-neutral-900">{{ __('client.order_show.total') }}</span>
                                 <span class="text-primary-500">{{ number_format($order->total, 0, ',', ' ') }} €</span>
                             </div>
                         </div>
@@ -223,23 +223,23 @@
                 <!-- Payment Info -->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="text-lg font-semibold text-neutral-900">Paiement</h3>
+                        <h3 class="text-lg font-semibold text-neutral-900">{{ __('client.order_show.payment') }}</h3>
                     </div>
                     <div class="card-body space-y-3">
                         <div class="flex justify-between text-sm">
-                            <span class="text-neutral-600">Méthode</span>
+                            <span class="text-neutral-600">{{ __('client.order_show.method') }}</span>
                             <span
                                 class="font-semibold text-neutral-900 capitalize">{{ $order->payment_method ?? 'FedaPay' }}</span>
                         </div>
                         @if ($order->transaction_id)
                             <div class="flex justify-between text-sm">
-                                <span class="text-neutral-600">Transaction</span>
+                                <span class="text-neutral-600">{{ __('client.order_show.transaction') }}</span>
                                 <span class="font-mono text-xs text-neutral-900">{{ $order->transaction_id }}</span>
                             </div>
                         @endif
                         @if ($order->paid_at)
                             <div class="flex justify-between text-sm">
-                                <span class="text-neutral-600">Payé le</span>
+                                <span class="text-neutral-600">{{ __('client.order_show.paid_on') }}</span>
                                 <span
                                     class="font-semibold text-neutral-900">{{ $order->paid_at->format('d/m/Y H:i') }}</span>
                             </div>
@@ -254,12 +254,12 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                        <span>Télécharger la facture</span>
+                        <span>{{ __('client.order_show.download_invoice') }}</span>
                     </button>
                 @endif
 
                 <a href="{{ route('shop.index') }}" class="w-full btn-secondary text-center">
-                    Continuer mes achats
+                    {{ __('client.order_show.continue_shopping') }}
                 </a>
             </div>
         </div>

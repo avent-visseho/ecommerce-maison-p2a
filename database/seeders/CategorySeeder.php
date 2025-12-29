@@ -13,7 +13,7 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-           /*  [
+            /* [
                 'name' => 'Mobilier',
                 'slug' => 'mobilier',
                 'description' => 'Meubles de qualité pour votre intérieur',
@@ -50,10 +50,28 @@ class CategorySeeder extends Seeder
             ],
             [
                 'name' => 'Événementiel',
-                'slug' => 'evenementiel',
+                'slug' => 'evenementiel1',
                 'description' => 'Décoration pour événements spéciaux',
                 'is_active' => true,
                 'order' => 6,
+            ],  [
+                'name' => 'Événementiel',
+                'slug' => 'evenementiel2',
+                'description' => 'Décoration pour événements spéciaux',
+                'is_active' => true,
+                'order' => 7,
+            ], [
+                'name' => 'Événementiel',
+                'slug' => 'evenementiel3',
+                'description' => 'Décoration pour événements spéciaux',
+                'is_active' => true,
+                'order' => 8,
+            ],[
+                'name' => 'Événementiel',
+                'slug' => 'evenementiel4',
+                'description' => 'Décoration pour événements spéciaux',
+                'is_active' => true,
+                'order' => 9,
             ], */
         ];
 

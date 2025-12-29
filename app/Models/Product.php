@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -79,6 +80,121 @@ class Product extends Model
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    /**
+     * Get the variants for the product.
+     */
+    public function variants(): HasMany
+    {
+        return $this->hasMany(ProductVariant::class);
+    }
+
+    /**
+     * Get active variants for the product.
+     */
+    public function activeVariants(): HasMany
+    {
+        return $this->variants()->active()->orderBy('sort_order');
+    }
+
+    /**
+     * Get the default variant for the product.
+     */
+    public function defaultVariant(): HasOne
+    {
+        return $this->hasOne(ProductVariant::class)->where('is_default', true);
+    }
+
+    /**
+     * Check if product has variants.
+     */
+    public function hasVariants(): bool
+    {
+        return $this->variants()->active()->exists();
+    }
+
+    /**
+     * Get minimum price (product or variants).
+     */
+    public function getMinPriceAttribute()
+    {
+        if (!$this->hasVariants()) {
+            return $this->effective_price;
+        }
+
+        // Récupérer toutes les variantes actives et calculer leur prix effectif
+        $variantPrices = $this->activeVariants()
+            ->get()
+            ->map(function ($variant) {
+                // Prix effectif de la variante : sale_price > price > product price
+                return $variant->sale_price ?? $variant->price ?? $this->price;
+            });
+
+        if ($variantPrices->isEmpty()) {
+            return $this->effective_price;
+        }
+
+        $variantMinPrice = $variantPrices->min();
+
+        return min($this->effective_price, $variantMinPrice);
+    }
+
+    /**
+     * Get maximum price (product or variants).
+     */
+    public function getMaxPriceAttribute()
+    {
+        if (!$this->hasVariants()) {
+            return $this->effective_price;
+        }
+
+        // Récupérer toutes les variantes actives et calculer leur prix effectif
+        $variantPrices = $this->activeVariants()
+            ->get()
+            ->map(function ($variant) {
+                // Prix effectif de la variante : sale_price > price > product price
+                return $variant->sale_price ?? $variant->price ?? $this->price;
+            });
+
+        if ($variantPrices->isEmpty()) {
+            return $this->effective_price;
+        }
+
+        $variantMaxPrice = $variantPrices->max();
+
+        return max($this->effective_price, $variantMaxPrice);
+    }
+
+    /**
+     * Get total stock (product + variants).
+     */
+    public function getTotalStockAttribute(): int
+    {
+        if (!$this->hasVariants()) {
+            return $this->stock;
+        }
+
+        return $this->activeVariants()->sum('stock');
+    }
+
+    /**
+     * Get price display (with range if variants).
+     */
+    public function getPriceDisplayAttribute(): string
+    {
+        if (!$this->hasVariants()) {
+            return number_format($this->effective_price, 0, ',', ' ') . ' €';
+        }
+
+        $min = $this->min_price;
+        $max = $this->max_price;
+
+        if ($min == $max) {
+            return number_format($min, 0, ',', ' ') . ' €';
+        }
+
+        return number_format($min, 0, ',', ' ') . ' - ' . number_format($max, 0, ',', ' ') . ' €';
     }
 
     /**

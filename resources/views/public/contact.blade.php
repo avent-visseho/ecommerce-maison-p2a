@@ -1,16 +1,16 @@
 @extends('layouts.public')
 
-@section('title', 'Contact')
-@section('description', 'Contactez-nous pour toute question ou demande de devis')
+@section('title', __('contact.title'))
+@section('description', __('contact.meta_description'))
 
 @section('content')
     <!-- Hero Section -->
     <section class="bg-gradient-to-br from-primary-50 to-neutral-50 py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto">
-                <h1 class="text-5xl font-bold text-neutral-900 mb-6">Contactez-Nous</h1>
+                <h1 class="text-5xl font-bold text-neutral-900 mb-6">{{ __('contact.hero_title') }}</h1>
                 <p class="text-xl text-neutral-600 leading-relaxed">
-                    Notre équipe est à votre écoute pour répondre à toutes vos questions
+                    {{ __('contact.hero_description') }}
                 </p>
             </div>
         </div>
@@ -22,10 +22,9 @@
                 <!-- Contact Info -->
                 <div class="space-y-8">
                     <div>
-                        <h2 class="text-2xl font-bold text-neutral-900 mb-6">Informations de Contact</h2>
+                        <h2 class="text-2xl font-bold text-neutral-900 mb-6">{{ __('contact.contact_info') }}</h2>
                         <p class="text-neutral-600 mb-8">
-                            N'hésitez pas à nous contacter par le moyen qui vous convient le mieux. Nous sommes là pour vous
-                            aider !
+                            {{ __('contact.contact_info_desc') }}
                         </p>
                     </div>
 
@@ -45,8 +44,8 @@
                                         </svg>
                                     </div>
                                     <div class="flex-1">
-                                        <h3 class="font-semibold text-neutral-900 mb-1">Adresse</h3>
-                                        <p class="text-neutral-600 text-sm">17 Rue François René Châteaubriand 78370 Plaisir (France)</p>
+                                        <h3 class="font-semibold text-neutral-900 mb-1">{{ __('contact.address') }}</h3>
+                                        <p class="text-neutral-600 text-sm">{{ __('contact.address_line1') }}</p>
                                        {{--  <p class="text-neutral-600 text-sm">Quartier des Cocotiers</p> --}}
                                     </div>
                                 </div>
@@ -65,10 +64,10 @@
                                         </svg>
                                     </div>
                                     <div class="flex-1">
-                                        <h3 class="font-semibold text-neutral-900 mb-1">Téléphone</h3>
+                                        <h3 class="font-semibold text-neutral-900 mb-1">{{ __('contact.phone') }}</h3>
                                         <p class="text-neutral-600 text-sm">0033 0782215485</p>
                                         <p class="text-neutral-600 text-sm">+229 01 90 01 68 79</p>
-                                        <p class="text-neutral-400 text-xs mt-1">Lun - Sam: 9h - 18h</p>
+                                        <p class="text-neutral-400 text-xs mt-1">{{ __('contact.phone_hours') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -86,9 +85,9 @@
                                         </svg>
                                     </div>
                                     <div class="flex-1">
-                                        <h3 class="font-semibold text-neutral-900 mb-1">Email</h3>
+                                        <h3 class="font-semibold text-neutral-900 mb-1">{{ __('contact.email') }}</h3>
                                         <p class="text-neutral-600 text-sm">Lamaisonp2a@outlook.com</p>
-                                        <p class="text-neutral-400 text-xs mt-1">Réponse sous 24h</p>
+                                        <p class="text-neutral-400 text-xs mt-1">{{ __('contact.email_response') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -106,10 +105,10 @@
                                         </svg>
                                     </div>
                                     <div class="flex-1">
-                                        <h3 class="font-semibold text-neutral-900 mb-1">Horaires</h3>
-                                        <p class="text-neutral-600 text-sm">Lun - Ven: 9h - 18h</p>
-                                        <p class="text-neutral-600 text-sm">Samedi: 10h - 16h</p>
-                                        <p class="text-neutral-400 text-sm">Dimanche: Fermé</p>
+                                        <h3 class="font-semibold text-neutral-900 mb-1">{{ __('contact.hours') }}</h3>
+                                        <p class="text-neutral-600 text-sm">{{ __('contact.hours_weekday') }}</p>
+                                        <p class="text-neutral-600 text-sm">{{ __('contact.hours_saturday') }}</p>
+                                        <p class="text-neutral-400 text-sm">{{ __('contact.hours_sunday') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +117,7 @@
 
                     <!-- Social Media -->
                     <div>
-                        <h3 class="font-semibold text-neutral-900 mb-4">Suivez-nous</h3>
+                        <h3 class="font-semibold text-neutral-900 mb-4">{{ __('contact.follow_us') }}</h3>
                         <div class="flex flex-wrap gap-3">
                             <a href="https://www.facebook.com/profile.php?id=61582522333813" target="_blank"
                                 class="w-10 h-10 bg-neutral-100 rounded-lg flex items-center justify-center hover:bg-primary-500 hover:text-white transition-all"
@@ -165,7 +164,7 @@
                 <div class="lg:col-span-2">
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="text-2xl font-bold text-neutral-900">Envoyez-nous un Message</h2>
+                            <h2 class="text-2xl font-bold text-neutral-900">{{ __('contact.send_message') }}</h2>
                         </div>
                         <div class="card-body">
                             @if (session('success'))
@@ -184,7 +183,7 @@
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div>
-                                        <label for="name" class="label">Nom complet <span
+                                        <label for="name" class="label">{{ __('contact.full_name') }} <span
                                                 class="text-red-500">*</span></label>
                                         <input type="text" id="name" name="name" value="{{ old('name') }}"
                                             required class="input-field @error('name') border-red-500 @enderror"
@@ -195,7 +194,7 @@
                                     </div>
 
                                     <div>
-                                        <label for="email" class="label">Email <span
+                                        <label for="email" class="label">{{ __('contact.email_address') }} <span
                                                 class="text-red-500">*</span></label>
                                         <input type="email" id="email" name="email" value="{{ old('email') }}"
                                             required class="input-field @error('email') border-red-500 @enderror"
@@ -208,7 +207,7 @@
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div>
-                                        <label for="phone" class="label">Téléphone</label>
+                                        <label for="phone" class="label">{{ __('contact.phone_number') }}</label>
                                         <input type="tel" id="phone" name="phone" value="{{ old('phone') }}"
                                             class="input-field @error('phone') border-red-500 @enderror"
                                             placeholder="+229 01 90 01 68 79">
@@ -218,24 +217,20 @@
                                     </div>
 
                                     <div>
-                                        <label for="subject" class="label">Sujet <span
+                                        <label for="subject" class="label">{{ __('contact.subject') }} <span
                                                 class="text-red-500">*</span></label>
                                         <select id="subject" name="subject" required
                                             class="input-field @error('subject') border-red-500 @enderror">
-                                            <option value="">Sélectionnez un sujet</option>
+                                            <option value="">{{ __('contact.select_subject') }}</option>
                                             <option value="Demande de devis"
-                                                {{ old('subject') == 'Demande de devis' ? 'selected' : '' }}>Demande de
-                                                devis</option>
+                                                {{ old('subject') == 'Demande de devis' ? 'selected' : '' }}>{{ __('contact.subject_quote') }}</option>
                                             <option value="Décoration intérieure"
-                                                {{ old('subject') == 'Décoration intérieure' ? 'selected' : '' }}>Décoration
-                                                intérieure</option>
+                                                {{ old('subject') == 'Décoration intérieure' ? 'selected' : '' }}>{{ __('contact.subject_interior') }}</option>
                                             <option value="Événement"
-                                                {{ old('subject') == 'Événement' ? 'selected' : '' }}>Organisation
-                                                d'événement</option>
+                                                {{ old('subject') == 'Événement' ? 'selected' : '' }}>{{ __('contact.subject_event') }}</option>
                                             <option value="Question produit"
-                                                {{ old('subject') == 'Question produit' ? 'selected' : '' }}>Question sur
-                                                un produit</option>
-                                            <option value="Autre" {{ old('subject') == 'Autre' ? 'selected' : '' }}>Autre
+                                                {{ old('subject') == 'Question produit' ? 'selected' : '' }}>{{ __('contact.subject_product') }}</option>
+                                            <option value="Autre" {{ old('subject') == 'Autre' ? 'selected' : '' }}>{{ __('contact.subject_other') }}
                                             </option>
                                         </select>
                                         @error('subject')
@@ -245,11 +240,11 @@
                                 </div>
 
                                 <div>
-                                    <label for="message" class="label">Message <span
+                                    <label for="message" class="label">{{ __('contact.message') }} <span
                                             class="text-red-500">*</span></label>
                                     <textarea id="message" name="message" rows="6" required
                                         class="input-field @error('message') border-red-500 @enderror"
-                                        placeholder="Décrivez votre projet ou posez votre question...">{{ old('message') }}</textarea>
+                                        placeholder="{{ __('contact.message_placeholder') }}">{{ old('message') }}</textarea>
                                     @error('message')
                                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                     @enderror
@@ -259,14 +254,13 @@
                                     <input type="checkbox" id="consent" name="consent" required
                                         class="mt-1 rounded border-neutral-300 text-primary-500 focus:ring-primary-500">
                                     <label for="consent" class="ml-3 text-sm text-neutral-600">
-                                        J'accepte que mes données soient utilisées pour me recontacter concernant ma
-                                        demande. <span class="text-red-500">*</span>
+                                        {{ __('contact.consent') }} <span class="text-red-500">*</span>
                                     </label>
                                 </div>
 
                                 <div class="flex justify-end">
                                     <button type="submit" class="btn-primary flex items-center space-x-2">
-                                        <span>Envoyer le message</span>
+                                        <span>{{ __('contact.send_button') }}</span>
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -285,11 +279,11 @@
     <section class="py-20 bg-neutral-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-neutral-900 mb-4">Trouvez-nous</h2>
-                <p class="text-neutral-600">Venez nous rendre visite dans notre showroom</p>
+                <h2 class="text-3xl font-bold text-neutral-900 mb-4">{{ __('contact.find_us') }}</h2>
+                <p class="text-neutral-600">{{ __('contact.visit_showroom') }}</p>
             </div>
             <div class="bg-neutral-200 rounded-2xl h-96 flex items-center justify-center">
-                <p class="text-neutral-500">Carte Google Maps à intégrer ici</p>
+                <p class="text-neutral-500">{{ __('contact.map_placeholder') }}</p>
             </div>
         </div>
     </section>

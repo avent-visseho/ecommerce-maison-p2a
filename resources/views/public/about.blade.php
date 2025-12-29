@@ -1,17 +1,16 @@
 @extends('layouts.public')
 
-@section('title', 'À Propos')
-@section('description', 'Découvrez l\'histoire de La Maison P2A et notre passion pour la décoration d\'intérieur')
+@section('title', __('about.title'))
+@section('description', __('about.meta_description'))
 
 @section('content')
     <!-- Hero Section -->
     <section class="bg-gradient-to-br from-primary-50 to-neutral-50 py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto">
-                <h1 class="text-5xl font-bold text-neutral-900 mb-6">Notre Histoire</h1>
+                <h1 class="text-5xl font-bold text-neutral-900 mb-6">{{ __('about.hero_title') }}</h1>
                 <p class="text-xl text-neutral-600 leading-relaxed">
-                    Depuis notre création, La Maison P2A s'est donnée pour mission de transformer les espaces de vie en
-                    lieux uniques et inspirants.
+                    {{ __('about.hero_description') }}
                 </p>
             </div>
         </div>
@@ -33,21 +32,16 @@
                 <div>
                     <span
                         class="inline-block px-4 py-2 bg-primary-50 text-primary-500 rounded-full text-sm font-medium mb-4">
-                        Depuis 2019
+                        {{ __('about.since_2019') }}
                     </span>
-                    <h2 class="text-4xl font-bold text-neutral-900 mb-6">Bienvenue chez La Maison P2A</h2>
-                    <p class="text-xl text-primary-500 font-semibold mb-6">L'élégance au cœur de votre quotidien</p>
+                    <h2 class="text-4xl font-bold text-neutral-900 mb-6">{{ __('about.welcome_title') }}</h2>
+                    <p class="text-xl text-primary-500 font-semibold mb-6">{{ __('about.tagline') }}</p>
                     <div class="space-y-4 text-neutral-600 leading-relaxed">
                         <p>
-                            Fondée en 2019 par <strong>Patricia AA</strong>, passionnée de décoration d'intérieur, La Maison
-                            P2A est bien plus qu'une entreprise : c'est une vision, une sensibilité artistique nourrie par
-                            des voyages aux quatre coins du monde.
+                            {!! __('about.story_p1') !!}
                         </p>
                         <p>
-                            Chaque création, chaque projet est pensé pour transformer les espaces en lieux de vie
-                            chaleureux, esthétiques et fonctionnels. <br> Patricia AA, également formée en architecture
-                            d'intérieur, allie expertise technique et inspiration multiculturelle pour concevoir des
-                            ambiances uniques, où le design pur et sophistiqué rend le quotidien visuellement agréable.
+                            {!! __('about.story_p2') !!}
                         </p>
                     </div>
                 </div>
@@ -60,9 +54,9 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold text-neutral-900 mb-4 flex justify-center items-center gap-6"><img
-                        src="{{ asset('univers.png') }}" alt="La Maison P2A" class="h-16 w-16"> Nos Univers</h2>
+                        src="{{ asset('univers.png') }}" alt="La Maison P2A" class="h-16 w-16"> {{ __('about.our_universe') }}</h2>
                 <p class="text-lg text-neutral-600 max-w-2xl mx-auto">
-                    Découvrez nos trois domaines d'expertise pour sublimer vos espaces et événements
+                    {{ __('about.universe_description') }}
                 </p>
             </div>
 
@@ -77,10 +71,9 @@
                         </svg> --}}
                         <img src="{{ asset('objet.png') }}" alt="La Maison P2A" class="h-16 w-16">
                     </div>
-                    <h3 class="text-2xl font-bold text-neutral-900 mb-4">Les Objets de décoration</h3>
+                    <h3 class="text-2xl font-bold text-neutral-900 mb-4">{{ __('about.deco_objects') }}</h3>
                     <p class="text-neutral-600 leading-relaxed">
-                        Des pièces uniques, pensées pour créer un cocon de douceur. Chaque objet est conçu avec soin pour
-                        apporter chaleur et harmonie à votre intérieur.
+                        {{ __('about.deco_objects_desc') }}
                     </p>
                 </div>
 
@@ -94,12 +87,12 @@
                         </svg> --}}
                         <img src="{{ asset('evenement.png') }}" alt="La Maison P2A" class="h-16 w-16">
                     </div>
-                    <h3 class="text-2xl font-bold text-neutral-900 mb-4">La Décoration événementielle</h3>
+                    <h3 class="text-2xl font-bold text-neutral-900 mb-4">{{ __('about.event_deco') }}</h3>
                     <p class="text-neutral-600 leading-relaxed mb-4">
-                        Mariage, Baby Shower, Anniversaire, Réception privée, Événement professionnel...
+                        {{ __('about.event_deco_desc1') }}
                     </p>
                     <p class="text-neutral-600 leading-relaxed">
-                        La Maison P2A sublime vos moments précieux avec une décoration sur mesure, élégante et mémorable.
+                        {{ __('about.event_deco_desc2') }}
                     </p>
                 </div>
 
@@ -113,10 +106,9 @@
                         </svg> --}}
                         <img src="{{ asset('coordination.png') }}" alt="La Maison P2A" class="h-16 w-16">
                     </div>
-                    <h3 class="text-2xl font-bold text-neutral-900 mb-4">La Coordination de projets</h3>
+                    <h3 class="text-2xl font-bold text-neutral-900 mb-4">{{ __('about.project_coordination') }}</h3>
                     <p class="text-neutral-600 leading-relaxed">
-                        De la construction à la décoration finale, nous coordonnons l'ensemble des corps de métier pour
-                        donner vie à vos projets, dans le respect de votre cahier des charges.
+                        {{ __('about.project_coordination_desc') }}
                     </p>
                 </div>
             </div>
@@ -128,11 +120,9 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
                 <div class="order-2 lg:order-1">
-                    <h2 class="text-4xl font-bold text-neutral-900 mb-6">🌍 Une inspiration venue d'ailleurs</h2>
+                    <h2 class="text-4xl font-bold text-neutral-900 mb-6">{{ __('about.inspiration_title') }}</h2>
                     <p class="text-lg text-neutral-600 leading-relaxed">
-                        Les voyages de <strong>Patricia AA</strong> sont une source inépuisable d'idées et de styles. Chaque
-                        destination influence les créations de La Maison P2A, apportant une touche d'exotisme, de
-                        raffinement et d'authenticité à vos espaces.
+                        {!! __('about.inspiration_desc') !!}
                     </p>
                 </div>
                 <div class="order-1 lg:order-2 mb-12 lg:mb-0">
@@ -152,9 +142,9 @@
     <section class="py-20 bg-neutral-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-neutral-900 mb-4">Nos Valeurs</h2>
+                <h2 class="text-4xl font-bold text-neutral-900 mb-4">{{ __('about.our_values') }}</h2>
                 <p class="text-lg text-neutral-600 max-w-2xl mx-auto">
-                    Les principes qui guident chacune de nos actions
+                    {{ __('about.values_description') }}
                 </p>
             </div>
 
@@ -164,9 +154,8 @@
                         <img
                         src="{{ asset('service.png') }}" alt="La Maison P2A" class="h-16 w-16">
                     </div>
-                    <h3 class="text-xl font-bold text-neutral-900 mb-3">Qualité</h3>
-                    <p class="text-neutral-600">Nous privilégions des matières nobles telles que le bois, les tissus
-                        artisanaux locaux…pour offrir une qualité supérieure respectueuse de l’environnement</p>
+                    <h3 class="text-xl font-bold text-neutral-900 mb-3">{{ __('about.quality') }}</h3>
+                    <p class="text-neutral-600">{{ __('about.quality_desc') }}</p>
                 </div>
 
                 <div class="bg-white rounded-2xl p-8 text-center hover:shadow-lg transition-all">
@@ -174,9 +163,8 @@
                        <img
                         src="{{ asset('service-client.png') }}" alt="La Maison P2A" class="h-16 w-16">
                     </div>
-                    <h3 class="text-xl font-bold text-neutral-900 mb-3">Service Client</h3>
-                    <p class="text-neutral-600">- Une équipe spécialisée par domaine, attentive et dotée d’une approche
-                        personnalisée pour répondre à chacune de vos attentes</p>
+                    <h3 class="text-xl font-bold text-neutral-900 mb-3">{{ __('about.customer_service') }}</h3>
+                    <p class="text-neutral-600">{{ __('about.customer_service_desc') }}</p>
                 </div>
 
                 <div class="bg-white rounded-2xl p-8 text-center hover:shadow-lg transition-all">
@@ -184,9 +172,8 @@
                         <img
                         src="{{ asset('innovation.png') }}" alt="La Maison P2A" class="h-16 w-16">
                     </div>
-                    <h3 class="text-xl font-bold text-neutral-900 mb-3">Innovation</h3>
-                    <p class="text-neutral-600">Des créations à la pointe du design pour sublimer vos espaces avec élégance
-                        et prestige</p>
+                    <h3 class="text-xl font-bold text-neutral-900 mb-3">{{ __('about.innovation') }}</h3>
+                    <p class="text-neutral-600">{{ __('about.innovation_desc') }}</p>
                 </div>
 
                 <div class="bg-white rounded-2xl p-8 text-center hover:shadow-lg transition-all">
@@ -194,10 +181,8 @@
                         <img
                         src="{{ asset('passion.png') }}" alt="La Maison P2A" class="h-16 w-16">
                     </div>
-                    <h3 class="text-xl font-bold text-neutral-900 mb-3">Passion</h3>
-                    <p class="text-neutral-600">Nous réalisons chaque création avec un savoir-faire unique et une attention
-                        méticuleuse aux détails.
-                        Chaque projet incarne notre passion et notre quête d’élégance intemporelle.</p>
+                    <h3 class="text-xl font-bold text-neutral-900 mb-3">{{ __('about.passion') }}</h3>
+                    <p class="text-neutral-600">{{ __('about.passion_desc') }}</p>
                 </div>
             </div>
         </div>
@@ -210,17 +195,17 @@
     <section class="py-20 bg-gradient-to-br from-primary-500 to-primary-700 relative overflow-hidden">
         <div class="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-10"></div>
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-            <h2 class="text-4xl font-bold mb-6">Prêt à Commencer Votre Projet ?</h2>
+            <h2 class="text-4xl font-bold mb-6">{{ __('about.cta_title') }}</h2>
             <p class="text-xl text-primary-100 mb-8">
-                Contactez-nous dès aujourd'hui et transformons ensemble votre espace de vie
+                {{ __('about.cta_description') }}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="{{ route('contact') }}" class="btn-primary bg-white text-primary-500 hover:bg-neutral-50">
-                    Nous Contacter
+                    {{ __('about.contact_us') }}
                 </a>
                 <a href="{{ route('shop.index') }}"
                     class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-semibold hover:bg-white/20 transition-all border border-white/20">
-                    Voir la Boutique
+                    {{ __('about.view_shop') }}
                 </a>
             </div>
         </div>

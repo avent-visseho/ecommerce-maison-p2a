@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Dashboard') - Admin | {{ config('app.name') }}</title>
+    <title>@yield('title', __('layouts.admin.dashboard')) - Admin | {{ config('app.name') }}</title>
     <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700,800" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -24,7 +24,7 @@
                     <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-3">
                         <img src="{{ asset('logo.jpg') }}" alt="La Maison P2A" class="h-12 w-auto object-contain">
                         <div>
-                            <span class="block text-xs text-neutral-400">Administration</span>
+                            <span class="block text-xs text-neutral-400">{{ __('layouts.admin.administration') }}</span>
                         </div>
                     </a>
                     <button @click="sidebarOpen = false" class="lg:hidden text-neutral-400 hover:text-neutral-900">
@@ -43,11 +43,11 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                         </svg>
-                        <span>Tableau de bord</span>
+                        <span>{{ __('layouts.admin.dashboard') }}</span>
                     </a>
 
                     <div class="pt-4 pb-2">
-                        <h3 class="px-4 text-xs font-semibold text-neutral-400 uppercase tracking-wider">Catalogue</h3>
+                        <h3 class="px-4 text-xs font-semibold text-neutral-400 uppercase tracking-wider">{{ __('layouts.admin.catalog') }}</h3>
                     </div>
 
                     <a href="{{ route('admin.products.index') }}"
@@ -56,7 +56,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                         </svg>
-                        <span>Produits</span>
+                        <span>{{ __('layouts.admin.products') }}</span>
                     </a>
 
                     <a href="{{ route('admin.categories.index') }}"
@@ -65,7 +65,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                         </svg>
-                        <span>Catégories</span>
+                        <span>{{ __('layouts.admin.categories') }}</span>
                     </a>
 
                     <a href="{{ route('admin.brands.index') }}"
@@ -74,11 +74,20 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                         </svg>
-                        <span>Marques</span>
+                        <span>{{ __('layouts.admin.brands') }}</span>
+                    </a>
+
+                    <a href="{{ route('admin.attributes.index') }}"
+                        class="sidebar-link {{ request()->routeIs('admin.attributes.*') ? 'active' : '' }}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                        </svg>
+                        <span>Attributs Produits</span>
                     </a>
 
                     <div class="pt-4 pb-2">
-                        <h3 class="px-4 text-xs font-semibold text-neutral-400 uppercase tracking-wider">Ventes</h3>
+                        <h3 class="px-4 text-xs font-semibold text-neutral-400 uppercase tracking-wider">{{ __('layouts.admin.sales') }}</h3>
                     </div>
 
                     <a href="{{ route('admin.orders.index') }}"
@@ -87,14 +96,14 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                         </svg>
-                        <span>Commandes</span>
+                        <span>{{ __('layouts.admin.orders') }}</span>
                         @if ($pendingOrders = \App\Models\Order::where('status', 'pending')->count())
                             <span class="ml-auto badge badge-warning">{{ $pendingOrders }}</span>
                         @endif
                     </a>
 
                     <div class="pt-4 pb-2">
-                        <h3 class="px-4 text-xs font-semibold text-neutral-400 uppercase tracking-wider">Blog</h3>
+                        <h3 class="px-4 text-xs font-semibold text-neutral-400 uppercase tracking-wider">{{ __('layouts.admin.blog') }}</h3>
                     </div>
 
                     <div x-data="{ open: {{ request()->routeIs('admin.blog.*') ? 'true' : 'false' }} }">
@@ -105,7 +114,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                                 </svg>
-                                <span>Gestion du Blog</span>
+                                <span>{{ __('layouts.admin.blog_management') }}</span>
                             </div>
                             <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-90': open }"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,19 +125,19 @@
                         <div x-show="open" x-transition class="ml-11 mt-2 space-y-1">
                             <a href="{{ route('admin.blog.dashboard') }}"
                                 class="sidebar-link text-sm {{ request()->routeIs('admin.blog.dashboard') ? 'active' : '' }}">
-                                Tableau de bord
+                                {{ __('layouts.admin.dashboard') }}
                             </a>
                             <a href="{{ route('admin.blog.posts.index') }}"
                                 class="sidebar-link text-sm {{ request()->routeIs('admin.blog.posts.*') ? 'active' : '' }}">
-                                Articles
+                                {{ __('layouts.admin.posts') }}
                             </a>
                             <a href="{{ route('admin.blog.categories.index') }}"
                                 class="sidebar-link text-sm {{ request()->routeIs('admin.blog.categories.*') ? 'active' : '' }}">
-                                Catégories
+                                {{ __('layouts.admin.categories') }}
                             </a>
                             <a href="{{ route('admin.blog.comments.index') }}"
                                 class="sidebar-link text-sm {{ request()->routeIs('admin.blog.comments.*') ? 'active' : '' }}">
-                                Commentaires
+                                {{ __('layouts.admin.comments') }}
                                 @if ($pendingComments = \App\Models\BlogComment::where('status', 'pending')->count())
                                     <span class="ml-auto badge badge-warning text-xs">{{ $pendingComments }}</span>
                                 @endif
@@ -147,7 +156,7 @@
                             </div>
                             <div class="flex-1 min-w-0">
                                 <p class="text-sm font-medium text-neutral-900 truncate">{{ auth()->user()->name }}</p>
-                                <p class="text-xs text-neutral-400 truncate">Administrateur</p>
+                                <p class="text-xs text-neutral-400 truncate">{{ __('layouts.admin.administrator') }}</p>
                             </div>
                         </div>
                         <form method="POST" action="{{ route('logout') }}">
@@ -177,7 +186,7 @@
 
                 <div class="flex-1 flex items-center justify-between ml-4 lg:ml-0">
                     <div>
-                        <h1 class="text-xl font-bold text-neutral-900">@yield('page-title', 'Dashboard')</h1>
+                        <h1 class="text-xl font-bold text-neutral-900">@yield('page-title', __('layouts.admin.dashboard'))</h1>
                     </div>
 
                     <div class="flex items-center space-x-4">
@@ -187,7 +196,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                             </svg>
-                            <span>Voir le site</span>
+                            <span>{{ __('layouts.admin.view_site') }}</span>
                         </a>
                     </div>
                 </div>

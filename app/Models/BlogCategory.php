@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +11,17 @@ use Illuminate\Support\Str;
 
 class BlogCategory extends Model
 {
-    use HasFactory;
+    use HasFactory, Translatable;
+
+    /**
+     * Les attributs traduisibles.
+     *
+     * @var array
+     */
+    protected $translatable = [
+        'name',
+        'description',
+    ];
 
     protected $fillable = [
         'name',

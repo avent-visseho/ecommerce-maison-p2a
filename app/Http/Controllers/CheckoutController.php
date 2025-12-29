@@ -6,6 +6,7 @@ use App\Mail\OrderConfirmation;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Services\CartService;
 use App\Services\FedaPayService;
 use Illuminate\Http\Request;
@@ -80,26 +81,42 @@ class CheckoutController extends Controller
             ]);
 
             // Create order items
-            foreach ($cart as $item) {
-                $product = Product::find($item['id']);
+            foreach ($cart as $cartKey => $item) {
+                // Récupérer produit et variante si applicable
+                $product = Product::find($item['product_id']);
+                $variant = isset($item['variant_id']) ? ProductVariant::find($item['variant_id']) : null;
 
-                if (!$product || $product->stock < $item['quantity']) {
+                if (!$product) {
+                    DB::rollBack();
+                    return redirect()->back()->with('error', 'Produit non trouvé : ' . $item['name']);
+                }
+
+                // Vérifier le stock (variante ou produit)
+                $availableStock = $variant ? $variant->stock : $product->stock;
+                if ($availableStock < $item['quantity']) {
                     DB::rollBack();
                     return redirect()->back()->with('error', 'Stock insuffisant pour ' . $item['name']);
                 }
 
+                // Créer l'OrderItem
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $product->id,
+                    'product_variant_id' => $variant?->id,
                     'product_name' => $product->name,
-                    'product_sku' => $product->sku,
+                    'product_sku' => $variant?->sku ?? $product->sku,
                     'price' => $item['price'],
                     'quantity' => $item['quantity'],
                     'subtotal' => $item['price'] * $item['quantity'],
+                    'variant_attributes' => $variant?->attributes_snapshot,
                 ]);
 
-                // Decrease stock
-                $product->decrement('stock', $item['quantity']);
+                // Décrémenter le stock
+                if ($variant) {
+                    $variant->decrement('stock', $item['quantity']);
+                } else {
+                    $product->decrement('stock', $item['quantity']);
+                }
             }
 
             DB::commit();

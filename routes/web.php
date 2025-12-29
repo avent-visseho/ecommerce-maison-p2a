@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\ProductAttributeController;
+use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\Admin\BlogPostController as AdminBlogPostController;
 use App\Http\Controllers\Admin\BlogCategoryController as AdminBlogCategoryController;
 use App\Http\Controllers\Admin\BlogCommentController as AdminBlogCommentController;
@@ -21,9 +23,13 @@ use App\Http\Controllers\Client\DashboardController as ClientDashboardController
 use App\Http\Controllers\Client\OrderController as ClientOrderController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
+
+// Maintenance Route
+Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('maintenance');
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -39,8 +45,8 @@ Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
 // Cart Routes
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
-Route::put('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
-Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::put('/cart/update/{cartKey}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/remove/{cartKey}', [CartController::class, 'remove'])->name('cart.remove');
 Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 
 // FedaPay Webhook (no auth required)
@@ -110,6 +116,28 @@ Route::middleware(['auth'])->group(function () {
 
         // Products
         Route::resource('products', AdminProductController::class);
+
+        // Product Attributes
+        Route::prefix('attributes')->name('attributes.')->group(function () {
+            Route::get('/', [ProductAttributeController::class, 'index'])->name('index');
+            Route::post('/', [ProductAttributeController::class, 'store'])->name('store');
+            Route::put('/{attribute}', [ProductAttributeController::class, 'update'])->name('update');
+            Route::delete('/{attribute}', [ProductAttributeController::class, 'destroy'])->name('destroy');
+            Route::get('/{attribute}/values', [ProductAttributeController::class, 'values'])->name('values');
+            Route::post('/{attribute}/values', [ProductAttributeController::class, 'storeValue'])->name('values.store');
+            Route::put('/{attribute}/values/{value}', [ProductAttributeController::class, 'updateValue'])->name('values.update');
+            Route::delete('/{attribute}/values/{value}', [ProductAttributeController::class, 'destroyValue'])->name('values.destroy');
+        });
+
+        // Product Variants
+        Route::prefix('products/{product}/variants')->name('products.variants.')->group(function () {
+            Route::get('/', [ProductVariantController::class, 'index'])->name('index');
+            Route::get('/create', [ProductVariantController::class, 'create'])->name('create');
+            Route::post('/', [ProductVariantController::class, 'store'])->name('store');
+            Route::get('/{variant}/edit', [ProductVariantController::class, 'edit'])->name('edit');
+            Route::put('/{variant}', [ProductVariantController::class, 'update'])->name('update');
+            Route::delete('/{variant}', [ProductVariantController::class, 'destroy'])->name('destroy');
+        });
 
         // Categories
         Route::resource('categories', AdminCategoryController::class);

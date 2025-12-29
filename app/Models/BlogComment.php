@@ -48,7 +48,9 @@ class BlogComment extends Model
      */
     public function replies(): HasMany
     {
-        return $this->hasMany(BlogComment::class, 'parent_id')->where('status', 'approved');
+        return $this->hasMany(BlogComment::class, 'parent_id')
+            ->where('status', 'approved')
+            ->orderBy('created_at', 'asc');
     }
 
     /**

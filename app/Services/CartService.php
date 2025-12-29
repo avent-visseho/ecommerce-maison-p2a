@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Support\Facades\Session;
 
 class CartService
@@ -18,30 +19,41 @@ class CartService
     }
 
     /**
-     * Add item to cart
+     * Add item to cart (with support for variants)
      */
-    public function addToCart(Product $product, int $quantity = 1): void
+    public function addToCart(Product $product, int $quantity = 1, ?ProductVariant $variant = null): void
     {
         $cart = $this->getCart();
-        $productId = $product->id;
 
-        if (isset($cart[$productId])) {
-            $cart[$productId]['quantity'] += $quantity;
+        // Clé unique : product_id + variant_id
+        $cartKey = $variant ? "p{$product->id}_v{$variant->id}" : "p{$product->id}";
+
+        if (isset($cart[$cartKey])) {
+            $cart[$cartKey]['quantity'] += $quantity;
         } else {
-            $cart[$productId] = [
-                'id' => $product->id,
+            // Utiliser les données de la variante si présente
+            $effectivePrice = $variant ? $variant->effective_price : $product->effective_price;
+            $effectiveStock = $variant ? $variant->stock : $product->stock;
+            $effectiveImage = $variant && $variant->image ? $variant->image : $product->main_image;
+            $variantDisplay = $variant ? $variant->display_name : null;
+
+            $cart[$cartKey] = [
+                'product_id' => $product->id,
+                'variant_id' => $variant?->id,
                 'name' => $product->name,
                 'slug' => $product->slug,
-                'price' => $product->effective_price,
-                'image' => $product->main_image,
+                'price' => $effectivePrice,
+                'image' => $effectiveImage,
                 'quantity' => $quantity,
-                'stock' => $product->stock,
+                'stock' => $effectiveStock,
+                'variant_name' => $variantDisplay,
             ];
         }
 
-        // Ensure quantity doesn't exceed stock
-        if ($cart[$productId]['quantity'] > $product->stock) {
-            $cart[$productId]['quantity'] = $product->stock;
+        // Limiter à la quantité en stock
+        $stockLimit = $variant ? $variant->stock : $product->stock;
+        if ($cart[$cartKey]['quantity'] > $stockLimit) {
+            $cart[$cartKey]['quantity'] = $stockLimit;
         }
 
         Session::put($this->sessionKey, $cart);
@@ -50,19 +62,19 @@ class CartService
     /**
      * Update cart item quantity
      */
-    public function updateQuantity(int $productId, int $quantity): void
+    public function updateQuantity(string $cartKey, int $quantity): void
     {
         $cart = $this->getCart();
 
-        if (isset($cart[$productId])) {
+        if (isset($cart[$cartKey])) {
             if ($quantity <= 0) {
-                unset($cart[$productId]);
+                unset($cart[$cartKey]);
             } else {
-                $cart[$productId]['quantity'] = $quantity;
+                $cart[$cartKey]['quantity'] = $quantity;
 
                 // Ensure quantity doesn't exceed stock
-                if ($quantity > $cart[$productId]['stock']) {
-                    $cart[$productId]['quantity'] = $cart[$productId]['stock'];
+                if ($quantity > $cart[$cartKey]['stock']) {
+                    $cart[$cartKey]['quantity'] = $cart[$cartKey]['stock'];
                 }
             }
 
@@ -73,12 +85,12 @@ class CartService
     /**
      * Remove item from cart
      */
-    public function removeFromCart(int $productId): void
+    public function removeFromCart(string $cartKey): void
     {
         $cart = $this->getCart();
 
-        if (isset($cart[$productId])) {
-            unset($cart[$productId]);
+        if (isset($cart[$cartKey])) {
+            unset($cart[$cartKey]);
             Session::put($this->sessionKey, $cart);
         }
     }
@@ -132,9 +144,10 @@ class CartService
     /**
      * Get cart item
      */
-    public function getItem(int $productId): ?array
+    public function getItem(int $productId, ?int $variantId = null): ?array
     {
+        $cartKey = $variantId ? "p{$productId}_v{$variantId}" : "p{$productId}";
         $cart = $this->getCart();
-        return $cart[$productId] ?? null;
+        return $cart[$cartKey] ?? null;
     }
 }

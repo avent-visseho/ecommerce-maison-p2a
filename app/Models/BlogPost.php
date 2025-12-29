@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,7 +13,20 @@ use Illuminate\Support\Str;
 
 class BlogPost extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Translatable;
+
+    /**
+     * Les attributs traduisibles.
+     *
+     * @var array
+     */
+    protected $translatable = [
+        'title',
+        'excerpt',
+        'content',
+        'meta_title',
+        'meta_description',
+    ];
 
     protected $fillable = [
         'title',
@@ -101,7 +115,10 @@ class BlogPost extends Model
      */
     public function approvedComments(): HasMany
     {
-        return $this->hasMany(BlogComment::class)->where('status', 'approved')->whereNull('parent_id');
+        return $this->hasMany(BlogComment::class)
+            ->where('status', 'approved')
+            ->whereNull('parent_id')
+            ->orderBy('created_at', 'desc');
     }
 
     /**

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmation de commande</title>
+    <title>{{ __('emails.order_confirmation.title') }}</title>
 </head>
 
 <body
@@ -18,10 +18,9 @@
                     <tr>
                         <td
                             style="background: linear-gradient(135deg, #e8bf5e 0%, #a05e18 100%); padding: 40px; text-align: center;">
-                            <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: bold;">La Maison P2A
+                            <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: bold;">{{ __('emails.order_confirmation.title') }}
                             </h1>
-                            <p style="color: #fde788; margin: 10px 0 0 0; font-size: 14px;">Confirmation de votre
-                                commande</p>
+                            <p style="color: #fde788; margin: 10px 0 0 0; font-size: 14px;">{{ __('emails.order_confirmation.subtitle') }}</p>
                         </td>
                     </tr>
 
@@ -35,11 +34,10 @@
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                             </div>
-                            <h2 style="color: #000000; margin: 0 0 12px 0; font-size: 24px; font-weight: bold;">Merci
-                                pour votre commande !</h2>
+                            <h2 style="color: #000000; margin: 0 0 12px 0; font-size: 24px; font-weight: bold;">{{ __('emails.order_confirmation.thank_you') }}</h2>
                             <p style="color: #40464b; margin: 0; font-size: 16px; line-height: 1.6;">
-                                Bonjour <strong>{{ $order->shipping_name }}</strong>,<br>
-                                Nous avons bien reçu votre commande et nous la préparons avec soin.
+                                {{ __('emails.order_confirmation.hello') }} <strong>{{ $order->shipping_name }}</strong>,<br>
+                                {{ __('emails.order_confirmation.order_received') }}
                             </p>
                         </td>
                     </tr>
@@ -53,28 +51,27 @@
                                     <td>
                                         <h3
                                             style="color: #000000; margin: 0 0 16px 0; font-size: 18px; font-weight: 600;">
-                                            Détails de la commande</h3>
+                                            {{ __('emails.order_confirmation.order_details') }}</h3>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="padding-bottom: 12px;">
                                         <table width="100%" cellpadding="0" cellspacing="0">
                                             <tr>
-                                                <td style="color: #40464b; font-size: 14px; padding-bottom: 8px;">Numéro
-                                                    de commande:</td>
+                                                <td style="color: #40464b; font-size: 14px; padding-bottom: 8px;">{{ __('emails.order_confirmation.order_number') }}:</td>
                                                 <td align="right"
                                                     style="color: #000000; font-size: 14px; font-weight: 600; padding-bottom: 8px;">
                                                     {{ $order->order_number }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="color: #40464b; font-size: 14px; padding-bottom: 8px;">Date:
+                                                <td style="color: #40464b; font-size: 14px; padding-bottom: 8px;">{{ __('emails.order_confirmation.date') }}:
                                                 </td>
                                                 <td align="right"
                                                     style="color: #000000; font-size: 14px; font-weight: 600; padding-bottom: 8px;">
-                                                    {{ $order->created_at->format('d/m/Y à H:i') }}</td>
+                                                    {{ $order->created_at->format('d/m/Y') }} {{ __('emails.order_confirmation.at') }} {{ $order->created_at->format('H:i') }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="color: #40464b; font-size: 14px;">Total:</td>
+                                                <td style="color: #40464b; font-size: 14px;">{{ __('emails.order_confirmation.total') }}:</td>
                                                 <td align="right"
                                                     style="color: #e8bf5e; font-size: 18px; font-weight: bold;">
                                                     {{ number_format($order->total, 0, ',', ' ') }} €</td>
@@ -89,8 +86,7 @@
                     <!-- Products -->
                     <tr>
                         <td style="padding: 0 40px 40px 40px;">
-                            <h3 style="color: #000000; margin: 0 0 20px 0; font-size: 18px; font-weight: 600;">Articles
-                                commandés</h3>
+                            <h3 style="color: #000000; margin: 0 0 20px 0; font-size: 18px; font-weight: 600;">{{ __('emails.order_confirmation.ordered_items') }}</h3>
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 @foreach ($order->items as $item)
                                     <tr>
@@ -102,7 +98,7 @@
                                                             style="margin: 0; color: #000000; font-size: 14px; font-weight: 600;">
                                                             {{ $item->product_name }}</p>
                                                         <p style="margin: 4px 0 0 0; color: #40464b; font-size: 13px;">
-                                                            Quantité: {{ $item->quantity }} ×
+                                                            {{ __('emails.order_confirmation.quantity') }}: {{ $item->quantity }} ×
                                                             {{ number_format($item->price, 0, ',', ' ') }} €</p>
                                                     </td>
                                                     <td width="20%" align="right">
@@ -124,13 +120,13 @@
                         <td style="padding: 0 40px 40px 40px;">
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
-                                    <td style="padding: 8px 0; color: #40464b; font-size: 14px;">Sous-total</td>
+                                    <td style="padding: 8px 0; color: #40464b; font-size: 14px;">{{ __('emails.order_confirmation.subtotal') }}</td>
                                     <td align="right"
                                         style="padding: 8px 0; color: #000000; font-size: 14px; font-weight: 600;">
                                         {{ number_format($order->subtotal, 0, ',', ' ') }} €</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 8px 0; color: #40464b; font-size: 14px;">Livraison</td>
+                                    <td style="padding: 8px 0; color: #40464b; font-size: 14px;">{{ __('emails.order_confirmation.shipping') }}</td>
                                     <td align="right"
                                         style="padding: 8px 0; color: #000000; font-size: 14px; font-weight: 600;">
                                         {{ number_format($order->shipping, 0, ',', ' ') }} €</td>
@@ -138,7 +134,7 @@
                                 <tr style="border-top: 2px solid #d0d0d0;">
                                     <td
                                         style="padding: 16px 0 0 0; color: #000000; font-size: 16px; font-weight: bold;">
-                                        Total</td>
+                                        {{ __('emails.order_confirmation.total') }}</td>
                                     <td align="right"
                                         style="padding: 16px 0 0 0; color: #e8bf5e; font-size: 20px; font-weight: bold;">
                                         {{ number_format($order->total, 0, ',', ' ') }} €</td>
@@ -156,7 +152,7 @@
                                     <td>
                                         <h3
                                             style="color: #000000; margin: 0 0 16px 0; font-size: 16px; font-weight: 600;">
-                                            Adresse de livraison</h3>
+                                            {{ __('emails.order_confirmation.shipping_address') }}</h3>
                                         <p style="margin: 0; color: #000000; font-size: 14px; line-height: 1.6;">
                                             <strong>{{ $order->shipping_name }}</strong><br>
                                             {{ $order->shipping_address }}<br>
@@ -176,13 +172,13 @@
                             <div
                                 style="background-color: #fef9ec; border-left: 4px solid #e8bf5e; border-radius: 8px; padding: 20px;">
                                 <h3 style="color: #000000; margin: 0 0 12px 0; font-size: 16px; font-weight: 600;">
-                                    Prochaines étapes</h3>
+                                    {{ __('emails.order_confirmation.next_steps') }}</h3>
                                 <ul
                                     style="margin: 0; padding-left: 20px; color: #40464b; font-size: 14px; line-height: 1.8;">
-                                    <li>Nous préparons votre commande avec soin</li>
-                                    <li>Vous recevrez un email de confirmation d'expédition</li>
-                                    <li>Livraison estimée : 2-5 jours ouvrables</li>
-                                    <li>Suivez votre commande dans votre espace client</li>
+                                    <li>{{ __('emails.order_confirmation.preparing_order') }}</li>
+                                    <li>{{ __('emails.order_confirmation.shipping_confirmation') }}</li>
+                                    <li>{{ __('emails.order_confirmation.estimated_delivery') }}</li>
+                                    <li>{{ __('emails.order_confirmation.track_order') }}</li>
                                 </ul>
                             </div>
                         </td>
@@ -193,7 +189,7 @@
                         <td style="padding: 0 40px 40px 40px; text-align: center;">
                             <a href="{{ route('client.orders.show', $order) }}"
                                 style="display: inline-block; background-color: #e8bf5e; color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 12px; font-size: 16px; font-weight: 600;">
-                                Suivre ma commande
+                                {{ __('emails.order_confirmation.track_my_order') }}
                             </a>
                         </td>
                     </tr>
@@ -202,7 +198,7 @@
                     <tr>
                         <td style="background-color: #f9f5f2; padding: 32px 40px; text-align: center;">
                             <p style="margin: 0 0 16px 0; color: #606266; font-size: 14px;">
-                                Besoin d'aide ? Contactez-nous :
+                                {{ __('emails.order_confirmation.need_help') }}
                             </p>
                             <p style="margin: 0; color: #2725a9; font-size: 14px; font-weight: 600;">
                                 Lamaisonp2a@outlook.com | +229 01 90 01 68 79
@@ -222,7 +218,7 @@
                                 </a>
                             </div>
                             <p style="margin: 24px 0 0 0; color: #4f5561; font-size: 12px;">
-                                © {{ date('Y') }} La Maison P2A. Tous droits réservés.<br>
+                                © {{ date('Y') }} La Maison P2A. {{ __('emails.order_confirmation.all_rights_reserved') }}.<br>
                                 Cotonou, Bénin
                             </p>
                         </td>

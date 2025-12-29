@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
-@section('title', 'Paiement Réussi')
-@section('description', 'Votre paiement a été effectué avec succès')
+@section('title', __('payment.success_title'))
+@section('description', __('payment.success_meta'))
 
 @section('content')
     <div class="min-h-screen bg-gradient-to-br from-green-50 to-neutral-50 py-12">
@@ -17,22 +17,21 @@
                 </div>
 
                 <!-- Success Message -->
-                <h1 class="text-3xl font-bold text-neutral-900 mb-4">Paiement Réussi !</h1>
+                <h1 class="text-3xl font-bold text-neutral-900 mb-4">{{ __('payment.success_heading') }}</h1>
                 <p class="text-lg text-neutral-600 mb-8">
-                    Votre commande <span class="font-semibold text-primary-500">#{{ $order->order_number }}</span> a été
-                    payée avec succès
+                    {!! __('payment.success_message', ['order_number' => '#'.$order->order_number]) !!}
                 </p>
 
                 <!-- Order Info -->
                 <div class="bg-gradient-to-br from-primary-50 to-neutral-50 rounded-xl p-6 mb-8">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
                         <div>
-                            <p class="text-sm text-neutral-500 mb-1">Montant payé</p>
+                            <p class="text-sm text-neutral-500 mb-1">{{ __('payment.amount_paid') }}</p>
                             <p class="text-2xl font-bold text-primary-500">{{ number_format($order->total, 0, ',', ' ') }}
                                 €</p>
                         </div>
                         <div>
-                            <p class="text-sm text-neutral-500 mb-1">Date du paiement</p>
+                            <p class="text-sm text-neutral-500 mb-1">{{ __('payment.payment_date') }}</p>
                             <p class="text-lg font-semibold text-neutral-900">{{ $order->paid_at->format('d/m/Y à H:i') }}
                             </p>
                         </div>
@@ -46,7 +45,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        Que se passe-t-il maintenant ?
+                        {{ __('payment.whats_next') }}
                     </h3>
                     <ul class="space-y-2 text-sm text-neutral-600">
                         <li class="flex items-start">
@@ -56,8 +55,7 @@
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
                             </svg>
-                            <span>Un email de confirmation a été envoyé à
-                                <strong>{{ $order->shipping_email }}</strong></span>
+                            <span>{!! __('payment.confirmation_sent', ['email' => $order->shipping_email]) !!}</span>
                         </li>
                         <li class="flex items-start">
                             <svg class="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor"
@@ -66,7 +64,7 @@
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
                             </svg>
-                            <span>Votre commande est en cours de traitement</span>
+                            <span>{{ __('payment.order_processing') }}</span>
                         </li>
                         <li class="flex items-start">
                             <svg class="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor"
@@ -75,7 +73,7 @@
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
                             </svg>
-                            <span>Nous vous contacterons pour la livraison</span>
+                            <span>{{ __('payment.delivery_contact') }}</span>
                         </li>
                         <li class="flex items-start">
                             <svg class="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor"
@@ -84,7 +82,7 @@
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
                             </svg>
-                            <span>Vous pouvez suivre l'état de votre commande depuis votre compte</span>
+                            <span>{{ __('payment.track_order') }}</span>
                         </li>
                     </ul>
                 </div>
@@ -96,23 +94,23 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                        Voir ma commande
+                        {{ __('payment.view_order') }}
                     </a>
                     <a href="{{ route('shop.index') }}" class="btn-secondary">
                         <svg class="w-5 h-5 mr-2 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
-                        Continuer mes achats
+                        {{ __('payment.continue_shopping') }}
                     </a>
                 </div>
 
                 <!-- Support -->
                 <div class="mt-8 pt-8 border-t border-neutral-200">
                     <p class="text-sm text-neutral-600">
-                        Une question sur votre commande ?
+                        {{ __('payment.order_question') }}
                         <a href="{{ route('contact') }}" class="text-primary-500 hover:text-primary-600 font-medium">
-                            Contactez-nous
+                            {{ __('payment.contact_us') }}
                         </a>
                     </p>
                 </div>

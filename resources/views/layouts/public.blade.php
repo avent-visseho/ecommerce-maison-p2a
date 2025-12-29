@@ -27,33 +27,84 @@
                     <div class="hidden lg:flex items-center space-x-1">
                         <a href="{{ route('home') }}"
                             class="px-4 py-2 text-sm font-medium text-neutral-900 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all {{ request()->routeIs('home') ? 'text-primary-500 bg-primary-50' : '' }}">
-                            Accueil
+                            {{ __('common.home') }}
                         </a>
                         <a href="{{ route('shop.index') }}"
                             class="px-4 py-2 text-sm font-medium text-neutral-900 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all {{ request()->routeIs('shop.*') ? 'text-primary-500 bg-primary-50' : '' }}">
-                            Boutique
+                            {{ __('common.shop') }}
                         </a>
                         <a href="{{ route('services') }}"
                             class="px-4 py-2 text-sm font-medium text-neutral-900 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all {{ request()->routeIs('services') ? 'text-primary-500 bg-primary-50' : '' }}">
-                            Services
+                            {{ __('common.services') }}
                         </a>
                         <a href="{{ route('blog.index') }}"
                             class="px-4 py-2 text-sm font-medium text-neutral-900 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all {{ request()->routeIs('blog.*') ? 'text-primary-500 bg-primary-50' : '' }}">
-                            Blog
+                            {{ __('common.blog') }}
                         </a>
                         <a href="{{ route('about') }}"
                             class="px-4 py-2 text-sm font-medium text-neutral-900 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all {{ request()->routeIs('about') ? 'text-primary-500 bg-primary-50' : '' }}">
-                            À Propos
+                            {{ __('common.about') }}
                         </a>
                         <a href="{{ route('contact') }}"
                             class="px-4 py-2 text-sm font-medium text-neutral-900 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all {{ request()->routeIs('contact') ? 'text-primary-500 bg-primary-50' : '' }}">
-                            Contact
+                            {{ __('common.contact') }}
                         </a>
                     </div>
                 </div>
 
                 <!-- Right Menu -->
                 <div class="flex items-center space-x-4">
+                    <!-- Language Selector -->
+                    <div x-data="{ langOpen: false }" class="relative">
+                        <button @click="langOpen = !langOpen"
+                            class="flex items-center gap-2 p-2 hover:bg-neutral-50 rounded-lg transition-all group">
+                            <svg class="w-5 h-5 text-neutral-400 group-hover:text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                            </svg>
+                            <span class="hidden md:block text-sm font-medium text-neutral-700 group-hover:text-neutral-900">
+                                {{ strtoupper(app()->getLocale()) }}
+                            </span>
+                            <svg class="w-4 h-4 text-neutral-400 group-hover:text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+
+                        <div x-show="langOpen" @click.away="langOpen = false"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 transform scale-95"
+                            x-transition:enter-end="opacity-100 transform scale-100"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 transform scale-100"
+                            x-transition:leave-end="opacity-0 transform scale-95"
+                            class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-neutral-200 py-2 z-50"
+                            style="display: none;">
+                            <a href="?lang=fr" class="flex items-center gap-3 px-4 py-3 hover:bg-primary-50 transition-all {{ app()->getLocale() == 'fr' ? 'bg-primary-50 text-primary-600' : 'text-neutral-700' }}">
+                                <span class="text-2xl">🇫🇷</span>
+                                <div>
+                                    <p class="font-semibold">Français</p>
+                                    <p class="text-xs text-neutral-500">French</p>
+                                </div>
+                                @if(app()->getLocale() == 'fr')
+                                    <svg class="w-5 h-5 ml-auto text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                @endif
+                            </a>
+                            <a href="?lang=en" class="flex items-center gap-3 px-4 py-3 hover:bg-primary-50 transition-all {{ app()->getLocale() == 'en' ? 'bg-primary-50 text-primary-600' : 'text-neutral-700' }}">
+                                <span class="text-2xl">🇬🇧</span>
+                                <div>
+                                    <p class="font-semibold">English</p>
+                                    <p class="text-xs text-neutral-500">Anglais</p>
+                                </div>
+                                @if(app()->getLocale() == 'en')
+                                    <svg class="w-5 h-5 ml-auto text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                @endif
+                            </a>
+                        </div>
+                    </div>
+
                     <!-- Search -->
                     <button
                         class="hidden md:flex p-2 text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50 rounded-lg transition-all">
@@ -108,7 +159,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                                         </svg>
-                                        Administration
+                                        {{ __('common.administration') }}
                                     </a>
                                     <div class="border-t border-neutral-200 my-2"></div>
                                 @endif
@@ -119,7 +170,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                     </svg>
-                                    Mon Compte
+                                    {{ __('common.my_account') }}
                                 </a>
                                 <a href="{{ route('client.orders.index') }}"
                                     class="flex items-center px-4 py-2 text-sm text-neutral-900 hover:bg-neutral-50">
@@ -128,7 +179,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                     </svg>
-                                    Mes Commandes
+                                    {{ __('common.my_orders') }}
                                 </a>
                                 <div class="border-t border-neutral-200 my-2"></div>
                                 <form method="POST" action="{{ route('logout') }}">
@@ -140,7 +191,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                         </svg>
-                                        Déconnexion
+                                        {{ __('common.logout') }}
                                     </button>
                                 </form>
                             </div>
@@ -148,10 +199,10 @@
                     @else
                         <a href="{{ route('login') }}"
                             class="hidden md:flex px-4 py-2 text-sm font-medium text-neutral-900 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all">
-                            Connexion
+                            {{ __('common.login') }}
                         </a>
                         <a href="{{ route('register') }}" class="hidden md:flex btn-primary text-sm">
-                            S'inscrire
+                            {{ __('common.register') }}
                         </a>
                     @endauth
 
@@ -174,25 +225,24 @@
             class="lg:hidden border-t border-neutral-200 bg-white" style="display: none;">
             <div class="px-4 py-4 space-y-1">
                 <a href="{{ route('home') }}"
-                    class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">Accueil</a>
+                    class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">{{ __('common.home') }}</a>
                 <a href="{{ route('shop.index') }}"
-                    class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">Boutique</a>
+                    class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">{{ __('common.shop') }}</a>
                 <a href="{{ route('services') }}"
-                    class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">Services</a>
+                    class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">{{ __('common.services') }}</a>
                 <a href="{{ route('blog.index') }}"
-                    class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">Blog</a>
+                    class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">{{ __('common.blog') }}</a>
                 <a href="{{ route('about') }}"
-                    class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">À
-                    Propos</a>
+                    class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">{{ __('common.about') }}</a>
                 <a href="{{ route('contact') }}"
-                    class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">Contact</a>
+                    class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">{{ __('common.contact') }}</a>
 
                 @guest
                     <div class="pt-4 border-t border-neutral-200">
                         <a href="{{ route('login') }}"
-                            class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">Connexion</a>
+                            class="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-50 rounded-lg">{{ __('common.login') }}</a>
                         <a href="{{ route('register') }}"
-                            class="block px-4 py-3 text-sm font-medium text-white bg-primary-500 rounded-lg text-center mt-2">S'inscrire</a>
+                            class="block px-4 py-3 text-sm font-medium text-white bg-primary-500 rounded-lg text-center mt-2">{{ __('common.register') }}</a>
                     </div>
                 @endguest
             </div>
@@ -244,8 +294,7 @@
                         <img src="{{ asset('logo.jpg') }}" alt="La Maison P2A" class="h-16 w-auto object-contain">
                     </div>
                     <p class="text-white mb-4 max-w-md">
-                        Votre partenaire privilégié pour la décoration d'intérieur et l'organisation d'événements.
-                        Créons ensemble des espaces qui vous ressemblent.
+                        {{ __('common.company_description') }}
                     </p>
                     <div class="flex items-center space-x-4">
                         <a href="https://www.facebook.com/profile.php?id=61582522333813" target="_blank"
@@ -290,24 +339,24 @@
 
                 <!-- Quick Links -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Liens Rapides</h3>
+                    <h3 class="text-lg font-semibold mb-4">{{ __('common.quick_links') }}</h3>
                     <ul class="space-y-2">
                         <li><a href="{{ route('shop.index') }}"
-                                class="text-white hover:text-white transition-colors">Boutique</a></li>
+                                class="text-white hover:text-white transition-colors">{{ __('common.shop') }}</a></li>
                         <li><a href="{{ route('services') }}"
-                                class="text-white hover:text-white transition-colors">Services</a></li>
+                                class="text-white hover:text-white transition-colors">{{ __('common.services') }}</a></li>
                         <li><a href="{{ route('blog.index') }}"
-                                class="text-white hover:text-white transition-colors">Blog</a></li>
+                                class="text-white hover:text-white transition-colors">{{ __('common.blog') }}</a></li>
                         <li><a href="{{ route('about') }}"
-                                class="text-white hover:text-white transition-colors">À Propos</a></li>
+                                class="text-white hover:text-white transition-colors">{{ __('common.about') }}</a></li>
                         <li><a href="{{ route('contact') }}"
-                                class="text-white hover:text-white transition-colors">Contact</a></li>
+                                class="text-white hover:text-white transition-colors">{{ __('common.contact') }}</a></li>
                     </ul>
                 </div>
 
                 <!-- Contact Info -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                    <h3 class="text-lg font-semibold mb-4">{{ __('common.contact') }}</h3>
                     <ul class="space-y-3 text-white">
                         <li class="flex items-start">
                             <svg class="w-5 h-5 mr-2 mt-0.5" fill="none" stroke="currentColor"
@@ -317,7 +366,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
-                            <span>17 Rue François René Châteaubriand; 78370 Plaisir (France)</span>
+                            <span>région parisienne (France)</span>
                         </li>
                         <li class="flex items-start">
                             <svg class="w-5 h-5 mr-2 mt-0.5" fill="none" stroke="currentColor"
@@ -343,15 +392,13 @@
             <div class="pt-8 border-t border-neutral-800">
                 <div class="flex flex-col md:flex-row items-center justify-between">
                     <p class="text-sm text-white">
-                        &copy; {{ date('Y') }} La Maison P2A. Tous droits réservés.
+                        &copy; {{ date('Y') }} La Maison P2A. {{ __('common.all_rights_reserved') }}.
                     </p>
                     <div class="flex items-center space-x-6 mt-4 md:mt-0">
                         <a href="#"
-                            class="text-sm text-white hover:text-white transition-colors">Politique de
-                            confidentialité</a>
+                            class="text-sm text-white hover:text-white transition-colors">{{ __('common.privacy_policy') }}</a>
                         <a href="#"
-                            class="text-sm text-white hover:text-white transition-colors">Conditions
-                            d'utilisation</a>
+                            class="text-sm text-white hover:text-white transition-colors">{{ __('common.terms_conditions') }}</a>
                     </div>
                 </div>
             </div>

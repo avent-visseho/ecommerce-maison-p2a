@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Mon Compte') - {{ config('app.name') }}</title>
+    <title>@yield('title', __('layouts.client.my_account')) - {{ config('app.name') }}</title>
     <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700,800" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -24,7 +24,7 @@
 
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('home') }}" class="text-sm text-neutral-400 hover:text-neutral-900">
-                        Retour au site
+                        {{ __('layouts.client.back_to_site') }}
                     </a>
                     <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center">
                         <span
@@ -62,7 +62,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                 </svg>
-                                <span class="font-medium">Tableau de bord</span>
+                                <span class="font-medium">{{ __('layouts.client.dashboard') }}</span>
                             </a>
 
                             <a href="{{ route('client.orders.index') }}"
@@ -71,7 +71,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                 </svg>
-                                <span class="font-medium">Mes Commandes</span>
+                                <span class="font-medium">{{ __('layouts.client.my_orders') }}</span>
                             </a>
 
                             <a href="{{ route('client.profile.edit') }}"
@@ -80,7 +80,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
-                                <span class="font-medium">Mon Profil</span>
+                                <span class="font-medium">{{ __('layouts.client.my_profile') }}</span>
                             </a>
 
                             <form method="POST" action="{{ route('logout') }}">
@@ -91,7 +91,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                     </svg>
-                                    <span class="font-medium">Déconnexion</span>
+                                    <span class="font-medium">{{ __('layouts.client.logout') }}</span>
                                 </button>
                             </form>
                         </nav>

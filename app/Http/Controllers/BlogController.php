@@ -63,7 +63,7 @@ class BlogController extends Controller
 
     public function show($slug)
     {
-        $post = BlogPost::with(['author', 'category', 'tags', 'approvedComments.user', 'approvedComments.replies'])
+        $post = BlogPost::with(['author', 'category', 'tags', 'approvedComments.user', 'approvedComments.replies.user'])
             ->where('slug', $slug)
             ->published()
             ->firstOrFail();

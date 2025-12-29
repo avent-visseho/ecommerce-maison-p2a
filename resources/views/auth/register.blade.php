@@ -1,8 +1,8 @@
 <x-guest-layout>
     <div class="bg-white rounded-2xl shadow-soft p-8 border border-neutral-200">
         <div class="mb-8">
-            <h2 class="text-3xl font-bold text-neutral-900 mb-2">Créer un compte</h2>
-            <p class="text-neutral-400">Rejoignez La Maison P2A et commencez votre décoration</p>
+            <h2 class="text-3xl font-bold text-neutral-900 mb-2">{{ __('auth.register.title') }}</h2>
+            <p class="text-neutral-400">{{ __('auth.register.subtitle') }}</p>
         </div>
 
         <!-- Errors -->
@@ -21,7 +21,7 @@
 
             <!-- Name -->
             <div>
-                <label for="name" class="label">Nom complet</label>
+                <label for="name" class="label">{{ __('auth.register.name') }}</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <svg class="h-5 w-5 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -30,13 +30,13 @@
                         </svg>
                     </div>
                     <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus
-                        class="input-field pl-12" placeholder="Jean Dupont">
+                        class="input-field pl-12" placeholder="{{ __('auth.register.name_placeholder') }}">
                 </div>
             </div>
 
             <!-- Email -->
             <div>
-                <label for="email" class="label">Adresse email</label>
+                <label for="email" class="label">{{ __('auth.register.email') }}</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <svg class="h-5 w-5 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,13 +45,13 @@
                         </svg>
                     </div>
                     <input id="email" type="email" name="email" value="{{ old('email') }}" required
-                        class="input-field pl-12" placeholder="exemple@email.com">
+                        class="input-field pl-12" placeholder="{{ __('auth.register.email_placeholder') }}">
                 </div>
             </div>
 
             <!-- Password -->
             <div>
-                <label for="password" class="label">Mot de passe</label>
+                <label for="password" class="label">{{ __('auth.register.password') }}</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <svg class="h-5 w-5 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,14 +60,14 @@
                         </svg>
                     </div>
                     <input id="password" type="password" name="password" required class="input-field pl-12"
-                        placeholder="••••••••">
+                        placeholder="{{ __('auth.register.password_placeholder') }}">
                 </div>
-                <p class="mt-1 text-xs text-neutral-400">Minimum 8 caractères</p>
+                <p class="mt-1 text-xs text-neutral-400">{{ __('auth.register.password_min') }}</p>
             </div>
 
             <!-- Password Confirmation -->
             <div>
-                <label for="password_confirmation" class="label">Confirmer le mot de passe</label>
+                <label for="password_confirmation" class="label">{{ __('auth.register.password_confirmation') }}</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <svg class="h-5 w-5 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -76,7 +76,7 @@
                         </svg>
                     </div>
                     <input id="password_confirmation" type="password" name="password_confirmation" required
-                        class="input-field pl-12" placeholder="••••••••">
+                        class="input-field pl-12" placeholder="{{ __('auth.register.password_placeholder') }}">
                 </div>
             </div>
 
@@ -85,18 +85,16 @@
                 <input type="checkbox" required
                     class="mt-1 rounded border-neutral-300 text-primary-500 focus:ring-primary-500">
                 <span class="ml-2 text-sm text-neutral-400">
-                    J'accepte les
-                    <a href="#" class="text-primary-500 hover:text-primary-600 font-medium">conditions
-                        d'utilisation</a>
-                    et la
-                    <a href="#" class="text-primary-500 hover:text-primary-600 font-medium">politique de
-                        confidentialité</a>
+                    {{ __('auth.register.terms_prefix') }}
+                    <a href="#" class="text-primary-500 hover:text-primary-600 font-medium">{{ __('auth.register.terms_link') }}</a>
+                    {{ __('auth.register.terms_and') }}
+                    <a href="#" class="text-primary-500 hover:text-primary-600 font-medium">{{ __('auth.register.privacy_link') }}</a>
                 </span>
             </div>
 
             <!-- Submit Button -->
             <button type="submit" class="w-full btn-primary flex items-center justify-center space-x-2">
-                <span>Créer mon compte</span>
+                <span>{{ __('auth.register.register_button') }}</span>
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -107,9 +105,9 @@
         <!-- Login Link -->
         <div class="mt-8 pt-6 border-t border-neutral-200 text-center">
             <p class="text-sm text-neutral-400">
-                Vous avez déjà un compte ?
+                {{ __('auth.register.have_account') }}
                 <a href="{{ route('login') }}" class="text-primary-500 hover:text-primary-600 font-semibold ml-1">
-                    Se connecter
+                    {{ __('auth.register.login_link') }}
                 </a>
             </p>
         </div>
@@ -122,7 +120,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                <span>Retour à l'accueil</span>
+                <span>{{ __('auth.register.back_to_home') }}</span>
             </a>
         </div>
     </div>

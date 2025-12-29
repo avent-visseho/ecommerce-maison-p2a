@@ -1,14 +1,14 @@
 @extends('layouts.client')
 
-@section('title', 'Mes Commandes')
+@section('title', __('client.orders.title'))
 
 @section('content')
     <div class="space-y-6">
         <!-- Header -->
         <div class="card">
             <div class="card-body">
-                <h1 class="text-2xl font-bold text-neutral-900 mb-2">Mes Commandes</h1>
-                <p class="text-neutral-400">Suivez l'état de toutes vos commandes</p>
+                <h1 class="text-2xl font-bold text-neutral-900 mb-2">{{ __('client.orders.title') }}</h1>
+                <p class="text-neutral-400">{{ __('client.orders.track_description') }}</p>
             </div>
         </div>
 
@@ -24,29 +24,29 @@
                                     <div class="flex items-start justify-between mb-4">
                                         <div>
                                             <h3 class="text-lg font-semibold text-neutral-900 mb-1">
-                                                Commande {{ $order->order_number }}
+                                                {{ __('client.orders.order') }} {{ $order->order_number }}
                                             </h3>
                                             <p class="text-sm text-neutral-400">
-                                                Passée le {{ $order->created_at->format('d/m/Y à H:i') }}
+                                                {{ __('client.orders.placed_on') }} {{ $order->created_at->format('d/m/Y') }} {{ __('client.orders.at') }} {{ $order->created_at->format('H:i') }}
                                             </p>
                                         </div>
                                         <div class="flex flex-col items-end space-y-2">
                                             @if ($order->status === 'pending')
-                                                <span class="badge badge-warning">En attente</span>
+                                                <span class="badge badge-warning">{{ __('client.orders.pending') }}</span>
                                             @elseif($order->status === 'processing')
-                                                <span class="badge badge-info">En cours</span>
+                                                <span class="badge badge-info">{{ __('client.orders.processing') }}</span>
                                             @elseif($order->status === 'completed')
-                                                <span class="badge badge-success">Complété</span>
+                                                <span class="badge badge-success">{{ __('client.orders.completed') }}</span>
                                             @else
-                                                <span class="badge badge-danger">Annulé</span>
+                                                <span class="badge badge-danger">{{ __('client.orders.cancelled') }}</span>
                                             @endif
 
                                             @if ($order->payment_status === 'paid')
-                                                <span class="badge badge-success">Payé</span>
+                                                <span class="badge badge-success">{{ __('client.orders.paid') }}</span>
                                             @elseif($order->payment_status === 'pending')
-                                                <span class="badge badge-warning">Paiement en attente</span>
+                                                <span class="badge badge-warning">{{ __('client.orders.payment_pending') }}</span>
                                             @else
-                                                <span class="badge badge-danger">Paiement échoué</span>
+                                                <span class="badge badge-danger">{{ __('client.orders.payment_failed') }}</span>
                                             @endif
                                         </div>
                                     </div>
@@ -83,7 +83,7 @@
                                             @endif
                                         </div>
                                         <p class="text-sm text-neutral-600">
-                                            {{ $order->items->count() }} article{{ $order->items->count() > 1 ? 's' : '' }}
+                                            {{ $order->items->count() }} {{ $order->items->count() > 1 ? __('client.orders.items') : __('client.orders.item') }}
                                         </p>
                                     </div>
 
@@ -114,11 +114,11 @@
                                 <div class="flex flex-col space-y-2 lg:w-auto w-full">
                                     <a href="{{ route('client.orders.show', $order) }}"
                                         class="btn-primary text-center whitespace-nowrap">
-                                        Voir les détails
+                                        {{ __('client.orders.view_details') }}
                                     </a>
                                     @if ($order->status === 'completed')
                                         <button class="btn-secondary text-center whitespace-nowrap">
-                                            Télécharger facture
+                                            {{ __('client.orders.download_invoice') }}
                                         </button>
                                     @endif
                                 </div>
@@ -134,16 +134,16 @@
                                             </div>
                                             <span class="text-sm font-medium text-neutral-900">
                                                 @if ($order->status === 'pending')
-                                                    Commande en attente de traitement
+                                                    {{ __('client.orders.order_pending_processing') }}
                                                 @elseif($order->status === 'processing')
-                                                    Commande en préparation
+                                                    {{ __('client.orders.order_in_preparation') }}
                                                 @else
-                                                    Commande livrée
+                                                    {{ __('client.orders.order_delivered') }}
                                                 @endif
                                             </span>
                                         </div>
                                         @if ($order->status === 'processing')
-                                            <span class="text-xs text-neutral-400">Livraison estimée: 2-5 jours</span>
+                                            <span class="text-xs text-neutral-400">{{ __('client.orders.estimated_delivery') }}</span>
                                         @endif
                                     </div>
                                     <div class="w-full bg-neutral-200 rounded-full h-2">
@@ -174,16 +174,16 @@
                                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-neutral-900 mb-2">Aucune commande</h3>
+                    <h3 class="text-2xl font-bold text-neutral-900 mb-2">{{ __('client.orders.no_orders') }}</h3>
                     <p class="text-neutral-400 mb-6 max-w-md mx-auto">
-                        Vous n'avez pas encore passé de commande. Découvrez notre collection de produits.
+                        {{ __('client.orders.no_orders_description') }}
                     </p>
                     <a href="{{ route('shop.index') }}" class="btn-primary inline-flex items-center">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
-                        Découvrir la boutique
+                        {{ __('client.orders.discover_shop') }}
                     </a>
                 </div>
             </div>

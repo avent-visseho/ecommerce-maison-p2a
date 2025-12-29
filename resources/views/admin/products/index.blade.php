@@ -250,19 +250,34 @@
                                 <td>
                                     <div class="flex items-center justify-end space-x-2">
                                         <a href="{{ route('admin.products.edit', $product) }}"
-                                            class="p-2 text-neutral-400 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all">
+                                            class="p-2 text-neutral-400 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all"
+                                            title="Modifier">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor"
                                                 viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                             </svg>
                                         </a>
+                                        <a href="{{ route('admin.products.variants.index', $product) }}"
+                                            class="p-2 text-neutral-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-all relative"
+                                            title="Gérer les variantes">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                                            </svg>
+                                            @if($product->activeVariants()->count() > 0)
+                                                <span class="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 text-white text-[10px] rounded-full flex items-center justify-center">
+                                                    {{ $product->activeVariants()->count() }}
+                                                </span>
+                                            @endif
+                                        </a>
                                         <form action="{{ route('admin.products.destroy', $product) }}" method="POST"
                                             onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="p-2 text-neutral-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all">
+                                                class="p-2 text-neutral-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                                                title="Supprimer">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

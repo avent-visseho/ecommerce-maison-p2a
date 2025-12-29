@@ -27,12 +27,12 @@ class AdminSeeder extends Seeder
         ]);
 
         // Create test customer
-        User::create([
+       /*  User::create([
             'name' => 'Client Test',
             'email' => 'client@test.com',
             'password' => Hash::make('Client123!'),
             'role_id' => $customerRole->id,
             'email_verified_at' => now(),
-        ]);
+        ]); */
     }
 }

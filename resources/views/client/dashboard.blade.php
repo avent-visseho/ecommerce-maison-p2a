@@ -1,14 +1,14 @@
 @extends('layouts.client')
 
-@section('title', 'Mon Tableau de Bord')
+@section('title', __('client.dashboard.title'))
 
 @section('content')
     <div class="space-y-6">
         <!-- Welcome Section -->
         <div class="card">
             <div class="card-body">
-                <h1 class="text-2xl font-bold text-neutral-900 mb-2">Bienvenue, {{ auth()->user()->name }} !</h1>
-                <p class="text-neutral-400">Gérez vos commandes et votre profil depuis votre espace personnel</p>
+                <h1 class="text-2xl font-bold text-neutral-900 mb-2">{{ __('client.dashboard.welcome', ['name' => auth()->user()->name]) }}</h1>
+                <p class="text-neutral-400">{{ __('client.dashboard.manage_description') }}</p>
             </div>
         </div>
 
@@ -23,7 +23,7 @@
                         </svg>
                     </div>
                 </div>
-                <p class="text-sm text-neutral-400 mb-1">Total Commandes</p>
+                <p class="text-sm text-neutral-400 mb-1">{{ __('client.dashboard.total_orders') }}</p>
                 <h3 class="text-3xl font-bold text-neutral-900">{{ $totalOrders }}</h3>
             </div>
 
@@ -36,7 +36,7 @@
                         </svg>
                     </div>
                 </div>
-                <p class="text-sm text-neutral-400 mb-1">En Attente</p>
+                <p class="text-sm text-neutral-400 mb-1">{{ __('client.dashboard.pending_orders') }}</p>
                 <h3 class="text-3xl font-bold text-neutral-900">{{ $pendingOrders }}</h3>
             </div>
 
@@ -49,7 +49,7 @@
                         </svg>
                     </div>
                 </div>
-                <p class="text-sm text-neutral-400 mb-1">Complétées</p>
+                <p class="text-sm text-neutral-400 mb-1">{{ __('client.dashboard.completed_orders') }}</p>
                 <h3 class="text-3xl font-bold text-neutral-900">{{ $completedOrders }}</h3>
             </div>
 
@@ -62,7 +62,7 @@
                         </svg>
                     </div>
                 </div>
-                <p class="text-sm text-neutral-400 mb-1">Total Dépensé</p>
+                <p class="text-sm text-neutral-400 mb-1">{{ __('client.dashboard.total_spent') }}</p>
                 <h3 class="text-2xl font-bold text-neutral-900">{{ number_format($totalSpent, 0, ',', ' ') }} €</h3>
             </div>
         </div>
@@ -70,10 +70,10 @@
         <!-- Recent Orders -->
         <div class="card">
             <div class="card-header flex items-center justify-between">
-                <h2 class="text-xl font-semibold text-neutral-900">Commandes Récentes</h2>
+                <h2 class="text-xl font-semibold text-neutral-900">{{ __('client.dashboard.recent_orders') }}</h2>
                 <a href="{{ route('client.orders.index') }}"
                     class="text-sm text-primary-500 hover:text-primary-600 font-medium">
-                    Voir tout
+                    {{ __('client.dashboard.view_all') }}
                 </a>
             </div>
             <div class="overflow-x-auto">
@@ -81,12 +81,12 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>N° Commande</th>
-                                <th>Date</th>
-                                <th>Articles</th>
-                                <th>Total</th>
-                                <th>Statut</th>
-                                <th>Actions</th>
+                                <th>{{ __('client.dashboard.order_number') }}</th>
+                                <th>{{ __('client.dashboard.date') }}</th>
+                                <th>{{ __('client.dashboard.items') }}</th>
+                                <th>{{ __('client.dashboard.total') }}</th>
+                                <th>{{ __('client.dashboard.status') }}</th>
+                                <th>{{ __('client.dashboard.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -125,19 +125,19 @@
                                     </td>
                                     <td>
                                         @if ($order->status === 'pending')
-                                            <span class="badge badge-warning">En attente</span>
+                                            <span class="badge badge-warning">{{ __('client.status.pending') }}</span>
                                         @elseif($order->status === 'processing')
-                                            <span class="badge badge-info">En cours</span>
+                                            <span class="badge badge-info">{{ __('client.status.processing') }}</span>
                                         @elseif($order->status === 'completed')
-                                            <span class="badge badge-success">Complété</span>
+                                            <span class="badge badge-success">{{ __('client.status.completed') }}</span>
                                         @else
-                                            <span class="badge badge-danger">Annulé</span>
+                                            <span class="badge badge-danger">{{ __('client.status.cancelled') }}</span>
                                         @endif
                                     </td>
                                     <td>
                                         <a href="{{ route('client.orders.show', $order) }}"
                                             class="text-primary-500 hover:text-primary-600 font-medium text-sm">
-                                            Voir détails
+                                            {{ __('client.dashboard.view_details') }}
                                         </a>
                                     </td>
                                 </tr>
@@ -151,9 +151,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
-                        <p class="text-neutral-400 mb-4">Vous n'avez pas encore passé de commande</p>
+                        <p class="text-neutral-400 mb-4">{{ __('client.dashboard.no_orders') }}</p>
                         <a href="{{ route('shop.index') }}" class="btn-primary inline-flex items-center">
-                            Découvrir la boutique
+                            {{ __('client.dashboard.discover_shop') }}
                         </a>
                     </div>
                 @endif
@@ -172,8 +172,8 @@
                                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
                     </div>
-                    <h3 class="font-semibold text-neutral-900 mb-2">Continuer mes achats</h3>
-                    <p class="text-sm text-neutral-400">Découvrez notre collection</p>
+                    <h3 class="font-semibold text-neutral-900 mb-2">{{ __('client.dashboard.continue_shopping') }}</h3>
+                    <p class="text-sm text-neutral-400">{{ __('client.dashboard.discover_collection') }}</p>
                 </div>
             </a>
 
@@ -187,8 +187,8 @@
                                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                         </svg>
                     </div>
-                    <h3 class="font-semibold text-neutral-900 mb-2">Mes commandes</h3>
-                    <p class="text-sm text-neutral-400">Suivre mes achats</p>
+                    <h3 class="font-semibold text-neutral-900 mb-2">{{ __('client.dashboard.my_orders') }}</h3>
+                    <p class="text-sm text-neutral-400">{{ __('client.dashboard.track_purchases') }}</p>
                 </div>
             </a>
 
@@ -202,8 +202,8 @@
                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
                     </div>
-                    <h3 class="font-semibold text-neutral-900 mb-2">Mon profil</h3>
-                    <p class="text-sm text-neutral-400">Gérer mes informations</p>
+                    <h3 class="font-semibold text-neutral-900 mb-2">{{ __('client.dashboard.my_profile') }}</h3>
+                    <p class="text-sm text-neutral-400">{{ __('client.dashboard.manage_info') }}</p>
                 </div>
             </a>
         </div>

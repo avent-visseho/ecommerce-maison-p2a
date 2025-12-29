@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'La Maison P2A') }} - @yield('title', 'Authentification')</title>
+    <title>{{ config('app.name', 'La Maison P2A') }} - @yield('title', __('layouts.guest.authentication'))</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700,800" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -26,12 +26,11 @@
 
                 <div class="space-y-6">
                     <h1 class="text-5xl font-bold leading-tight">
-                        Créez votre espace<br />
-                        <span class="text-accent-light">de rêve</span>
+                        {{ __('layouts.guest.create_dream_space') }}<br />
+                        <span class="text-accent-light">{{ __('layouts.guest.dream_space_subtitle') }}</span>
                     </h1>
                     <p class="text-xl text-primary-100 max-w-md">
-                        Découvrez notre collection exclusive de décoration d'intérieur et transformez votre maison en un
-                        lieu unique.
+                        {{ __('layouts.guest.discover_collection') }}
                     </p>
                 </div>
 
@@ -42,8 +41,8 @@
                         <div class="w-10 h-10 rounded-full bg-white/20 border-2 border-white"></div>
                     </div>
                     <div>
-                        <p class="text-sm text-primary-100">Rejoignez plus de</p>
-                        <p class="font-semibold text-lg">500+ clients satisfaits</p>
+                        <p class="text-sm text-primary-100">{{ __('layouts.guest.join_more_than') }}</p>
+                        <p class="font-semibold text-lg">{{ __('layouts.guest.satisfied_customers') }}</p>
                     </div>
                 </div>
             </div>
@@ -63,7 +62,7 @@
 
                 <!-- Footer -->
                 <div class="mt-8 text-center text-sm text-neutral-400">
-                    <p>&copy; {{ date('Y') }} La Maison P2A. Tous droits réservés.</p>
+                    <p>&copy; {{ date('Y') }} La Maison P2A. {{ __('layouts.guest.all_rights_reserved') }}.</p>
                 </div>
             </div>
         </div>

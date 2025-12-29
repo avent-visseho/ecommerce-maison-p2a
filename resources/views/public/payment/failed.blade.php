@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
-@section('title', 'Paiement Échoué')
-@section('description', 'Le paiement n\'a pas pu être effectué')
+@section('title', __('payment.failed_title'))
+@section('description', __('payment.failed_meta'))
 
 @section('content')
     <div class="min-h-screen bg-gradient-to-br from-red-50 to-neutral-50 py-12">
@@ -17,10 +17,9 @@
                 </div>
 
                 <!-- Error Message -->
-                <h1 class="text-3xl font-bold text-neutral-900 mb-4">Paiement Échoué</h1>
+                <h1 class="text-3xl font-bold text-neutral-900 mb-4">{{ __('payment.failed_heading') }}</h1>
                 <p class="text-lg text-neutral-600 mb-8">
-                    Le paiement pour la commande <span class="font-semibold text-red-500">#{{ $order->order_number }}</span>
-                    n'a pas pu être effectué
+                    {!! __('payment.failed_message', ['order_number' => '#'.$order->order_number]) !!}
                 </p>
 
                 <!-- Reasons -->
@@ -30,24 +29,24 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
-                        Raisons possibles
+                        {{ __('payment.possible_reasons') }}
                     </h3>
                     <ul class="space-y-2 text-sm text-neutral-600">
                         <li class="flex items-start">
                             <span class="text-red-500 mr-2">•</span>
-                            <span>Solde insuffisant sur votre compte</span>
+                            <span>{{ __('payment.insufficient_balance') }}</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-red-500 mr-2">•</span>
-                            <span>Informations de paiement incorrectes</span>
+                            <span>{{ __('payment.incorrect_info') }}</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-red-500 mr-2">•</span>
-                            <span>Problème de connexion pendant la transaction</span>
+                            <span>{{ __('payment.connection_issue') }}</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-red-500 mr-2">•</span>
-                            <span>Paiement annulé par votre banque ou opérateur mobile</span>
+                            <span>{{ __('payment.payment_cancelled_by_bank') }}</span>
                         </li>
                     </ul>
                 </div>
@@ -59,7 +58,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        Que faire maintenant ?
+                        {{ __('payment.what_to_do') }}
                     </h3>
                     <ul class="space-y-2 text-sm text-neutral-600">
                         <li class="flex items-start">
@@ -69,7 +68,7 @@
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
                             </svg>
-                            <span>Vérifiez votre solde et vos informations de paiement</span>
+                            <span>{{ __('payment.check_balance') }}</span>
                         </li>
                         <li class="flex items-start">
                             <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor"
@@ -78,7 +77,7 @@
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
                             </svg>
-                            <span>Assurez-vous d'avoir une connexion internet stable</span>
+                            <span>{{ __('payment.stable_connection') }}</span>
                         </li>
                         <li class="flex items-start">
                             <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor"
@@ -87,7 +86,7 @@
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
                             </svg>
-                            <span>Réessayez avec un autre moyen de paiement</span>
+                            <span>{{ __('payment.try_another_method') }}</span>
                         </li>
                         <li class="flex items-start">
                             <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor"
@@ -96,7 +95,7 @@
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
                             </svg>
-                            <span>Contactez notre service client si le problème persiste</span>
+                            <span>{{ __('payment.contact_support') }}</span>
                         </li>
                     </ul>
                 </div>
@@ -111,9 +110,8 @@
                                 clip-rule="evenodd" />
                         </svg>
                         <div class="text-left">
-                            <p class="text-sm font-semibold text-yellow-800 mb-1">Votre commande est toujours en attente</p>
-                            <p class="text-xs text-yellow-700">La commande n'a pas été annulée. Vous pouvez réessayer le
-                                paiement à tout moment.</p>
+                            <p class="text-sm font-semibold text-yellow-800 mb-1">{{ __('payment.order_pending_notice') }}</p>
+                            <p class="text-xs text-yellow-700">{{ __('payment.order_not_cancelled') }}</p>
                         </div>
                     </div>
                 </div>
@@ -125,23 +123,23 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                         </svg>
-                        Réessayer le paiement
+                        {{ __('payment.retry_payment') }}
                     </a>
                     <a href="{{ route('client.orders.show', $order) }}" class="btn-secondary">
                         <svg class="w-5 h-5 mr-2 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                        Voir ma commande
+                        {{ __('payment.view_order') }}
                     </a>
                 </div>
 
                 <!-- Support -->
                 <div class="mt-8 pt-8 border-t border-neutral-200">
                     <p class="text-sm text-neutral-600">
-                        Besoin d'aide ?
+                        {{ __('payment.need_help') }}
                         <a href="{{ route('contact') }}" class="text-primary-500 hover:text-primary-600 font-medium">
-                            Contactez notre service client
+                            {{ __('payment.contact_customer_service') }}
                         </a>
                     </p>
                 </div>

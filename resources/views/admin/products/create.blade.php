@@ -182,7 +182,7 @@
                     <!-- Main Image -->
                     <div>
                         <label for="main_image" class="label">Image principale</label>
-                        <div
+                        <div id="mainImagePreviewContainer"
                             class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-neutral-200 border-dashed rounded-xl hover:border-primary-500 transition-colors">
                             <div class="space-y-2 text-center">
                                 <svg class="mx-auto h-12 w-12 text-neutral-400" fill="none" stroke="currentColor"
@@ -230,12 +230,95 @@
                                 <p class="text-xs text-neutral-400">Plusieurs images PNG, JPG, WEBP jusqu'à 2MB chacune</p>
                             </div>
                         </div>
+                        <div id="galleryPreviewContainer" class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 hidden"></div>
                         @error('images')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
             </div>
+
+            @push('scripts')
+                <script>
+                    // Preview main image
+                    document.getElementById('main_image').addEventListener('change', function(e) {
+                        const file = e.target.files[0];
+                        const container = document.getElementById('mainImagePreviewContainer');
+
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                container.innerHTML = `
+                                    <div class="relative">
+                                        <img src="${e.target.result}" class="max-h-64 rounded-lg" alt="Preview">
+                                        <button type="button" onclick="clearMainImage()"
+                                            class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                `;
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+
+                    // Preview gallery images
+                    document.getElementById('images').addEventListener('change', function(e) {
+                        const files = e.target.files;
+                        const container = document.getElementById('galleryPreviewContainer');
+                        container.innerHTML = '';
+
+                        if (files.length > 0) {
+                            container.classList.remove('hidden');
+                            Array.from(files).forEach((file, index) => {
+                                const reader = new FileReader();
+                                reader.onload = function(e) {
+                                    const div = document.createElement('div');
+                                    div.className = 'relative group';
+                                    div.innerHTML = `
+                                        <img src="${e.target.result}" class="h-32 w-full object-cover rounded-lg" alt="Preview ${index + 1}">
+                                        <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                                            <span class="text-white text-sm font-medium">Image ${index + 1}</span>
+                                        </div>
+                                    `;
+                                    container.appendChild(div);
+                                };
+                                reader.readAsDataURL(file);
+                            });
+                        } else {
+                            container.classList.add('hidden');
+                        }
+                    });
+
+                    function clearMainImage() {
+                        document.getElementById('main_image').value = '';
+                        const container = document.getElementById('mainImagePreviewContainer');
+                        container.innerHTML = `
+                            <div class="space-y-2 text-center">
+                                <svg class="mx-auto h-12 w-12 text-neutral-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                </svg>
+                                <div class="flex text-sm text-neutral-400">
+                                    <label for="main_image"
+                                        class="relative cursor-pointer rounded-md font-medium text-primary-500 hover:text-primary-600">
+                                        <span>Télécharger un fichier</span>
+                                        <input id="main_image" name="main_image" type="file" class="sr-only"
+                                            accept="image/*">
+                                    </label>
+                                    <p class="pl-1">ou glisser-déposer</p>
+                                </div>
+                                <p class="text-xs text-neutral-400">PNG, JPG, WEBP jusqu'à 2MB</p>
+                            </div>
+                        `;
+                        // Re-attach event listener
+                        document.getElementById('main_image').addEventListener('change', arguments.callee.caller);
+                    }
+                </script>
+            @endpush
 
             <!-- Options -->
             <div class="card">
