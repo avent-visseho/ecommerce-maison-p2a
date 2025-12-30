@@ -160,7 +160,7 @@
                         </div>
                         <div class="flex-1 space-y-3">
                             <input type="file" name="image" id="imageInput" accept="image/*" class="input-field">
-                            <p class="text-xs text-neutral-400">JPG, PNG, WebP - Max 2MB. Si non fournie, l'image du produit sera utilisée.</p>
+                            <p class="text-xs text-neutral-400">JPG, PNG, WebP - Max 10MB. Si non fournie, l'image du produit sera utilisée.</p>
 
                             @if($variant->image)
                                 <div class="flex items-center">

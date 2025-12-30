@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models\RentalItem;
 use App\Services\CartService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -19,9 +21,9 @@ class CartController extends Controller
     public function index()
     {
         $cart = $this->cartService->getCart();
-        $total = $this->cartService->getTotal();
+        $totals = $this->cartService->getTotalWithDeposits();
 
-        return view('public.cart.index', compact('cart', 'total'));
+        return view('public.cart.index', compact('cart', 'totals'));
     }
 
     public function add(Request $request, $id)
@@ -100,5 +102,63 @@ class CartController extends Controller
         $this->cartService->clearCart();
 
         return redirect()->route('cart.index')->with('success', 'Panier vidé.');
+    }
+
+    public function addRental(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'start_date' => 'required|date|after_or_equal:today',
+            'end_date' => 'required|date|after:start_date',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        $rentalItem = RentalItem::active()->findOrFail($id);
+
+        // Parse dates
+        $startDate = Carbon::parse($validated['start_date']);
+        $endDate = Carbon::parse($validated['end_date']);
+        $quantity = $validated['quantity'];
+
+        // Calculate duration
+        $days = $startDate->diffInDays($endDate) + 1;
+
+        // Check min/max rental days
+        if ($rentalItem->min_rental_days && $days < $rentalItem->min_rental_days) {
+            return response()->json([
+                'success' => false,
+                'message' => "Durée minimum de location : {$rentalItem->min_rental_days} jour(s).",
+            ], 400);
+        }
+
+        if ($rentalItem->max_rental_days && $days > $rentalItem->max_rental_days) {
+            return response()->json([
+                'success' => false,
+                'message' => "Durée maximum de location : {$rentalItem->max_rental_days} jour(s).",
+            ], 400);
+        }
+
+        // Check quantity
+        if ($quantity > $rentalItem->quantity) {
+            return response()->json([
+                'success' => false,
+                'message' => "Stock insuffisant. Seulement {$rentalItem->quantity} disponible(s).",
+            ], 400);
+        }
+
+        // Add to cart
+        try {
+            $this->cartService->addRentalToCart($rentalItem, $startDate, $endDate, $quantity);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Objet ajouté au panier avec succès.',
+                'cart_count' => $this->cartService->getCount(),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 400);
+        }
     }
 }

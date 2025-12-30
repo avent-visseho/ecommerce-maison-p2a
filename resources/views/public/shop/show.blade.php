@@ -148,7 +148,7 @@
                     @if ($product->description)
                         <div>
                             <h3 class="text-lg font-semibold text-neutral-900 mb-2">{{ __('shop.description') }}</h3>
-                            <p class="text-neutral-600 leading-relaxed">{{ $product->description }}</p>
+                            <div class="trix-content text-neutral-600">{!! $product->description !!}</div>
                         </div>
                     @endif
 
@@ -474,11 +474,11 @@
 
                     <div class="py-8">
                         <!-- Description Tab -->
-                        <div x-show="activeTab === 'description'" class="prose max-w-none">
+                        <div x-show="activeTab === 'description'">
                             @if ($product->long_description)
-                                <p class="text-neutral-600 leading-relaxed text-lg">{{ $product->long_description }}</p>
+                                <div class="trix-content text-neutral-600 text-lg">{!! $product->long_description !!}</div>
                             @else
-                                <p class="text-neutral-600 leading-relaxed text-lg">{{ $product->description }}</p>
+                                <div class="trix-content text-neutral-600 text-lg">{!! $product->description !!}</div>
                             @endif
                         </div>
 

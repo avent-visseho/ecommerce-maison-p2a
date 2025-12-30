@@ -101,7 +101,7 @@
                                     </label>
                                     <p class="pl-1">ou glisser-déposer</p>
                                 </div>
-                                <p class="text-xs text-neutral-400">PNG, JPG, WEBP jusqu'à 2MB</p>
+                                <p class="text-xs text-neutral-400">PNG, JPG, WEBP jusqu'à 10MB</p>
                                 <p class="text-xs text-neutral-400">Recommandé : fond transparent, format carré</p>
                             </div>
                         </div>

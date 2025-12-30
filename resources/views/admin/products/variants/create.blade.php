@@ -189,7 +189,7 @@
                             </div>
                             <div class="flex-1">
                                 <input type="file" name="image" id="imageInput" accept="image/*" class="input-field">
-                                <p class="text-xs text-neutral-400 mt-2">JPG, PNG, WebP - Max 2MB. Si non fournie, l'image du produit sera utilisée.</p>
+                                <p class="text-xs text-neutral-400 mt-2">JPG, PNG, WebP - Max 10MB. Si non fournie, l'image du produit sera utilisée.</p>
                                 @error('image')
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror

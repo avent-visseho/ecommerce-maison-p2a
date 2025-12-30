@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models\RentalItem;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 
 class CartService
@@ -149,5 +151,70 @@ class CartService
         $cartKey = $variantId ? "p{$productId}_v{$variantId}" : "p{$productId}";
         $cart = $this->getCart();
         return $cart[$cartKey] ?? null;
+    }
+
+    /**
+     * Add rental item to cart
+     */
+    public function addRentalToCart(RentalItem $item, Carbon $startDate, Carbon $endDate, int $quantity = 1): void
+    {
+        // Verify availability
+        if (!$item->isAvailable($startDate, $endDate, $quantity)) {
+            throw new \Exception('Cet objet n\'est pas disponible pour les dates sélectionnées.');
+        }
+
+        $cart = $this->getCart();
+
+        // Calculate duration and pricing
+        $days = $startDate->diffInDays($endDate) + 1;
+        $pricing = $item->calculatePrice($days);
+
+        // Unique key: r{item_id}_{startDate}_{endDate}
+        $cartKey = "r{$item->id}_{$startDate->format('Ymd')}_{$endDate->format('Ymd')}";
+
+        $cart[$cartKey] = [
+            'type' => 'rental',
+            'rental_item_id' => $item->id,
+            'name' => $item->name,
+            'slug' => $item->slug,
+            'image' => $item->main_image,
+            'start_date' => $startDate->format('Y-m-d'),
+            'end_date' => $endDate->format('Y-m-d'),
+            'duration_days' => $days,
+            'quantity' => $quantity,
+            'rate_type' => $pricing['rate_type'],
+            'rate' => $pricing['rate'],
+            'price' => $pricing['subtotal'], // Price per item
+            'deposit' => $item->deposit_amount,
+        ];
+
+        Session::put($this->sessionKey, $cart);
+    }
+
+    /**
+     * Get total with deposits separated
+     */
+    public function getTotalWithDeposits(): array
+    {
+        $cart = $this->getCart();
+        $subtotal = 0;
+        $deposits = 0;
+
+        foreach ($cart as $item) {
+            if (isset($item['type']) && $item['type'] === 'rental') {
+                $rentalPrice = $item['price'] * $item['quantity'];
+                $rentalDeposit = $item['deposit'] * $item['quantity'];
+                $subtotal += $rentalPrice;
+                $deposits += $rentalDeposit;
+            } else {
+                $subtotal += $item['price'] * $item['quantity'];
+            }
+        }
+
+        return [
+            'subtotal' => $subtotal,
+            'deposits' => $deposits,
+            'total' => $subtotal + $deposits
+        ];
     }
 }

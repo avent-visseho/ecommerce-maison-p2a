@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProductAttributeController;
 use App\Http\Controllers\Admin\ProductVariantController;
+use App\Http\Controllers\Admin\RentalCategoryController as AdminRentalCategoryController;
+use App\Http\Controllers\Admin\RentalItemController as AdminRentalItemController;
+use App\Http\Controllers\Admin\RentalReservationController as AdminRentalReservationController;
 use App\Http\Controllers\Admin\BlogPostController as AdminBlogPostController;
 use App\Http\Controllers\Admin\BlogCategoryController as AdminBlogCategoryController;
 use App\Http\Controllers\Admin\BlogCommentController as AdminBlogCommentController;
@@ -19,6 +22,7 @@ use App\Http\Controllers\Blog\CommentController as BlogCommentController;
 use App\Http\Controllers\Blog\NewsletterController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\RentalController;
 use App\Http\Controllers\Client\DashboardController as ClientDashboardController;
 use App\Http\Controllers\Client\OrderController as ClientOrderController;
 use App\Http\Controllers\Client\ProfileController;
@@ -42,9 +46,15 @@ Route::post('/contact', [HomeController::class, 'contactSubmit'])->name('contact
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
 
+// Rental Routes
+Route::get('/rentals', [RentalController::class, 'index'])->name('rentals.index');
+Route::get('/rentals/{slug}', [RentalController::class, 'show'])->name('rentals.show');
+Route::post('/rentals/{id}/check-availability', [RentalController::class, 'checkAvailability'])->name('rentals.checkAvailability');
+
 // Cart Routes
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/add-rental/{id}', [CartController::class, 'addRental'])->name('cart.add.rental');
 Route::put('/cart/update/{cartKey}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/remove/{cartKey}', [CartController::class, 'remove'])->name('cart.remove');
 Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
@@ -150,6 +160,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
         Route::put('orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.updateStatus');
         Route::put('orders/{order}/payment-status', [AdminOrderController::class, 'updatePaymentStatus'])->name('orders.updatePaymentStatus');
+
+        // Rental Management
+        Route::resource('rental-categories', AdminRentalCategoryController::class);
+        Route::resource('rental-items', AdminRentalItemController::class);
+        Route::get('rental-reservations', [AdminRentalReservationController::class, 'index'])->name('rental-reservations.index');
+        Route::get('rental-reservations/{rentalReservation}', [AdminRentalReservationController::class, 'show'])->name('rental-reservations.show');
+        Route::put('rental-reservations/{rentalReservation}/status', [AdminRentalReservationController::class, 'updateStatus'])->name('rental-reservations.updateStatus');
 
         // Blog Management
         Route::prefix('blog')->name('blog.')->group(function () {

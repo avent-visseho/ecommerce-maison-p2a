@@ -37,7 +37,7 @@ class BlogCategoryController extends Controller
             'slug' => 'nullable|string|unique:blog_categories,slug',
             'description' => 'nullable|string',
             'parent_id' => 'nullable|exists:blog_categories,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
             'is_active' => 'boolean',
             'order' => 'nullable|integer|min:0',
         ]);
@@ -81,7 +81,7 @@ class BlogCategoryController extends Controller
             'slug' => 'nullable|string|unique:blog_categories,slug,' . $category->id,
             'description' => 'nullable|string',
             'parent_id' => 'nullable|exists:blog_categories,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
             'is_active' => 'boolean',
             'order' => 'nullable|integer|min:0',
             'delete_image' => 'boolean',

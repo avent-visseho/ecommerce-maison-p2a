@@ -42,15 +42,35 @@ class ProductController extends Controller
             'low_stock_alert' => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'nullable|exists:brands,id',
-            'main_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'main_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
             'is_active' => 'boolean',
             'is_featured' => 'boolean',
         ]);
 
-        $validated['slug'] = Str::slug($validated['name']);
+        // Generate unique slug
+        $baseSlug = Str::slug($validated['name']);
+        $slug = $baseSlug;
+        $counter = 1;
+
+        while (Product::where('slug', $slug)->exists()) {
+            $slug = $baseSlug . '-' . $counter;
+            $counter++;
+        }
+        $validated['slug'] = $slug;
+
         $validated['is_active'] = $request->has('is_active');
         $validated['is_featured'] = $request->has('is_featured');
+
+        // Generate SKU if not provided
+        if (empty($validated['sku'])) {
+            $validated['sku'] = 'PROD-' . strtoupper(Str::random(8));
+
+            // Ensure uniqueness
+            while (Product::where('sku', $validated['sku'])->exists()) {
+                $validated['sku'] = 'PROD-' . strtoupper(Str::random(8));
+            }
+        }
 
         // Handle main image upload
         if ($request->hasFile('main_image')) {
@@ -93,13 +113,23 @@ class ProductController extends Controller
             'low_stock_alert' => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'nullable|exists:brands,id',
-            'main_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'main_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
             'is_active' => 'boolean',
             'is_featured' => 'boolean',
         ]);
 
-        $validated['slug'] = Str::slug($validated['name']);
+        // Generate unique slug (excluding current product)
+        $baseSlug = Str::slug($validated['name']);
+        $slug = $baseSlug;
+        $counter = 1;
+
+        while (Product::where('slug', $slug)->where('id', '!=', $product->id)->exists()) {
+            $slug = $baseSlug . '-' . $counter;
+            $counter++;
+        }
+        $validated['slug'] = $slug;
+
         $validated['is_active'] = $request->has('is_active');
         $validated['is_featured'] = $request->has('is_featured');
 

@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('title', 'Nouvelle Catégorie')
-@section('page-title', 'Créer une Catégorie')
+@section('title', 'Modifier Catégorie de Location')
+@section('page-title', 'Modifier la Catégorie')
 
 @section('content')
     <div class="max-w-3xl">
         <div class="mb-6">
-            <a href="{{ route('admin.categories.index') }}"
+            <a href="{{ route('admin.rental-categories.index') }}"
                 class="inline-flex items-center text-sm text-neutral-400 hover:text-neutral-900">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -15,8 +15,10 @@
             </a>
         </div>
 
-        <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+        <form action="{{ route('admin.rental-categories.update', $rentalCategory) }}" method="POST" enctype="multipart/form-data"
+            class="space-y-6">
             @csrf
+            @method('PUT')
 
             <div class="card">
                 <div class="card-header">
@@ -26,8 +28,8 @@
                     <!-- Name -->
                     <div>
                         <label for="name" class="label">Nom de la catégorie <span class="text-red-500">*</span></label>
-                        <input type="text" id="name" name="name" value="{{ old('name') }}" required
-                            class="input-field @error('name') border-red-500 @enderror" placeholder="Ex: Mobilier">
+                        <input type="text" id="name" name="name" value="{{ old('name', $rentalCategory->name) }}"
+                            required class="input-field @error('name') border-red-500 @enderror" placeholder="Ex: Mobilier">
                         @error('name')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -37,7 +39,7 @@
                     <div>
                         <label for="description" class="label">Description</label>
                         <textarea id="description" name="description" rows="3"
-                            class="input-field @error('description') border-red-500 @enderror" placeholder="Description de la catégorie">{{ old('description') }}</textarea>
+                            class="input-field @error('description') border-red-500 @enderror" placeholder="Description de la catégorie">{{ old('description', $rentalCategory->description) }}</textarea>
                         @error('description')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -50,7 +52,8 @@
                             class="input-field @error('parent_id') border-red-500 @enderror">
                             <option value="">Aucune (Catégorie principale)</option>
                             @foreach ($parentCategories as $parent)
-                                <option value="{{ $parent->id }}" {{ old('parent_id') == $parent->id ? 'selected' : '' }}>
+                                <option value="{{ $parent->id }}"
+                                    {{ old('parent_id', $rentalCategory->parent_id) == $parent->id ? 'selected' : '' }}>
                                     {{ $parent->name }}
                                 </option>
                             @endforeach
@@ -64,17 +67,38 @@
                     <!-- Order -->
                     <div>
                         <label for="order" class="label">Ordre d'affichage</label>
-                        <input type="number" id="order" name="order" value="{{ old('order', 0) }}" min="0"
-                            class="input-field @error('order') border-red-500 @enderror" placeholder="0">
+                        <input type="number" id="order" name="order" value="{{ old('order', $rentalCategory->order) }}"
+                            min="0" class="input-field @error('order') border-red-500 @enderror" placeholder="0">
                         <p class="mt-1 text-xs text-neutral-400">Les catégories seront triées par ordre croissant</p>
                         @error('order')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
 
-                    <!-- Image -->
+                    <!-- Current Image -->
+                    @if ($rentalCategory->image)
+                        <div>
+                            <label class="label">Image actuelle</label>
+                            <div class="mt-2 flex items-center space-x-4">
+                                <img src="{{ asset('storage/' . $rentalCategory->image) }}" alt="{{ $rentalCategory->name }}"
+                                    class="w-32 h-32 object-cover rounded-xl border-2 border-neutral-200">
+                                <div>
+                                    <p class="text-sm text-neutral-600 mb-2">Téléchargez une nouvelle image pour remplacer
+                                        celle-ci</p>
+                                    <label for="remove_image" class="inline-flex items-center">
+                                        <input type="checkbox" id="remove_image" name="remove_image" value="1"
+                                            class="rounded border-neutral-300 text-primary-500 focus:ring-primary-500">
+                                        <span class="ml-2 text-sm text-neutral-600">Supprimer l'image actuelle</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                    <!-- Image Upload -->
                     <div>
-                        <label for="image" class="label">Image de la catégorie</label>
+                        <label for="image"
+                            class="label">{{ $rentalCategory->image ? 'Nouvelle image' : 'Image de la catégorie' }}</label>
 
                         <!-- Image Preview -->
                         <div id="imagePreviewContainer" class="hidden mt-2 mb-4">
@@ -122,7 +146,7 @@
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" id="is_active" name="is_active" value="1"
-                                {{ old('is_active', true) ? 'checked' : '' }} class="sr-only peer">
+                                {{ old('is_active', $rentalCategory->is_active) ? 'checked' : '' }} class="sr-only peer">
                             <div
                                 class="w-11 h-6 bg-neutral-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500">
                             </div>
@@ -133,14 +157,41 @@
 
             <!-- Action Buttons -->
             <div class="flex items-center justify-end space-x-4">
-                <a href="{{ route('admin.categories.index') }}" class="btn-secondary">
+                <a href="{{ route('admin.rental-categories.index') }}" class="btn-secondary">
                     Annuler
                 </a>
                 <button type="submit" class="btn-primary">
-                    Créer la catégorie
+                    Mettre à jour
                 </button>
             </div>
         </form>
+
+        <!-- Delete Section -->
+        <div class="card mt-6 border-red-200">
+            <div class="card-body">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <h3 class="text-lg font-semibold text-red-600 mb-2">Zone de danger</h3>
+                        <p class="text-sm text-neutral-600">
+                            La suppression de cette catégorie est irréversible.
+                            @if ($rentalCategory->products_count > 0)
+                                <strong class="text-red-600">Attention : {{ $rentalCategory->products_count }} produit(s) sont
+                                    liés à cette catégorie.</strong>
+                            @endif
+                        </p>
+                    </div>
+                    <form action="{{ route('admin.rental-categories.destroy', $rentalCategory) }}" method="POST"
+                        onsubmit="return confirm('Êtes-vous absolument sûr de vouloir supprimer cette catégorie ? Cette action est irréversible.');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+                            Supprimer la catégorie
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     @push('scripts')
@@ -151,6 +202,7 @@
             const imagePreviewContainer = document.getElementById('imagePreviewContainer');
             const uploadArea = document.getElementById('uploadArea');
             const removeImageBtn = document.getElementById('removeImage');
+            const removeImageCheckbox = document.getElementById('remove_image');
 
             // Handle image selection
             imageInput.addEventListener('change', function(e) {
@@ -177,6 +229,11 @@
                         imagePreview.src = e.target.result;
                         imagePreviewContainer.classList.remove('hidden');
                         uploadArea.classList.add('hidden');
+
+                        // Uncheck remove_image if a new image is selected
+                        if (removeImageCheckbox) {
+                            removeImageCheckbox.checked = false;
+                        }
                     };
 
                     reader.readAsDataURL(file);

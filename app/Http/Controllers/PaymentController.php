@@ -94,6 +94,15 @@ class PaymentController extends Controller
                             'transaction_id' => $request['id'],
                             'paid_at' => now(),
                         ]);
+
+                        // Confirm rental reservations
+                        $order->load('items.rentalReservation');
+                        foreach ($order->items as $item) {
+                            if ($item->isRental() && $item->rentalReservation) {
+                                $item->rentalReservation->update(['status' => 'confirmed']);
+                            }
+                        }
+
                         // Send confirmation email
                         Mail::to($order->shipping_email)->send(new OrderConfirmation($order));
                         Mail::to(config('mail.from.address'))->send(new OrderConfirmation($order, true));
@@ -147,6 +156,14 @@ class PaymentController extends Controller
                         'status' => 'processing',
                         'paid_at' => now(),
                     ]);
+
+                    // Confirm rental reservations
+                    $order->load('items.rentalReservation');
+                    foreach ($order->items as $item) {
+                        if ($item->isRental() && $item->rentalReservation) {
+                            $item->rentalReservation->update(['status' => 'confirmed']);
+                        }
+                    }
 
                     try {
                         Mail::to($order->shipping_email)->send(new OrderConfirmation($order));

@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('title', 'Nouvelle Catégorie')
-@section('page-title', 'Créer une Catégorie')
+@section('title', 'Nouvelle Catégorie de Location')
+@section('page-title', 'Créer une Catégorie de Location')
 
 @section('content')
     <div class="max-w-3xl">
         <div class="mb-6">
-            <a href="{{ route('admin.categories.index') }}"
+            <a href="{{ route('admin.rental-categories.index') }}"
                 class="inline-flex items-center text-sm text-neutral-400 hover:text-neutral-900">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -15,7 +15,7 @@
             </a>
         </div>
 
-        <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+        <form action="{{ route('admin.rental-categories.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
 
             <div class="card">
@@ -27,7 +27,7 @@
                     <div>
                         <label for="name" class="label">Nom de la catégorie <span class="text-red-500">*</span></label>
                         <input type="text" id="name" name="name" value="{{ old('name') }}" required
-                            class="input-field @error('name') border-red-500 @enderror" placeholder="Ex: Mobilier">
+                            class="input-field @error('name') border-red-500 @enderror" placeholder="Ex: Tables, Chaises">
                         @error('name')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -133,7 +133,7 @@
 
             <!-- Action Buttons -->
             <div class="flex items-center justify-end space-x-4">
-                <a href="{{ route('admin.categories.index') }}" class="btn-secondary">
+                <a href="{{ route('admin.rental-categories.index') }}" class="btn-secondary">
                     Annuler
                 </a>
                 <button type="submit" class="btn-primary">
@@ -163,7 +163,7 @@
                         return;
                     }
 
-                    // Check file size (2MB = 10 * 1024 * 1024 bytes)
+                    // Check file size (10MB = 10 * 1024 * 1024 bytes)
                     if (file.size > 10 * 1024 * 1024) {
                         alert('La taille du fichier ne doit pas dépasser 10MB');
                         imageInput.value = '';

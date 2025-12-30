@@ -147,7 +147,7 @@
                                     <span class="text-neutral-600">{{ __('services.event_item4') }}</span>
                                 </li>
                             </ul>
-                            <a href="#" class="btn-primary inline-flex items-center">
+                            <a href="{{ route('rentals.index') }}" class="btn-primary inline-flex items-center">
                                 {{ __('services.plan_event') }}
                                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

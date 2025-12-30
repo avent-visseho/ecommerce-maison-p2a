@@ -3,6 +3,18 @@
 @section('title', 'Modifier Produit')
 @section('page-title', 'Modifier le Produit')
 
+@push('styles')
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
+<style>
+    trix-toolbar .trix-button-group--file-tools {
+        display: none;
+    }
+    trix-editor {
+        min-height: 150px;
+    }
+</style>
+@endpush
+
 @section('content')
     <div class="max-w-5xl">
         <div class="mb-6 flex items-center justify-between">
@@ -45,8 +57,8 @@
 
                     <div>
                         <label for="description" class="label">Description courte</label>
-                        <textarea id="description" name="description" rows="3"
-                            class="input-field @error('description') border-red-500 @enderror">{{ old('description', $product->description) }}</textarea>
+                        <input id="description" type="hidden" name="description" value="{{ old('description', $product->description) }}">
+                        <trix-editor input="description" class="trix-content @error('description') border-red-500 @enderror"></trix-editor>
                         @error('description')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -54,8 +66,8 @@
 
                     <div>
                         <label for="long_description" class="label">Description détaillée</label>
-                        <textarea id="long_description" name="long_description" rows="6"
-                            class="input-field @error('long_description') border-red-500 @enderror">{{ old('long_description', $product->long_description) }}</textarea>
+                        <input id="long_description" type="hidden" name="long_description" value="{{ old('long_description', $product->long_description) }}">
+                        <trix-editor input="long_description" class="trix-content @error('long_description') border-red-500 @enderror"></trix-editor>
                         @error('long_description')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -233,35 +245,61 @@
             </div>
 
             @push('scripts')
+                <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
                 <script>
-                    // Preview main image
-                    document.getElementById('main_image').addEventListener('change', function(e) {
-                        const file = e.target.files[0];
-                        const container = document.getElementById('mainImagePreviewContainer');
-
-                        if (file) {
-                            const reader = new FileReader();
-                            reader.onload = function(e) {
-                                container.innerHTML = `
-                                    <div class="relative inline-block">
-                                        <img src="${e.target.result}" class="max-h-64 rounded-lg border-2 border-green-500" alt="Preview">
-                                        <button type="button" onclick="clearMainImageEdit()"
-                                            class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                            </svg>
-                                        </button>
-                                        <span class="absolute bottom-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">Nouvelle image</span>
-                                    </div>
-                                `;
-                                container.classList.remove('hidden');
-                            };
-                            reader.readAsDataURL(file);
-                        } else {
-                            container.innerHTML = '';
-                            container.classList.add('hidden');
-                        }
+                    // Prevent file attachment in Trix
+                    document.addEventListener('trix-file-accept', function(e) {
+                        e.preventDefault();
                     });
+
+                    // Preview main image
+                    function setupMainImagePreview() {
+                        const input = document.getElementById('main_image');
+                        if (!input) return;
+
+                        input.addEventListener('change', function(e) {
+                            const file = e.target.files[0];
+                            const container = document.getElementById('mainImagePreviewContainer');
+
+                            if (file) {
+                                // Validation
+                                if (!file.type.startsWith('image/')) {
+                                    alert('Veuillez sélectionner un fichier image valide');
+                                    input.value = '';
+                                    return;
+                                }
+
+                                if (file.size > 10 * 1024 * 1024) {
+                                    alert('La taille du fichier ne doit pas dépasser 10MB');
+                                    input.value = '';
+                                    return;
+                                }
+
+                                const reader = new FileReader();
+                                reader.onload = function(e) {
+                                    container.innerHTML = `
+                                        <div class="relative inline-block">
+                                            <img src="${e.target.result}" class="max-h-64 rounded-lg border-2 border-green-500" alt="Preview">
+                                            <button type="button" onclick="clearMainImageEdit()"
+                                                class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                </svg>
+                                            </button>
+                                            <span class="absolute bottom-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">Nouvelle image</span>
+                                        </div>
+                                    `;
+                                    container.classList.remove('hidden');
+                                };
+                                reader.readAsDataURL(file);
+                            } else {
+                                container.innerHTML = '';
+                                container.classList.add('hidden');
+                            }
+                        });
+                    }
+
+                    setupMainImagePreview();
 
                     // Preview gallery images
                     document.getElementById('images').addEventListener('change', function(e) {
@@ -270,6 +308,26 @@
                         container.innerHTML = '';
 
                         if (files.length > 0) {
+                            // Validation
+                            let allValid = true;
+                            Array.from(files).forEach(file => {
+                                if (!file.type.startsWith('image/')) {
+                                    alert('Tous les fichiers doivent être des images valides');
+                                    allValid = false;
+                                    return;
+                                }
+                                if (file.size > 10 * 1024 * 1024) {
+                                    alert('Chaque fichier ne doit pas dépasser 10MB');
+                                    allValid = false;
+                                    return;
+                                }
+                            });
+
+                            if (!allValid) {
+                                e.target.value = '';
+                                return;
+                            }
+
                             container.classList.remove('hidden');
                             Array.from(files).forEach((file, index) => {
                                 const reader = new FileReader();

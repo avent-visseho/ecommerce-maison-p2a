@@ -99,7 +99,21 @@
                     <div>
                         <label for="image"
                             class="label">{{ $category->image ? 'Nouvelle image' : 'Image de la catégorie' }}</label>
-                        <div
+
+                        <!-- Image Preview -->
+                        <div id="imagePreviewContainer" class="hidden mt-2 mb-4">
+                            <div class="relative inline-block">
+                                <img id="imagePreview" src="" alt="Aperçu" class="max-w-xs max-h-48 rounded-lg border-2 border-neutral-200">
+                                <button type="button" id="removeImage" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Upload Area -->
+                        <div id="uploadArea"
                             class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-neutral-200 border-dashed rounded-xl hover:border-primary-500 transition-colors">
                             <div class="space-y-2 text-center">
                                 <svg class="mx-auto h-12 w-12 text-neutral-400" fill="none" stroke="currentColor"
@@ -116,7 +130,7 @@
                                     </label>
                                     <p class="pl-1">ou glisser-déposer</p>
                                 </div>
-                                <p class="text-xs text-neutral-400">PNG, JPG, WEBP jusqu'à 2MB</p>
+                                <p class="text-xs text-neutral-400">PNG, JPG, WEBP jusqu'à 10MB</p>
                             </div>
                         </div>
                         @error('image')
@@ -179,4 +193,61 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageInput = document.getElementById('image');
+            const imagePreview = document.getElementById('imagePreview');
+            const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+            const uploadArea = document.getElementById('uploadArea');
+            const removeImageBtn = document.getElementById('removeImage');
+            const removeImageCheckbox = document.getElementById('remove_image');
+
+            // Handle image selection
+            imageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+
+                if (file) {
+                    // Check if file is an image
+                    if (!file.type.startsWith('image/')) {
+                        alert('Veuillez sélectionner un fichier image valide');
+                        return;
+                    }
+
+                    // Check file size (2MB = 10 * 1024 * 1024 bytes)
+                    if (file.size > 10 * 1024 * 1024) {
+                        alert('La taille du fichier ne doit pas dépasser 10MB');
+                        imageInput.value = '';
+                        return;
+                    }
+
+                    // Create FileReader to preview image
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                        imagePreviewContainer.classList.remove('hidden');
+                        uploadArea.classList.add('hidden');
+
+                        // Uncheck remove_image if a new image is selected
+                        if (removeImageCheckbox) {
+                            removeImageCheckbox.checked = false;
+                        }
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Handle image removal
+            removeImageBtn.addEventListener('click', function() {
+                imageInput.value = '';
+                imagePreview.src = '';
+                imagePreviewContainer.classList.add('hidden');
+                uploadArea.classList.remove('hidden');
+            });
+        });
+    </script>
+    @endpush
 @endsection

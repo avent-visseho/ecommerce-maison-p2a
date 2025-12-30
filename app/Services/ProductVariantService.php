@@ -64,13 +64,13 @@ class ProductVariantService
         }
 
         $variant->update([
-            'price' => $data['price'] ?? $variant->price,
-            'sale_price' => $data['sale_price'] ?? $variant->sale_price,
-            'stock' => $data['stock'] ?? $variant->stock,
-            'low_stock_alert' => $data['low_stock_alert'] ?? $variant->low_stock_alert,
-            'is_active' => $data['is_active'] ?? $variant->is_active,
-            'is_default' => $data['is_default'] ?? $variant->is_default,
-            'sort_order' => $data['sort_order'] ?? $variant->sort_order,
+            'price' => array_key_exists('price', $data) ? $data['price'] : $variant->price,
+            'sale_price' => array_key_exists('sale_price', $data) ? $data['sale_price'] : $variant->sale_price,
+            'stock' => array_key_exists('stock', $data) ? $data['stock'] : $variant->stock,
+            'low_stock_alert' => array_key_exists('low_stock_alert', $data) ? $data['low_stock_alert'] : $variant->low_stock_alert,
+            'is_active' => array_key_exists('is_active', $data) ? $data['is_active'] : $variant->is_active,
+            'is_default' => array_key_exists('is_default', $data) ? $data['is_default'] : $variant->is_default,
+            'sort_order' => array_key_exists('sort_order', $data) ? $data['sort_order'] : $variant->sort_order,
         ]);
 
         // Gérer suppression de l'image
