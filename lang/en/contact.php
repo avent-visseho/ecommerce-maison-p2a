@@ -15,7 +15,7 @@ return [
 
     // Contact Details
     'address' => 'Address',
-    'address_line1' => 'région parisienne (France)',
+    'address_line1' => 'Région Parisienne (France)',
     'phone' => 'Phone',
     'phone_hours' => 'Mon - Sat: 9am - 6pm',
     'email' => 'Email',

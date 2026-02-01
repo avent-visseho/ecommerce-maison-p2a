@@ -35,7 +35,7 @@ return [
 
     // Payment info
     'secure_payment' => 'Paiement sécurisé',
-    'fedapay_redirect' => 'Vous serez redirigé vers FedaPay pour finaliser le paiement en toute sécurité.',
+    'fedapay_redirect' => 'Vous serez redirigé vers Stripe pour finaliser le paiement en toute sécurité.',
 
     // Submit button
     'proceed_to_payment' => 'Passer au paiement',
@@ -43,7 +43,7 @@ return [
     // Security badges
     'ssl_secure' => 'Paiement SSL sécurisé',
     'data_protection' => 'Protection des données',
-    'payment_by_fedapay' => 'Paiement par FedaPay',
+    'payment_by_fedapay' => 'Paiement par Stripe',
 
     // Back link
     'back_to_cart' => 'Retour au panier',

@@ -11,7 +11,10 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<body class="antialiased bg-neutral-50">
+<body class="antialiased bg-neutral-50" x-data>
+    {{-- Modal d'erreur global --}}
+    @include('components.error-modal')
+
     <!-- Top Navigation -->
     <nav class="bg-white border-b border-neutral-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -18,11 +18,11 @@ class RoleSeeder extends Seeder
                 'slug' => 'admin',
                 'description' => 'Accès complet au système',
             ],
-          /*   [
+            [
                 'name' => 'Client',
                 'slug' => 'customer',
                 'description' => 'Utilisateur client standard',
-            ], */
+            ],
         ];
 
         foreach ($roles as $role) {

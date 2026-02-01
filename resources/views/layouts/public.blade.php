@@ -13,6 +13,8 @@
 </head>
 
 <body class="antialiased" x-data="{ mobileMenuOpen: false, cartOpen: false }">
+    {{-- Modal d'erreur global --}}
+    @include('components.error-modal')
     <!-- Navigation -->
     <nav class="bg-white border-b border-neutral-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -366,7 +368,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
-                            <span>région parisienne (France)</span>
+                            <span>Région Parisienne (France)</span>
                         </li>
                         <li class="flex items-start">
                             <svg class="w-5 h-5 mr-2 mt-0.5" fill="none" stroke="currentColor"

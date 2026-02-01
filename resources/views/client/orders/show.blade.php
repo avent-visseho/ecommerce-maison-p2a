@@ -229,7 +229,7 @@
                         <div class="flex justify-between text-sm">
                             <span class="text-neutral-600">{{ __('client.order_show.method') }}</span>
                             <span
-                                class="font-semibold text-neutral-900 capitalize">{{ $order->payment_method ?? 'FedaPay' }}</span>
+                                class="font-semibold text-neutral-900 capitalize">{{ $order->payment_method ?? 'Stripe' }}</span>
                         </div>
                         @if ($order->transaction_id)
                             <div class="flex justify-between text-sm">
@@ -248,6 +248,16 @@
                 </div>
 
                 <!-- Actions -->
+                @if (!$order->isPaid() && $order->status !== 'cancelled')
+                    <a href="{{ route('payment.show', $order) }}" class="w-full btn-primary flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                        </svg>
+                        <span>{{ __('client.order_show.pay_now') }}</span>
+                    </a>
+                @endif
+
                 @if ($order->status === 'completed')
                     <button class="w-full btn-primary flex items-center justify-center space-x-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

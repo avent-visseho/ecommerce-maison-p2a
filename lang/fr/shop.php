@@ -38,7 +38,7 @@ return [
     'returns_info' => 'Retours acceptés sous 14 jours. Le produit doit être dans son emballage d\'origine et non utilisé.',
 
     // Related products
-    'similar_products' => 'Produits Similaires',
+    'similar_products' => 'Vous pourriez aussi aimer',
 
     // Shop page
     'title' => 'Boutique',

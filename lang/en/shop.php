@@ -38,7 +38,7 @@ return [
     'returns_info' => 'Returns accepted within 14 days. Product must be in original packaging and unused.',
 
     // Related products
-    'similar_products' => 'Similar Products',
+    'similar_products' => 'You may also like',
 
     // Shop page
     'title' => 'Shop',

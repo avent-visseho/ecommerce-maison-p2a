@@ -87,6 +87,7 @@ return [
         'paid_on' => 'Paid on',
         'download_invoice' => 'Download invoice',
         'continue_shopping' => 'Continue shopping',
+        'pay_now' => 'Pay now',
     ],
 
     // Profile

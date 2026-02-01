@@ -22,6 +22,7 @@ class Order extends Model
         'payment_status',
         'payment_method',
         'transaction_id',
+        'stripe_payment_intent_id',
         'shipping_name',
         'shipping_email',
         'shipping_phone',

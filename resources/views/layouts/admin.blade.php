@@ -14,6 +14,9 @@
 </head>
 
 <body class="antialiased" x-data="{ sidebarOpen: false }">
+    {{-- Modal d'erreur global --}}
+    @include('components.error-modal')
+
     <div class="flex h-screen bg-neutral-100">
         <!-- Sidebar -->
         <aside

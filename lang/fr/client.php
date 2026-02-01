@@ -87,6 +87,7 @@ return [
         'paid_on' => 'Payé le',
         'download_invoice' => 'Télécharger la facture',
         'continue_shopping' => 'Continuer mes achats',
+        'pay_now' => 'Payer maintenant',
     ],
 
     // Profile

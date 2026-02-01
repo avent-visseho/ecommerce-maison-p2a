@@ -29,6 +29,7 @@ use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,8 +60,9 @@ Route::put('/cart/update/{cartKey}', [CartController::class, 'update'])->name('c
 Route::delete('/cart/remove/{cartKey}', [CartController::class, 'remove'])->name('cart.remove');
 Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 
-// FedaPay Webhook (no auth required)
-Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('payment.webhook');
+// Payment Webhooks (no auth required)
+// Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('payment.webhook'); // FedaPay - désactivé temporairement
+Route::post('/stripe/webhook', [StripePaymentController::class, 'webhook'])->name('stripe.webhook');
 
 // Blog Public Routes
 Route::prefix('blog')->name('blog.')->group(function () {
@@ -98,13 +100,20 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
 
-    // Payment Routes
+    // Payment Routes (FedaPay) - Désactivé temporairement, seul Stripe est utilisé
     Route::get('/payment/{order}', [PaymentController::class, 'show'])->name('payment.show');
-    Route::post('/payment/{order}/initiate', [PaymentController::class, 'initiate'])->name('payment.initiate');
-    Route::get('/payment/{order}/callback', [PaymentController::class, 'callback'])->name('payment.callback');
+    // Route::post('/payment/{order}/initiate', [PaymentController::class, 'initiate'])->name('payment.initiate');
+    // Route::get('/payment/{order}/callback', [PaymentController::class, 'callback'])->name('payment.callback');
     Route::get('/payment/{order}/success', [PaymentController::class, 'success'])->name('payment.success');
     Route::get('/payment/{order}/failed', [PaymentController::class, 'failed'])->name('payment.failed');
-    Route::get('/payment/{order}/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
+    // Route::get('/payment/{order}/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
+
+    // Stripe Payment Routes
+    Route::get('/stripe/payment/{order}', [StripePaymentController::class, 'show'])->name('stripe.show');
+    Route::post('/stripe/payment/{order}/intent', [StripePaymentController::class, 'createIntent'])->name('stripe.intent');
+    Route::get('/stripe/payment/{order}/callback', [StripePaymentController::class, 'callback'])->name('stripe.callback');
+    Route::get('/stripe/payment/{order}/success', [StripePaymentController::class, 'success'])->name('stripe.success');
+    Route::get('/stripe/payment/{order}/failed', [StripePaymentController::class, 'failed'])->name('stripe.failed');
 
     // Client Dashboard Routes
     Route::prefix('client')->name('client.')->middleware('customer')->group(function () {

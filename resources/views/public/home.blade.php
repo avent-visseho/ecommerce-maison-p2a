@@ -58,13 +58,14 @@
                 </div>
 
                 <!-- Hero Image -->
-                <div class="relative lg:h-[600px] hidden lg:block">
+                {{-- <div class="relative lg:h-[600px] hidden lg:block">
                     <div class="absolute inset-0 bg-gradient-to-tr from-primary-500/20 to-transparent rounded-3xl"></div>
                     <div class="relative h-full grid grid-cols-2 gap-4">
                         <div class="space-y-4">
                             <div class="h-64 bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden">
                                 <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=400"
                                     alt="Décoration" class="w-full h-full object-cover">
+
                             </div>
                             <div class="h-48 bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden">
                                 <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=400"
@@ -82,7 +83,17 @@
                             </div>
                         </div>
                     </div>
+                </div> --}}
+
+                <div class="relative lg:h-[600px] hidden lg:block">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-primary-500/20 to-transparent rounded-3xl"></div>
+
+                    <div class="relative h-full w-full rounded-3xl overflow-hidden bg-white/10">
+                        <img src="{{ asset('voeux.png') }}" alt="voeux" class="w-full h-full object-contain">
+                    </div>
                 </div>
+
+
             </div>
         </div>
 
@@ -131,7 +142,8 @@
                                 class="text-2xl font-bold text-white mb-2 drop-shadow-lg group-hover:text-primary-100 transition-colors">
                                 {{ $category->name }}
                             </h3>
-                            <p class="text-white/90 text-sm font-medium">{{ __('home.x_products', ['count' => $category->products_count]) }}</p>
+                            <p class="text-white/90 text-sm font-medium">
+                                {{ __('home.x_products', ['count' => $category->products_count]) }}</p>
 
                             <!-- Icône décorative -->
                             <div
@@ -196,7 +208,8 @@
 
                             @if ($product->isOutOfStock())
                                 <div class="absolute inset-0 bg-neutral-900/80 flex items-center justify-center">
-                                    <span class="px-4 py-2 bg-white text-neutral-900 rounded-lg font-semibold">{{ __('common.out_of_stock') }}</span>
+                                    <span
+                                        class="px-4 py-2 bg-white text-neutral-900 rounded-lg font-semibold">{{ __('common.out_of_stock') }}</span>
                                 </div>
                             @endif
 
