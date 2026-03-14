@@ -169,9 +169,9 @@ class ProductVariantService
 
         $sku = "{$baseSku}-{$suffix}";
 
-        // Vérifier unicité
+        // Vérifier unicité (inclure les soft-deleted)
         $counter = 1;
-        while (ProductVariant::where('sku', $sku)->exists()) {
+        while (ProductVariant::withTrashed()->where('sku', $sku)->exists()) {
             $sku = "{$baseSku}-{$suffix}-{$counter}";
             $counter++;
         }

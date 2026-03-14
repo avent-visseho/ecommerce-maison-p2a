@@ -37,26 +37,24 @@
                             <label class="label">{{ $attribute->name }}</label>
 
                             @if($attribute->type === 'color')
-                                <div class="flex flex-wrap gap-3">
+                                <div class="flex flex-wrap gap-3 pb-6">
                                     @foreach($attribute->activeValues as $value)
-                                        <label class="flex items-center cursor-pointer group">
+                                        <label class="relative flex flex-col items-center cursor-pointer">
                                             <input type="radio" name="attribute_values[{{ $attribute->id }}]"
                                                 value="{{ $value->id }}"
                                                 class="sr-only peer"
                                                 {{ old('attribute_values.' . $attribute->id, $selectedValue?->id) == $value->id ? 'checked' : '' }}>
-                                            <div class="relative">
-                                                <div class="w-12 h-12 rounded-lg border-2 border-neutral-300 peer-checked:border-primary-500 peer-checked:ring-2 peer-checked:ring-primary-200 transition-all duration-200 flex items-center justify-center"
-                                                    style="background-color: {{ $value->color_hex }}">
-                                                    <svg class="w-6 h-6 text-white drop-shadow-lg opacity-0 peer-checked:opacity-100 transition-opacity"
-                                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                                                            d="M5 13l4 4L19 7" />
-                                                    </svg>
-                                                </div>
-                                                <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-neutral-600 whitespace-nowrap">
-                                                    {{ $value->value }}
-                                                </span>
+                                            <div class="w-12 h-12 rounded-lg border-2 border-neutral-300 peer-checked:border-primary-500 peer-checked:ring-2 peer-checked:ring-primary-200 transition-all duration-200 flex items-center justify-center"
+                                                style="background-color: {{ $value->color_hex }}">
                                             </div>
+                                            <svg class="w-6 h-6 text-white drop-shadow-lg absolute top-3 left-1/2 -translate-x-1/2 opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                                    d="M5 13l4 4L19 7" />
+                                            </svg>
+                                            <span class="text-xs text-neutral-600 whitespace-nowrap mt-2">
+                                                {{ $value->value }}
+                                            </span>
                                         </label>
                                     @endforeach
                                 </div>
