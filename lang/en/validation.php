@@ -1,0 +1,56 @@
+<?php
+
+return [
+    'accepted' => 'The :attribute field must be accepted.',
+    'after' => 'The :attribute field must be a date after :date.',
+    'after_or_equal' => 'The :attribute field must be a date equal to or after :date.',
+    'confirmed' => 'The :attribute confirmation does not match.',
+    'current_password' => 'The current password is incorrect.',
+    'date' => 'The :attribute field must be a valid date.',
+    'email' => 'The :attribute field must be a valid email address.',
+    'exists' => 'The selected value for :attribute is invalid.',
+    'image' => 'The :attribute field must be an image.',
+    'in' => 'The selected value for :attribute is invalid.',
+    'integer' => 'The :attribute field must be an integer.',
+    'max' => [
+        'numeric' => 'The :attribute field must not be greater than :max.',
+        'string' => 'The :attribute field must not be more than :max characters.',
+    ],
+    'min' => [
+        'numeric' => 'The :attribute field must be at least :min.',
+        'string' => 'The :attribute field must be at least :min characters.',
+    ],
+    'mimes' => 'The :attribute field must be of type: :mimes.',
+    'numeric' => 'The :attribute field must be a number.',
+    'required' => 'The :attribute field is required.',
+    'string' => 'The :attribute field must be a string.',
+    'unique' => 'This value for :attribute is already in use.',
+
+    'password' => [
+        'letters' => 'The password must contain at least one letter.',
+        'lower' => 'The password must contain at least one lowercase letter.',
+        'mixed' => 'The password must contain at least one letter and one number.',
+        'numbers' => 'The password must contain at least one number.',
+        'symbols' => 'The password must contain at least one special symbol.',
+        'uncompromised' => 'The chosen password is too common. Please choose another one.',
+        'upper' => 'The password must contain at least one uppercase letter.',
+    ],
+
+    'attributes' => [
+        'name' => 'name',
+        'email' => 'email address',
+        'password' => 'password',
+        'password_confirmation' => 'password confirmation',
+        'current_password' => 'current password',
+        'shipping_name' => 'name',
+        'shipping_email' => 'email address',
+        'shipping_phone' => 'phone number',
+        'shipping_address' => 'address',
+        'shipping_city' => 'city',
+        'shipping_postal_code' => 'postal code',
+        'content' => 'comment content',
+        'start_date' => 'start date',
+        'end_date' => 'end date',
+        'quantity' => 'quantity',
+    ],
+];

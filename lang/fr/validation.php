@@ -1,0 +1,56 @@
+<?php
+
+return [
+    'accepted' => 'Le champ :attribute doit être accepté.',
+    'after' => 'Le champ :attribute doit être une date postérieure au :date.',
+    'after_or_equal' => 'Le champ :attribute doit être une date égale ou postérieure au :date.',
+    'confirmed' => 'La confirmation de :attribute ne correspond pas.',
+    'current_password' => 'Le mot de passe actuel est incorrect.',
+    'date' => 'Le champ :attribute doit être une date valide.',
+    'email' => 'Le champ :attribute doit être une adresse email valide.',
+    'exists' => 'La valeur sélectionnée pour :attribute est invalide.',
+    'image' => 'Le champ :attribute doit être une image.',
+    'in' => 'La valeur sélectionnée pour :attribute est invalide.',
+    'integer' => 'Le champ :attribute doit être un entier.',
+    'max' => [
+        'numeric' => 'Le champ :attribute ne doit pas être supérieur à :max.',
+        'string' => 'Le champ :attribute ne doit pas dépasser :max caractères.',
+    ],
+    'min' => [
+        'numeric' => 'Le champ :attribute doit être d\'au moins :min.',
+        'string' => 'Le champ :attribute doit contenir au moins :min caractères.',
+    ],
+    'mimes' => 'Le champ :attribute doit être de type : :mimes.',
+    'numeric' => 'Le champ :attribute doit être un nombre.',
+    'required' => 'Le champ :attribute est obligatoire.',
+    'string' => 'Le champ :attribute doit être une chaîne de caractères.',
+    'unique' => 'Cette valeur pour :attribute est déjà utilisée.',
+
+    'password' => [
+        'letters' => 'Le mot de passe doit contenir au moins une lettre.',
+        'lower' => 'Le mot de passe doit contenir au moins une lettre minuscule.',
+        'mixed' => 'Le mot de passe doit contenir au moins une lettre et un chiffre.',
+        'numbers' => 'Le mot de passe doit contenir au moins un chiffre.',
+        'symbols' => 'Le mot de passe doit contenir au moins un symbole spécial.',
+        'uncompromised' => 'Le mot de passe choisi est trop courant. Veuillez en choisir un autre.',
+        'upper' => 'Le mot de passe doit contenir au moins une lettre majuscule.',
+    ],
+
+    'attributes' => [
+        'name' => 'nom',
+        'email' => 'adresse email',
+        'password' => 'mot de passe',
+        'password_confirmation' => 'confirmation du mot de passe',
+        'current_password' => 'mot de passe actuel',
+        'shipping_name' => 'nom',
+        'shipping_email' => 'adresse email',
+        'shipping_phone' => 'numéro de téléphone',
+        'shipping_address' => 'adresse',
+        'shipping_city' => 'ville',
+        'shipping_postal_code' => 'code postal',
+        'content' => 'contenu du commentaire',
+        'start_date' => 'date de début',
+        'end_date' => 'date de fin',
+        'quantity' => 'quantité',
+    ],
+];
