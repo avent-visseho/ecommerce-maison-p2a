@@ -62,6 +62,19 @@ class RentalItemController extends Controller
         $validated['is_active'] = $request->has('is_active');
         $validated['is_featured'] = $request->has('is_featured');
 
+        // Set default for min_rental_days if not provided (DB column is NOT NULL with default 1)
+        if (empty($validated['min_rental_days'])) {
+            $validated['min_rental_days'] = 1;
+        }
+
+        // Remove null values for nullable DB columns so DB defaults apply
+        // (weekly_rate, monthly_rate, max_rental_days are nullable in DB)
+        foreach (['weekly_rate', 'monthly_rate', 'max_rental_days'] as $field) {
+            if (array_key_exists($field, $validated) && is_null($validated[$field])) {
+                unset($validated[$field]);
+            }
+        }
+
         // Generate SKU if not provided
         if (empty($validated['sku'])) {
             $validated['sku'] = 'RENT-' . strtoupper(Str::random(8));
@@ -133,6 +146,18 @@ class RentalItemController extends Controller
 
         $validated['is_active'] = $request->has('is_active');
         $validated['is_featured'] = $request->has('is_featured');
+
+        // Set default for min_rental_days if not provided (DB column is NOT NULL)
+        if (empty($validated['min_rental_days'])) {
+            $validated['min_rental_days'] = 1;
+        }
+
+        // Remove null values for nullable DB columns so existing values are preserved
+        foreach (['weekly_rate', 'monthly_rate', 'max_rental_days'] as $field) {
+            if (array_key_exists($field, $validated) && is_null($validated[$field])) {
+                unset($validated[$field]);
+            }
+        }
 
         // Handle main image upload
         if ($request->hasFile('main_image')) {

@@ -47,56 +47,51 @@ class ProductVariantController extends Controller
     public function store(Request $request, Product $product)
     {
         $validated = $request->validate([
-            'price' => 'nullable|numeric|min:0',
-            'sale_price' => 'nullable|numeric|min:0|lt:price',
-            'stock' => 'required|integer|min:0',
-            'low_stock_alert' => 'required|integer|min:0',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
-            'attribute_values' => 'nullable|array',
-            'attribute_values.*' => 'nullable|array',
-            'attribute_values.*.*' => 'exists:product_attribute_values,id',
+            'variant_data' => 'required|array|min:1',
+            'variant_data.*.price' => 'nullable|numeric|min:0',
+            'variant_data.*.sale_price' => 'nullable|numeric|min:0',
+            'variant_data.*.stock' => 'required|integer|min:0',
+            'variant_data.*.low_stock_alert' => 'nullable|integer|min:0',
+            'variant_data.*.attribute_values' => 'required|array|min:1',
+            'variant_data.*.attribute_values.*' => 'exists:product_attribute_values,id',
+            'variant_data.*.image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
             'is_active' => 'boolean',
-            'is_default' => 'boolean',
-            'sort_order' => 'nullable|integer|min:0',
         ]);
 
-        $validated['is_active'] = $request->has('is_active');
-        $validated['is_default'] = $request->has('is_default');
-        $validated['sort_order'] = $request->input('sort_order', 0);
+        $isActive = $request->has('is_active');
+        $count = 0;
 
-        // Préparer les données communes pour toutes les variantes
-        $commonData = [
-            'price' => $validated['price'] ?? null,
-            'sale_price' => $validated['sale_price'] ?? null,
-            'stock' => $validated['stock'],
-            'low_stock_alert' => $validated['low_stock_alert'],
-            'is_active' => $validated['is_active'],
-            'is_default' => $validated['is_default'],
-            'sort_order' => $validated['sort_order'],
-        ];
+        foreach ($validated['variant_data'] as $index => $variantInput) {
+            $variantData = [
+                'price' => $variantInput['price'] ?? null,
+                'sale_price' => $variantInput['sale_price'] ?? null,
+                'stock' => $variantInput['stock'],
+                'low_stock_alert' => $variantInput['low_stock_alert'] ?? 10,
+                'is_active' => $isActive,
+                'is_default' => $count === 0, // première variante par défaut
+                'sort_order' => $count,
+                'attribute_values' => $variantInput['attribute_values'],
+            ];
 
-        // Upload image si présente
-        if ($request->hasFile('image')) {
-            $commonData['image'] = $request->file('image');
+            // Ajouter l'image si uploadée
+            if ($request->hasFile("variant_data.{$index}.image")) {
+                $variantData['image'] = $request->file("variant_data.{$index}.image");
+            }
+
+            // Générer un SKU unique
+            $valueCodes = [];
+            foreach ($variantInput['attribute_values'] as $valueId) {
+                $attrValue = \App\Models\ProductAttributeValue::find($valueId);
+                if ($attrValue && $attrValue->code) {
+                    $valueCodes[] = $attrValue->code;
+                }
+            }
+            $variantData['sku'] = $this->variantService->generateSku($product, $valueCodes);
+
+            $this->variantService->createVariant($product, $variantData);
+            $count++;
         }
 
-        // Vérifier si des attributs sont sélectionnés
-        $attributeValues = $validated['attribute_values'] ?? [];
-        $attributeValues = array_filter($attributeValues, fn($values) => !empty($values));
-
-        if (empty($attributeValues)) {
-            // Aucun attribut sélectionné - créer une variante simple
-            $variant = $this->variantService->createVariant($product, $commonData);
-
-            return redirect()
-                ->route('admin.products.variants.index', $product)
-                ->with('success', __('messages.admin.variant.created'));
-        }
-
-        // Créer plusieurs variantes à partir des combinaisons
-        $createdVariants = $this->variantService->createVariants($product, $commonData, $attributeValues);
-
-        $count = $createdVariants->count();
         $message = $count > 1
             ? __('messages.admin.variant.created_many', ['count' => $count])
             : __('messages.admin.variant.created');
@@ -111,8 +106,21 @@ class ProductVariantController extends Controller
      */
     public function edit(Product $product, ProductVariant $variant)
     {
-        $attributes = ProductAttribute::active()->with('activeValues')->get();
         $variant->load('attributeValues');
+
+        // Only show attributes that this product's variants actually use
+        $usedAttributeIds = $product->variants()
+            ->with('attributeValues')
+            ->get()
+            ->pluck('attributeValues')
+            ->flatten()
+            ->pluck('product_attribute_id')
+            ->unique();
+
+        $attributes = ProductAttribute::active()
+            ->whereIn('id', $usedAttributeIds)
+            ->with('activeValues')
+            ->get();
 
         return view('admin.products.variants.edit', compact('product', 'variant', 'attributes'));
     }

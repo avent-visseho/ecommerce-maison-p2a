@@ -21,18 +21,14 @@ class CartService
     }
 
     /**
-     * Add item to cart (with support for variants and checkbox options)
+     * Add item to cart (with support for variants)
      */
-    public function addToCart(Product $product, int $quantity = 1, ?ProductVariant $variant = null, array $checkboxOptions = []): void
+    public function addToCart(Product $product, int $quantity = 1, ?ProductVariant $variant = null): void
     {
         $cart = $this->getCart();
 
-        // Clé unique : product_id + variant_id + hash des checkbox options
+        // Clé unique : product_id + variant_id
         $cartKey = $variant ? "p{$product->id}_v{$variant->id}" : "p{$product->id}";
-        if (!empty($checkboxOptions)) {
-            $optionIds = collect($checkboxOptions)->pluck('id')->sort()->implode('-');
-            $cartKey .= "_cb{$optionIds}";
-        }
 
         if (isset($cart[$cartKey])) {
             $cart[$cartKey]['quantity'] += $quantity;
@@ -43,18 +39,12 @@ class CartService
             $effectiveImage = $variant && $variant->image ? $variant->image : $product->main_image;
             $variantDisplay = $variant ? $variant->display_name : null;
 
-            // Calculer le prix des options checkbox
-            $checkboxTotal = collect($checkboxOptions)->sum('price');
-
             $cart[$cartKey] = [
                 'product_id' => $product->id,
                 'variant_id' => $variant?->id,
                 'name' => $product->name,
                 'slug' => $product->slug,
-                'price' => $effectivePrice + $checkboxTotal,
-                'base_price' => $effectivePrice,
-                'checkbox_options' => $checkboxOptions,
-                'checkbox_total' => $checkboxTotal,
+                'price' => $effectivePrice,
                 'image' => $effectiveImage,
                 'quantity' => $quantity,
                 'stock' => $effectiveStock,
@@ -202,29 +192,66 @@ class CartService
     }
 
     /**
-     * Get total with deposits separated
+     * Get total with deposits separated, with bundle pricing applied.
      */
     public function getTotalWithDeposits(): array
     {
         $cart = $this->getCart();
-        $subtotal = 0;
         $deposits = 0;
+        $rentalSubtotal = 0;
+
+        // Grouper les produits normaux par product_id
+        $productGroups = [];
 
         foreach ($cart as $item) {
             if (isset($item['type']) && $item['type'] === 'rental') {
-                $rentalPrice = $item['price'] * $item['quantity'];
-                $rentalDeposit = $item['deposit'] * $item['quantity'];
-                $subtotal += $rentalPrice;
-                $deposits += $rentalDeposit;
+                $rentalSubtotal += $item['price'] * $item['quantity'];
+                $deposits += $item['deposit'] * $item['quantity'];
+                continue;
+            }
+
+            $pid = $item['product_id'];
+            if (!isset($productGroups[$pid])) {
+                $productGroups[$pid] = ['items' => [], 'total_qty' => 0, 'standard_total' => 0.0];
+            }
+            $productGroups[$pid]['items'][] = $item;
+            $productGroups[$pid]['total_qty'] += $item['quantity'];
+            $productGroups[$pid]['standard_total'] += $item['price'] * $item['quantity'];
+        }
+
+        $productSubtotal = 0.0;
+        $bundleSavings = 0.0;
+        $bundleGroups = [];
+
+        foreach ($productGroups as $pid => $group) {
+            $product = \App\Models\Product::find($pid);
+
+            $bundleTotal = $product ? $product->getBundlePriceForQty($group['total_qty']) : null;
+
+            if ($bundleTotal !== null) {
+                $savings = $group['standard_total'] - $bundleTotal;
+                $bundleSavings += $savings;
+                $productSubtotal += $bundleTotal;
+                $bundleGroups[$pid] = [
+                    'name' => $group['items'][0]['name'],
+                    'total_qty' => $group['total_qty'],
+                    'standard_total' => $group['standard_total'],
+                    'bundle_total' => $bundleTotal,
+                    'savings' => $savings,
+                ];
             } else {
-                $subtotal += $item['price'] * $item['quantity'];
+                $productSubtotal += $group['standard_total'];
             }
         }
+
+        $subtotal = $productSubtotal + $rentalSubtotal;
 
         return [
             'subtotal' => $subtotal,
             'deposits' => $deposits,
-            'total' => $subtotal + $deposits
+            'total' => $subtotal + $deposits,
+            'bundle_savings' => $bundleSavings,
+            'bundle_groups' => $bundleGroups,
         ];
     }
 }

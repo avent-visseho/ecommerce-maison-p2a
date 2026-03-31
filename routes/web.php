@@ -55,6 +55,7 @@ Route::post('/rentals/{id}/check-availability', [RentalController::class, 'check
 // Cart Routes
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/add-variants/{id}', [CartController::class, 'addMultipleVariants'])->name('cart.addMultipleVariants');
 Route::post('/cart/add-rental/{id}', [CartController::class, 'addRental'])->name('cart.add.rental');
 Route::put('/cart/update/{cartKey}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/remove/{cartKey}', [CartController::class, 'remove'])->name('cart.remove');

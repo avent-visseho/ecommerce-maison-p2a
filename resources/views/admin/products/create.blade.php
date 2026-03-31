@@ -184,6 +184,57 @@
                 </div>
             </div>
 
+            <!-- Bundle Prices -->
+            <div class="card" x-data="{
+                rows: [{ qty: 1, price: '' }, { qty: 2, price: '' }],
+                addRow() { this.rows.push({ qty: this.rows.length + 1, price: '' }); },
+                removeRow(i) { if (this.rows.length > 1) this.rows.splice(i, 1); }
+            }">
+                <div class="card-header flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-semibold text-neutral-900">Prix en lot <span class="text-sm font-normal text-neutral-400">(optionnel)</span></h3>
+                        <p class="text-sm text-neutral-400 mt-0.5">Ex : 1 tasse = 8 €, 2 tasses = 15 € — s'applique en cumulant toutes les variantes du même produit dans le panier.</p>
+                    </div>
+                    <button type="button" @click="addRow()"
+                        class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-primary-600 border border-primary-300 rounded-lg hover:bg-primary-50">
+                        + Ajouter un palier
+                    </button>
+                </div>
+                <div class="card-body space-y-3">
+                    <template x-for="(row, i) in rows" :key="i">
+                        <div class="flex items-center gap-3">
+                            <div class="flex-1">
+                                <label class="label text-xs">Quantité</label>
+                                <div class="relative">
+                                    <input type="number" :name="'bundle_qty[' + i + ']'" x-model="row.qty"
+                                        min="1" class="input-field" placeholder="1">
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <label class="label text-xs">Prix total (€)</label>
+                                <div class="relative">
+                                    <input type="number" :name="'bundle_price[' + i + ']'" x-model="row.price"
+                                        min="0" step="0.01" class="input-field" placeholder="0.00">
+                                    <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                                        <span class="text-neutral-400 text-sm">€</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-5">
+                                <button type="button" @click="removeRow(i)"
+                                    class="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                    :disabled="rows.length === 1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+                    <p class="text-xs text-neutral-400 pt-1">Laissez vide si vous ne souhaitez pas activer les prix en lot pour ce produit.</p>
+                </div>
+            </div>
+
             <!-- Images -->
             <div class="card">
                 <div class="card-header">
@@ -359,39 +410,6 @@
                     }
                 </script>
             @endpush
-
-            <!-- Attributs Checkbox (Options à cocher) -->
-            @if($checkboxAttributes->count() > 0)
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-lg font-semibold text-neutral-900">Options à cocher</h3>
-                        <p class="text-sm text-neutral-400 mt-1">Sélectionnez les attributs checkbox à proposer pour ce produit (ex: parfums, toppings...)</p>
-                    </div>
-                    <div class="card-body space-y-4">
-                        @foreach($checkboxAttributes as $cbAttr)
-                            <div class="flex items-start space-x-3 p-4 bg-neutral-50 rounded-lg">
-                                <input type="checkbox" name="checkbox_attributes[]" value="{{ $cbAttr->id }}"
-                                    id="cb_attr_{{ $cbAttr->id }}"
-                                    {{ in_array($cbAttr->id, old('checkbox_attributes', [])) ? 'checked' : '' }}
-                                    class="w-4 h-4 mt-1 text-primary-500 border-neutral-300 rounded focus:ring-primary-500">
-                                <div>
-                                    <label for="cb_attr_{{ $cbAttr->id }}" class="text-sm font-medium text-neutral-900">{{ $cbAttr->name }}</label>
-                                    <div class="flex flex-wrap gap-2 mt-2">
-                                        @foreach($cbAttr->activeValues as $val)
-                                            <span class="text-xs px-2 py-1 bg-white rounded border border-neutral-200 text-neutral-600">
-                                                {{ $val->value }}
-                                                @if($val->price)
-                                                    <span class="text-primary-500 font-semibold">(+{{ number_format($val->price, 0, ',', ' ') }} €)</span>
-                                                @endif
-                                            </span>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
 
             <!-- Options -->
             <div class="card">

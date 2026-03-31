@@ -114,24 +114,8 @@
                                                     </p>
                                                 @endif
 
-                                                @if(!empty($item['checkbox_options']))
-                                                    <div class="mb-2">
-                                                        @foreach($item['checkbox_options'] as $opt)
-                                                            <span class="inline-flex items-center text-xs px-2 py-1 bg-primary-50 text-primary-700 rounded-full mr-1 mb-1">
-                                                                {{ $opt['value'] }}
-                                                                @if($opt['price'] > 0)
-                                                                    (+{{ number_format($opt['price'], 0, ',', ' ') }} €)
-                                                                @endif
-                                                            </span>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
-
                                                 <p class="text-sm text-neutral-400 mb-3">
                                                     {{ __('cart.unit_price') }}: {{ number_format($item['price'], 0, ',', ' ') }} €
-                                                    @if(!empty($item['checkbox_total']) && $item['checkbox_total'] > 0)
-                                                        <span class="text-xs text-neutral-400">(dont {{ number_format($item['checkbox_total'], 0, ',', ' ') }} € d'options)</span>
-                                                    @endif
                                                 </p>
 
                                                 <div class="flex items-center space-x-4">
@@ -221,10 +205,31 @@
                                 <h3 class="text-lg font-semibold text-neutral-900">{{ __('cart.order_summary') }}</h3>
                             </div>
                             <div class="card-body space-y-4">
+                                @if(!empty($totals['bundle_groups']))
+                                    @foreach($totals['bundle_groups'] as $bundleGroup)
+                                        <div class="flex items-start gap-2 p-3 bg-green-50 border border-green-200 rounded-lg text-sm">
+                                            <svg class="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a2 2 0 012-2z" />
+                                            </svg>
+                                            <div>
+                                                <p class="font-medium text-green-800">Tarif lot appliqué — {{ $bundleGroup['name'] }}</p>
+                                                <p class="text-green-600">{{ $bundleGroup['total_qty'] }} article(s) : {{ number_format($bundleGroup['bundle_total'], 2, ',', ' ') }} € au lieu de {{ number_format($bundleGroup['standard_total'], 2, ',', ' ') }} €</p>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+
                                 <div class="flex justify-between text-neutral-600">
                                     <span>{{ __('cart.subtotal') }}</span>
                                     <span class="font-semibold">{{ number_format($totals['subtotal'], 0, ',', ' ') }} €</span>
                                 </div>
+
+                                @if(!empty($totals['bundle_savings']) && $totals['bundle_savings'] > 0)
+                                    <div class="flex justify-between text-green-600 text-sm">
+                                        <span>Économie lot</span>
+                                        <span class="font-semibold">- {{ number_format($totals['bundle_savings'], 2, ',', ' ') }} €</span>
+                                    </div>
+                                @endif
 
                                 @if($totals['deposits'] > 0)
                                     <div class="flex justify-between text-amber-600">

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\ProductAttributeValue;
 use App\Models\ProductVariant;
 use App\Models\RentalItem;
 use App\Services\CartService;
@@ -61,26 +60,7 @@ class CartController extends Controller
             }
         }
 
-        // Gérer les options checkbox
-        $checkboxOptions = [];
-        if ($request->has('checkbox_options')) {
-            $optionIds = $request->input('checkbox_options', []);
-            $values = ProductAttributeValue::whereIn('id', $optionIds)
-                ->whereHas('attribute', fn($q) => $q->where('type', 'checkbox'))
-                ->with('attribute')
-                ->get();
-
-            foreach ($values as $val) {
-                $checkboxOptions[] = [
-                    'id' => $val->id,
-                    'attribute_name' => $val->attribute->name,
-                    'value' => $val->value,
-                    'price' => (float) ($val->price ?? 0),
-                ];
-            }
-        }
-
-        $this->cartService->addToCart($product, $quantity, $variant, $checkboxOptions);
+        $this->cartService->addToCart($product, $quantity, $variant);
 
         if ($request->ajax()) {
             return response()->json([
@@ -91,6 +71,32 @@ class CartController extends Controller
         }
 
         return redirect()->back()->with('success', __('messages.cart.product_added'));
+    }
+
+    public function addMultipleVariants(Request $request, $id)
+    {
+        $product = Product::active()->findOrFail($id);
+
+        $request->validate([
+            'variants' => 'required|array|min:1',
+            'variants.*' => 'integer|min:1',
+        ]);
+
+        $added = 0;
+        foreach ($request->variants as $variantId => $quantity) {
+            $variant = ProductVariant::active()->where('product_id', $product->id)->find($variantId);
+            if (!$variant || $variant->isOutOfStock()) continue;
+
+            $quantity = min($quantity, $variant->stock);
+            $this->cartService->addToCart($product, $quantity, $variant);
+            $added += $quantity;
+        }
+
+        if ($added === 0) {
+            return redirect()->back()->with('error', __('messages.cart.no_variants_added', ['default' => 'Aucune variante ajoutée']));
+        }
+
+        return redirect()->back()->with('success', __('messages.cart.products_added', ['count' => $added, 'default' => $added . ' article(s) ajouté(s) au panier']));
     }
 
     public function update(Request $request, $cartKey)

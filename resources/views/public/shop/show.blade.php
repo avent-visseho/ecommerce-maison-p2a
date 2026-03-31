@@ -31,10 +31,29 @@
             <div class="lg:grid lg:grid-cols-2 lg:gap-12" x-data="productDetail()">
                 <!-- Product Images -->
                 <div class="space-y-4">
-                    <!-- Main Image -->
-                    <div class="aspect-square rounded-2xl overflow-hidden bg-neutral-50 border border-neutral-200">
+                    <!-- Main Image with Zoom -->
+                    <div class="aspect-square rounded-2xl overflow-hidden bg-neutral-50 border border-neutral-200 relative cursor-zoom-in"
+                         x-data="imageZoom()"
+                         @mouseenter="zooming = true"
+                         @mouseleave="zooming = false"
+                         @mousemove="onMouseMove($event)"
+                         @click="$dispatch('open-lightbox')">
                         @if ($product->main_image)
-                            <img :src="selectedImage" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                            {{-- Normal image --}}
+                            <img :src="selectedImage" alt="{{ $product->name }}" class="w-full h-full object-cover transition-opacity duration-200"
+                                 :class="zooming ? 'opacity-0' : 'opacity-100'">
+                            {{-- Zoomed image layer --}}
+                            <div x-show="zooming"
+                                 class="absolute inset-0 bg-no-repeat"
+                                 :style="`background-image: url(${selectedImage}); background-size: 200%; background-position: ${zoomX}% ${zoomY}%;`">
+                            </div>
+                            {{-- Zoom hint icon --}}
+                            <div class="absolute top-3 right-3 bg-white/80 backdrop-blur-sm rounded-full p-2 shadow-sm pointer-events-none transition-opacity duration-200"
+                                 :class="zooming ? 'opacity-0' : 'opacity-100'">
+                                <svg class="w-5 h-5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                </svg>
+                            </div>
                         @else
                             <div class="w-full h-full flex items-center justify-center">
                                 <svg class="w-24 h-24 text-neutral-300" fill="none" stroke="currentColor"
@@ -74,6 +93,51 @@
                     @endif
                 </div>
 
+                <!-- Lightbox / Fullscreen Modal -->
+                <template x-teleport="body">
+                    <div x-show="lightboxOpen"
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0"
+                         x-transition:enter-end="opacity-100"
+                         x-transition:leave="transition ease-in duration-200"
+                         x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
+                         @open-lightbox.window="lightboxOpen = true"
+                         @keydown.escape.window="lightboxOpen = false"
+                         @keydown.arrow-left.window="if(lightboxOpen) prevImage()"
+                         @keydown.arrow-right.window="if(lightboxOpen) nextImage()"
+                         class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-sm cursor-zoom-out"
+                         @click.self="lightboxOpen = false"
+                         x-cloak>
+                        {{-- Close button --}}
+                        <button @click="lightboxOpen = false"
+                                class="absolute top-4 right-4 z-10 bg-white/10 hover:bg-white/20 text-white rounded-full p-3 transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        {{-- Navigation arrows (only if multiple images) --}}
+                        <template x-if="allImages.length > 1">
+                            <button @click.stop="prevImage()" class="absolute left-4 bg-white/10 hover:bg-white/20 text-white rounded-full p-3 transition-colors">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+                        </template>
+                        <template x-if="allImages.length > 1">
+                            <button @click.stop="nextImage()" class="absolute right-4 bg-white/10 hover:bg-white/20 text-white rounded-full p-3 transition-colors">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </template>
+                        {{-- Fullscreen image --}}
+                        <img :src="selectedImage" alt="{{ $product->name }}"
+                             class="max-w-[90vw] max-h-[90vh] object-contain rounded-lg shadow-2xl"
+                             @click.stop>
+                    </div>
+                </template>
+
                 <!-- Product Info -->
                 <div class="mt-8 lg:mt-0 space-y-6">
                     <!-- Title & Category -->
@@ -90,22 +154,31 @@
 
                     <!-- Price -->
                     <div class="border-y border-neutral-200 py-6">
-                        @if ($product->isOnSale())
-                            <div class="flex items-baseline space-x-3">
-                                <span
-                                    class="text-4xl font-bold text-primary-500">{{ number_format($product->sale_price, 0, ',', ' ') }}
-                                    €</span>
-                                <span
-                                    class="text-2xl text-neutral-400 line-through">{{ number_format($product->price, 0, ',', ' ') }}
-                                    €</span>
-                                <span class="px-3 py-1 bg-red-500 text-white text-sm font-bold rounded-full">
-                                    -{{ round((($product->price - $product->sale_price) / $product->price) * 100) }}%
-                                </span>
+                        @if($product->hasVariants())
+                            {{-- Total dynamique quand des variantes sont sélectionnées --}}
+                            <div x-show="totalItems > 0" x-cloak>
+                                <div class="flex items-baseline space-x-3">
+                                    <span class="text-4xl font-bold text-primary-500" x-text="formatPrice(totalPrice)"></span>
+                                    <span class="text-lg text-neutral-400" x-text="totalItems + ' article(s)'"></span>
+                                </div>
+                            </div>
+                            {{-- Prix de base affiché quand rien n'est sélectionné --}}
+                            <div x-show="totalItems === 0">
+                                <span class="text-2xl text-neutral-500">{{ __('shop.from', ['default' => 'À partir de']) }}</span>
+                                <span class="text-4xl font-bold text-neutral-900">{{ number_format($product->price, 0, ',', ' ') }} €</span>
                             </div>
                         @else
-                            <span
-                                class="text-4xl font-bold text-neutral-900">{{ number_format($product->price, 0, ',', ' ') }}
-                                €</span>
+                            @if ($product->isOnSale())
+                                <div class="flex items-baseline space-x-3">
+                                    <span class="text-4xl font-bold text-primary-500">{{ number_format($product->sale_price, 0, ',', ' ') }} €</span>
+                                    <span class="text-2xl text-neutral-400 line-through">{{ number_format($product->price, 0, ',', ' ') }} €</span>
+                                    <span class="px-3 py-1 bg-red-500 text-white text-sm font-bold rounded-full">
+                                        -{{ round((($product->price - $product->sale_price) / $product->price) * 100) }}%
+                                    </span>
+                                </div>
+                            @else
+                                <span class="text-4xl font-bold text-neutral-900">{{ number_format($product->price, 0, ',', ' ') }} €</span>
+                            @endif
                         @endif
                     </div>
 
@@ -152,148 +225,80 @@
                         </div>
                     @endif
 
-                    <!-- Variant Selector -->
+                    <!-- Variant Selector (multi-select) -->
                     @if($product->hasVariants())
                         <div class="space-y-4 border-t border-neutral-200 pt-6">
-                            @php
-                                $productAttributes = $product->activeVariants
-                                    ->flatMap(fn($v) => $v->attributeValues)
-                                    ->groupBy('product_attribute_id');
-                            @endphp
+                            <h3 class="text-lg font-semibold text-neutral-900">{{ __('shop.choose_variants', ['default' => 'Choisissez vos variantes']) }}</h3>
 
-                            @foreach($productAttributes as $attributeId => $values)
-                                @php
-                                    $attribute = $values->first()->attribute;
-                                    $uniqueValues = $values->unique('id');
-                                @endphp
+                            <!-- Liste des variantes avec quantité -->
+                            <div class="space-y-3">
+                                <template x-for="variant in variants" :key="variant.id">
+                                    <div class="border rounded-xl p-4 transition-all cursor-pointer"
+                                         :class="[
+                                            cart[variant.id]?.qty > 0 ? 'border-primary-500 bg-primary-50/30' : 'border-neutral-200',
+                                            previewingVariantId === variant.id ? 'ring-2 ring-primary-300' : ''
+                                         ]"
+                                         @click="previewVariant(variant)">
+                                        <div class="flex items-center justify-between gap-4">
+                                            <!-- Variant info -->
+                                            <div class="flex items-center gap-3 flex-1 min-w-0">
+                                                <!-- Color swatch if applicable -->
+                                                <template x-if="getVariantColor(variant)">
+                                                    <div class="w-8 h-8 rounded-full ring-1 ring-neutral-300 flex-shrink-0"
+                                                         :class="previewingVariantId === variant.id ? 'ring-2 ring-primary-500 ring-offset-2' : ''"
+                                                         :style="'background-color:' + getVariantColor(variant)"></div>
+                                                </template>
+                                                <!-- Variant image -->
+                                                <template x-if="variant.image">
+                                                    <img :src="'{{ asset('storage/') }}/' + variant.image"
+                                                         class="w-12 h-12 rounded-lg object-cover flex-shrink-0 transition-all"
+                                                         :class="previewingVariantId === variant.id ? 'ring-2 ring-primary-500' : ''"
+                                                         alt="">
+                                                </template>
+                                                <div class="min-w-0">
+                                                    <p class="font-medium text-neutral-900 truncate" x-text="getVariantName(variant)"></p>
+                                                    <div class="flex items-center gap-2 mt-0.5">
+                                                        <span class="text-sm font-bold text-primary-500" x-text="formatPrice(variant.effective_price)"></span>
+                                                        <template x-if="variant.is_on_sale && variant.price">
+                                                            <span class="text-xs text-neutral-400 line-through" x-text="formatPrice(variant.price)"></span>
+                                                        </template>
+                                                    </div>
+                                                    <!-- Stock -->
+                                                    <span x-show="variant.stock <= 0" class="text-xs text-red-600 font-medium">Rupture de stock</span>
+                                                    <span x-show="variant.stock > 0 && variant.stock <= variant.low_stock_alert" class="text-xs text-orange-600 font-medium" x-text="'Plus que ' + variant.stock + ' en stock'"></span>
+                                                </div>
+                                            </div>
 
-                                <div>
-                                    <label class="block text-sm font-medium text-neutral-900 mb-3">
-                                        {{ $attribute->name }}
-                                        <span x-show="selectedAttributes[{{ $attribute->id }}]" class="text-primary-500" x-text="': ' + getSelectedValueName({{ $attribute->id }})"></span>
-                                    </label>
-
-                                    @if($attribute->type === 'color')
-                                        <!-- Color Selector -->
-                                        <div class="flex flex-wrap gap-3">
-                                            @foreach($uniqueValues as $value)
-                                                <button
-                                                    type="button"
-                                                    @click="selectAttribute({{ $attribute->id }}, {{ $value->id }})"
-                                                    :class="selectedAttributes[{{ $attribute->id }}] === {{ $value->id }} ? 'ring-2 ring-primary-500 ring-offset-2' : 'ring-1 ring-neutral-300'"
-                                                    class="group relative w-12 h-12 rounded-full transition-all hover:scale-110"
-                                                    style="background-color: {{ $value->color_hex }}"
-                                                    title="{{ $value->value }}">
-                                                    <!-- Checkmark -->
-                                                    <svg x-show="selectedAttributes[{{ $attribute->id }}] === {{ $value->id }}"
-                                                         class="absolute inset-0 m-auto w-6 h-6 text-white drop-shadow-lg"
-                                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                                            <!-- Quantity selector -->
+                                            <div class="flex items-center gap-2 flex-shrink-0" x-show="variant.stock > 0">
+                                                <button type="button"
+                                                    @click.stop="updateCart(variant.id, -1, variant.stock)"
+                                                    class="w-8 h-8 flex items-center justify-center rounded-lg border border-neutral-200 hover:bg-neutral-50 transition-colors"
+                                                    :class="!cart[variant.id]?.qty ? 'opacity-30 cursor-not-allowed' : ''">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
                                                     </svg>
                                                 </button>
-                                            @endforeach
+                                                <span class="w-8 text-center font-semibold text-sm" x-text="cart[variant.id]?.qty || 0"></span>
+                                                <button type="button"
+                                                    @click.stop="updateCart(variant.id, 1, variant.stock)"
+                                                    class="w-8 h-8 flex items-center justify-center rounded-lg border border-neutral-200 hover:bg-neutral-50 transition-colors"
+                                                    :class="cart[variant.id]?.qty >= variant.stock ? 'opacity-30 cursor-not-allowed' : ''">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                                    </svg>
+                                                </button>
+                                            </div>
                                         </div>
-                                    @else
-                                        <!-- Dropdown Selector -->
-                                        <select
-                                            @change="selectAttribute({{ $attribute->id }}, parseInt($event.target.value))"
-                                            class="block w-full px-4 py-3 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
-                                            <option value="">Sélectionner {{ $attribute->name }}</option>
-                                            @foreach($uniqueValues as $value)
-                                                <option value="{{ $value->id }}" :selected="selectedAttributes[{{ $attribute->id }}] === {{ $value->id }}">
-                                                    {{ $value->value }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    @endif
-                                </div>
-                            @endforeach
-
-                            <!-- Selected Variant Info -->
-                            <div x-show="selectedVariant" class="border-t border-neutral-200 pt-4 space-y-3">
-                                <!-- Price -->
-                                <div>
-                                    <div class="flex items-baseline space-x-3">
-                                        <span class="text-3xl font-bold text-primary-500" x-text="formatPrice(selectedVariant?.effective_price)"></span>
-                                        <span x-show="selectedVariant?.is_on_sale && selectedVariant?.price"
-                                              class="text-xl text-neutral-400 line-through"
-                                              x-text="formatPrice(selectedVariant?.price)"></span>
                                     </div>
-                                </div>
-
-                                <!-- Stock Status -->
-                                <div>
-                                    <span x-show="selectedVariant?.stock <= 0"
-                                          class="inline-flex items-center px-4 py-2 rounded-lg bg-red-50 text-red-700 font-semibold">
-                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                        Rupture de stock
-                                    </span>
-                                    <span x-show="selectedVariant?.stock > 0 && selectedVariant?.stock <= selectedVariant?.low_stock_alert"
-                                          class="inline-flex items-center px-4 py-2 rounded-lg bg-orange-50 text-orange-700 font-semibold">
-                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                                        </svg>
-                                        Seulement <span x-text="selectedVariant?.stock"></span> en stock
-                                    </span>
-                                    <span x-show="selectedVariant?.stock > selectedVariant?.low_stock_alert"
-                                          class="inline-flex items-center px-4 py-2 rounded-lg bg-green-50 text-green-700 font-semibold">
-                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        En stock
-                                    </span>
-                                </div>
-
-                                <!-- SKU -->
-                                <div class="text-sm text-neutral-400">
-                                    SKU: <span class="font-mono" x-text="selectedVariant?.sku"></span>
-                                </div>
+                                </template>
                             </div>
-                        </div>
-                    @endif
 
-                    <!-- Checkbox Options (ex: parfums) -->
-                    @if($product->checkboxAttributes->count() > 0)
-                        <div class="space-y-4 border-t border-neutral-200 pt-6">
-                            @foreach($product->checkboxAttributes as $cbAttr)
-                                <div>
-                                    <label class="block text-sm font-medium text-neutral-900 mb-3">
-                                        {{ $cbAttr->name }}
-                                        <span x-show="getCheckedCount({{ $cbAttr->id }}) > 0" class="text-primary-500" x-text="'(' + getCheckedCount({{ $cbAttr->id }}) + ' sélectionné(s))'"></span>
-                                    </label>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                        @foreach($cbAttr->activeValues as $val)
-                                            <label class="flex items-center space-x-3 p-3 rounded-lg border border-neutral-200 hover:border-primary-500 cursor-pointer transition-all"
-                                                :class="checkedOptions[{{ $val->id }}] ? 'border-primary-500 bg-primary-50' : ''">
-                                                <input type="checkbox"
-                                                    name="checkbox_options[]"
-                                                    value="{{ $val->id }}"
-                                                    x-model="checkedOptions[{{ $val->id }}]"
-                                                    @change="updateCheckboxTotal()"
-                                                    data-attribute-id="{{ $cbAttr->id }}"
-                                                    data-price="{{ $val->price ?? 0 }}"
-                                                    class="w-4 h-4 text-primary-500 border-neutral-300 rounded focus:ring-primary-500">
-                                                <span class="flex-1 text-sm text-neutral-700">{{ $val->value }}</span>
-                                                @if($val->price)
-                                                    <span class="text-sm font-semibold text-primary-500">+{{ number_format($val->price, 0, ',', ' ') }} €</span>
-                                                @endif
-                                            </label>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endforeach
-
-                            <!-- Prix total dynamique -->
-                            <div class="bg-primary-50 rounded-lg p-4" x-show="checkboxTotal > 0">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-sm font-medium text-neutral-700">Options sélectionnées :</span>
-                                    <span class="text-sm font-semibold text-primary-500" x-text="'+' + formatPrice(checkboxTotal)"></span>
-                                </div>
-                                <div class="flex justify-between items-center mt-2 pt-2 border-t border-primary-200">
-                                    <span class="text-sm font-bold text-neutral-900">Prix total :</span>
-                                    <span class="text-lg font-bold text-primary-500" x-text="formatPrice(totalWithOptions)"></span>
+                            <!-- Récapitulatif sélection -->
+                            <div x-show="totalItems > 0" x-cloak class="bg-neutral-50 rounded-xl p-4 space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-neutral-600" x-text="totalItems + ' article(s) sélectionné(s)'"></span>
+                                    <span class="font-bold text-neutral-900" x-text="formatPrice(totalPrice)"></span>
                                 </div>
                             </div>
                         </div>
@@ -301,20 +306,43 @@
 
                     <!-- Add to Cart Form -->
                     @if (!$product->isOutOfStock())
+                        @if($product->hasVariants())
+                            <form action="{{ route('cart.addMultipleVariants', $product->id) }}" method="POST" class="space-y-4">
+                                @csrf
+                                <!-- Hidden inputs for selected variants -->
+                                <template x-for="(item, variantId) in cart" :key="variantId">
+                                    <template x-if="item.qty > 0">
+                                        <div>
+                                            <input type="hidden" :name="'variants[' + variantId + ']'" :value="item.qty">
+                                        </div>
+                                    </template>
+                                </template>
+
+                                <!-- Action Buttons -->
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <button type="submit"
+                                        :disabled="totalItems === 0"
+                                        :class="{'opacity-50 cursor-not-allowed': totalItems === 0}"
+                                        class="flex-1 btn-primary flex items-center justify-center space-x-2 py-4">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                        </svg>
+                                        <span x-show="totalItems === 0">Sélectionnez des variantes</span>
+                                        <span x-show="totalItems > 0" x-text="'{{ __('common.add_to_cart') }} (' + totalItems + ')'"></span>
+                                    </button>
+                                    <button type="button"
+                                        class="px-6 py-4 border-2 border-neutral-200 rounded-xl hover:border-primary-500 hover:text-primary-500 transition-all">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </form>
+                        @else
                         <form action="{{ route('cart.add', $product->id) }}" method="POST" class="space-y-4">
                             @csrf
-
-                            @if($product->hasVariants())
-                                <!-- Hidden variant_id field -->
-                                <input type="hidden" name="variant_id" x-model="selectedVariantId">
-                            @endif
-
-                            <!-- Hidden checkbox options -->
-                            @if($product->checkboxAttributes->count() > 0)
-                                <template x-for="optId in selectedCheckboxIds" :key="optId">
-                                    <input type="hidden" name="checkbox_options[]" :value="optId">
-                                </template>
-                            @endif
 
                             <!-- Quantity Selector -->
                             <div>
@@ -348,29 +376,14 @@
 
                             <!-- Action Buttons -->
                             <div class="flex flex-col sm:flex-row gap-4">
-                                @if($product->hasVariants())
-                                    <button type="submit"
-                                        :disabled="!selectedVariantId || (selectedVariant && selectedVariant.stock <= 0)"
-                                        :class="{'opacity-50 cursor-not-allowed': !selectedVariantId || (selectedVariant && selectedVariant.stock <= 0)}"
-                                        class="flex-1 btn-primary flex items-center justify-center space-x-2 py-4">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                                        </svg>
-                                        <span x-show="!selectedVariantId">Sélectionnez une variante</span>
-                                        <span x-show="selectedVariantId && (!selectedVariant || selectedVariant.stock > 0)">{{ __('common.add_to_cart') }}</span>
-                                        <span x-show="selectedVariantId && selectedVariant && selectedVariant.stock <= 0">Rupture de stock</span>
-                                    </button>
-                                @else
-                                    <button type="submit"
-                                        class="flex-1 btn-primary flex items-center justify-center space-x-2 py-4">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                                        </svg>
-                                        <span>{{ __('common.add_to_cart') }}</span>
-                                    </button>
-                                @endif
+                                <button type="submit"
+                                    class="flex-1 btn-primary flex items-center justify-center space-x-2 py-4">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                    </svg>
+                                    <span>{{ __('common.add_to_cart') }}</span>
+                                </button>
                                 <button type="button"
                                     class="px-6 py-4 border-2 border-neutral-200 rounded-xl hover:border-primary-500 hover:text-primary-500 transition-all">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -380,6 +393,7 @@
                                 </button>
                             </div>
                         </form>
+                        @endif
                     @else
                         <div class="p-6 bg-neutral-50 rounded-xl text-center">
                             <p class="text-neutral-600 mb-4">{{ __('shop.out_of_stock_message') }}</p>
@@ -617,109 +631,84 @@
 
 @push('scripts')
 <script>
+function imageZoom() {
+    return {
+        zooming: false,
+        zoomX: 50,
+        zoomY: 50,
+
+        onMouseMove(event) {
+            const rect = event.currentTarget.getBoundingClientRect();
+            this.zoomX = ((event.clientX - rect.left) / rect.width) * 100;
+            this.zoomY = ((event.clientY - rect.top) / rect.height) * 100;
+        }
+    }
+}
+
 function productDetail() {
     return {
         variants: @json($product->activeVariants),
-        selectedAttributes: {},
-        selectedVariant: null,
-        selectedVariantId: null,
+        cart: {},
         selectedImage: '{{ $product->main_image ? asset('storage/' . $product->main_image) : '' }}',
+        defaultImage: '{{ $product->main_image ? asset('storage/' . $product->main_image) : '' }}',
+        previewingVariantId: null,
         quantity: 1,
-        // Checkbox options
-        checkedOptions: {},
-        checkboxTotal: 0,
-        basePrice: {{ $product->effective_price }},
-
-        init() {
-            // Sélectionner la variante par défaut si elle existe
-            @if($product->hasVariants())
-                const defaultVariant = this.variants.find(v => v.is_default);
-                if (defaultVariant) {
-                    defaultVariant.attribute_values.forEach(attrValue => {
-                        this.selectedAttributes[attrValue.product_attribute_id] = attrValue.id;
-                    });
-                    this.findMatchingVariant();
-                }
+        lightboxOpen: false,
+        allImages: [
+            @if($product->main_image)'{{ asset('storage/' . $product->main_image) }}'@endif
+            @if($product->images)
+                @foreach($product->images as $image)
+                    , '{{ asset('storage/' . $image) }}'
+                @endforeach
             @endif
-        },
+        ],
 
         get maxStock() {
-            if (this.selectedVariant) {
-                return this.selectedVariant.stock;
-            }
             return {{ $product->stock }};
         },
 
-        get totalWithOptions() {
-            let base = this.basePrice;
-            if (this.selectedVariant) {
-                base = this.selectedVariant.effective_price || this.selectedVariant.price || this.basePrice;
-            }
-            return base + this.checkboxTotal;
+        get totalItems() {
+            return Object.values(this.cart).reduce((sum, item) => sum + (item.qty || 0), 0);
         },
 
-        get selectedCheckboxIds() {
-            return Object.keys(this.checkedOptions).filter(id => this.checkedOptions[id]).map(id => parseInt(id));
-        },
-
-        updateCheckboxTotal() {
+        get totalPrice() {
             let total = 0;
-            const checkboxes = document.querySelectorAll('input[name="checkbox_options[]"]');
-            checkboxes.forEach(cb => {
-                if (this.checkedOptions[cb.value]) {
-                    total += parseFloat(cb.dataset.price) || 0;
+            for (const [variantId, item] of Object.entries(this.cart)) {
+                if (item.qty > 0) {
+                    const variant = this.variants.find(v => v.id == variantId);
+                    if (variant) {
+                        total += parseFloat(variant.effective_price) * item.qty;
+                    }
                 }
-            });
-            this.checkboxTotal = total;
-        },
-
-        getCheckedCount(attributeId) {
-            const checkboxes = document.querySelectorAll('input[name="checkbox_options[]"][data-attribute-id="' + attributeId + '"]');
-            let count = 0;
-            checkboxes.forEach(cb => {
-                if (this.checkedOptions[cb.value]) count++;
-            });
-            return count;
-        },
-
-        selectAttribute(attributeId, valueId) {
-            this.selectedAttributes[attributeId] = parseInt(valueId);
-            this.findMatchingVariant();
-        },
-
-        findMatchingVariant() {
-            const selectedValueIds = Object.values(this.selectedAttributes).sort();
-
-            this.selectedVariant = this.variants.find(variant => {
-                const variantValueIds = variant.attribute_values
-                    .map(av => av.id)
-                    .sort();
-
-                return JSON.stringify(variantValueIds) === JSON.stringify(selectedValueIds);
-            });
-
-            this.selectedVariantId = this.selectedVariant?.id || null;
-
-            if (this.selectedVariant && this.selectedVariant.image) {
-                this.selectedImage = '{{ asset('storage/') }}/' + this.selectedVariant.image;
-            } else if ('{{ $product->main_image }}') {
-                this.selectedImage = '{{ asset('storage/' . $product->main_image) }}';
             }
+            return total;
+        },
 
-            if (this.selectedVariant && this.quantity > this.selectedVariant.stock) {
-                this.quantity = Math.max(1, this.selectedVariant.stock);
+        previewVariant(variant) {
+            this.previewingVariantId = variant.id;
+            if (variant.image) {
+                this.selectedImage = '{{ asset('storage/') }}/' + variant.image;
+            } else if (this.defaultImage) {
+                this.selectedImage = this.defaultImage;
             }
         },
 
-        getSelectedValueName(attributeId) {
-            const valueId = this.selectedAttributes[attributeId];
-            if (!valueId) return '';
-
-            for (let variant of this.variants) {
-                const attrValue = variant.attribute_values.find(av => av.id === valueId);
-                if (attrValue) return attrValue.value;
+        updateCart(variantId, delta, maxStock) {
+            if (!this.cart[variantId]) {
+                this.cart[variantId] = { qty: 0 };
             }
-            return '';
+            const newQty = this.cart[variantId].qty + delta;
+            if (newQty < 0 || newQty > maxStock) return;
+            this.cart[variantId] = { qty: newQty };
+        },
+
+        getVariantName(variant) {
+            return variant.attribute_values.map(av => av.value).join(' / ');
+        },
+
+        getVariantColor(variant) {
+            const colorAttr = variant.attribute_values.find(av => av.color_hex);
+            return colorAttr ? colorAttr.color_hex : null;
         },
 
         formatPrice(price) {
@@ -729,6 +718,20 @@ function productDetail() {
                 currency: 'EUR',
                 minimumFractionDigits: 0
             }).format(price);
+        },
+
+        prevImage() {
+            if (this.allImages.length <= 1) return;
+            const currentIndex = this.allImages.indexOf(this.selectedImage);
+            const prevIndex = (currentIndex - 1 + this.allImages.length) % this.allImages.length;
+            this.selectedImage = this.allImages[prevIndex];
+        },
+
+        nextImage() {
+            if (this.allImages.length <= 1) return;
+            const currentIndex = this.allImages.indexOf(this.selectedImage);
+            const nextIndex = (currentIndex + 1) % this.allImages.length;
+            this.selectedImage = this.allImages[nextIndex];
         }
     }
 }

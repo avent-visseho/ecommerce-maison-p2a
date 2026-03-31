@@ -32,6 +32,7 @@ class Product extends Model
         'is_active',
         'is_featured',
         'views',
+        'bundle_prices',
     ];
 
     protected $casts = [
@@ -40,6 +41,7 @@ class Product extends Model
         'is_active' => 'boolean',
         'is_featured' => 'boolean',
         'images' => 'array',
+        'bundle_prices' => 'array',
     ];
 
     /**
@@ -57,6 +59,51 @@ class Product extends Model
                 $product->sku = 'PRD-' . strtoupper(Str::random(8));
             }
         });
+    }
+
+    /**
+     * Calcule le prix bundle pour une quantité donnée.
+     * Applique un algorithme glouton : utilise les paliers les plus grands en premier.
+     * Retourne null si le produit n'a pas de bundle ou si les paliers ne couvrent pas qty.
+     */
+    public function getBundlePriceForQty(int $qty): ?float
+    {
+        if (empty($this->bundle_prices) || $qty <= 0) {
+            return null;
+        }
+
+        // Trier les paliers par qty décroissant
+        $rules = collect($this->bundle_prices)
+            ->filter(fn($r) => isset($r['qty'], $r['price']) && $r['qty'] > 0)
+            ->sortByDesc('qty')
+            ->values();
+
+        $total = 0.0;
+        $remaining = $qty;
+
+        foreach ($rules as $rule) {
+            if ($remaining <= 0) break;
+            $sets = intdiv($remaining, (int) $rule['qty']);
+            if ($sets > 0) {
+                $total += $sets * (float) $rule['price'];
+                $remaining -= $sets * (int) $rule['qty'];
+            }
+        }
+
+        // Si des unités ne sont pas couvertes par les paliers, on ne peut pas appliquer le bundle
+        if ($remaining > 0) {
+            return null;
+        }
+
+        return $total;
+    }
+
+    /**
+     * Vérifie si ce produit a des prix en lot configurés.
+     */
+    public function hasBundlePrices(): bool
+    {
+        return !empty($this->bundle_prices);
     }
 
     /**

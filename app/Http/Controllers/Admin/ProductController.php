@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductAttribute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -26,9 +25,8 @@ class ProductController extends Controller
     {
         $categories = Category::active()->get();
         $brands = Brand::active()->get();
-        $checkboxAttributes = ProductAttribute::where('type', 'checkbox')->active()->with('activeValues')->get();
 
-        return view('admin.products.create', compact('categories', 'brands', 'checkboxAttributes'));
+        return view('admin.products.create', compact('categories', 'brands'));
     }
 
     public function store(Request $request)
@@ -55,7 +53,7 @@ class ProductController extends Controller
         $slug = $baseSlug;
         $counter = 1;
 
-        while (Product::where('slug', $slug)->exists()) {
+        while (Product::withTrashed()->where('slug', $slug)->exists()) {
             $slug = $baseSlug . '-' . $counter;
             $counter++;
         }
@@ -69,7 +67,7 @@ class ProductController extends Controller
             $validated['sku'] = 'PROD-' . strtoupper(Str::random(8));
 
             // Ensure uniqueness
-            while (Product::where('sku', $validated['sku'])->exists()) {
+            while (Product::withTrashed()->where('sku', $validated['sku'])->exists()) {
                 $validated['sku'] = 'PROD-' . strtoupper(Str::random(8));
             }
         }
@@ -88,12 +86,18 @@ class ProductController extends Controller
             $validated['images'] = $images;
         }
 
-        $product = Product::create($validated);
-
-        // Associer les attributs checkbox
-        if ($request->has('checkbox_attributes')) {
-            $product->checkboxAttributes()->sync($request->input('checkbox_attributes', []));
+        // Handle bundle prices
+        $bundlePrices = [];
+        $bundleQtys = $request->input('bundle_qty', []);
+        $bundleAmounts = $request->input('bundle_price', []);
+        foreach ($bundleQtys as $i => $qty) {
+            if ($qty > 0 && isset($bundleAmounts[$i]) && $bundleAmounts[$i] > 0) {
+                $bundlePrices[] = ['qty' => (int) $qty, 'price' => (float) $bundleAmounts[$i]];
+            }
         }
+        $validated['bundle_prices'] = !empty($bundlePrices) ? $bundlePrices : null;
+
+        $product = Product::create($validated);
 
         return redirect()->route('admin.products.index')
             ->with('success', __('messages.admin.product.created'));
@@ -103,10 +107,8 @@ class ProductController extends Controller
     {
         $categories = Category::active()->get();
         $brands = Brand::active()->get();
-        $checkboxAttributes = ProductAttribute::where('type', 'checkbox')->active()->with('activeValues')->get();
-        $product->load('checkboxAttributes');
 
-        return view('admin.products.edit', compact('product', 'categories', 'brands', 'checkboxAttributes'));
+        return view('admin.products.edit', compact('product', 'categories', 'brands'));
     }
 
     public function update(Request $request, Product $product)
@@ -133,7 +135,7 @@ class ProductController extends Controller
         $slug = $baseSlug;
         $counter = 1;
 
-        while (Product::where('slug', $slug)->where('id', '!=', $product->id)->exists()) {
+        while (Product::withTrashed()->where('slug', $slug)->where('id', '!=', $product->id)->exists()) {
             $slug = $baseSlug . '-' . $counter;
             $counter++;
         }
@@ -168,10 +170,18 @@ class ProductController extends Controller
             unset($validated['images']);
         }
 
-        $product->update($validated);
+        // Handle bundle prices
+        $bundlePrices = [];
+        $bundleQtys = $request->input('bundle_qty', []);
+        $bundleAmounts = $request->input('bundle_price', []);
+        foreach ($bundleQtys as $i => $qty) {
+            if ($qty > 0 && isset($bundleAmounts[$i]) && $bundleAmounts[$i] > 0) {
+                $bundlePrices[] = ['qty' => (int) $qty, 'price' => (float) $bundleAmounts[$i]];
+            }
+        }
+        $validated['bundle_prices'] = !empty($bundlePrices) ? $bundlePrices : null;
 
-        // Mettre à jour les attributs checkbox
-        $product->checkboxAttributes()->sync($request->input('checkbox_attributes', []));
+        $product->update($validated);
 
         return redirect()->route('admin.products.index')
             ->with('success', __('messages.admin.product.updated'));

@@ -33,6 +33,8 @@ class ProductVariant extends Model
         'is_default' => 'boolean',
     ];
 
+    protected $appends = ['effective_price', 'is_on_sale'];
+
     /**
      * Boot
      */
@@ -85,7 +87,7 @@ class ProductVariant extends Model
     /**
      * Vérifier si en promo
      */
-    public function isOnSale(): bool
+    public function getIsOnSaleAttribute(): bool
     {
         if ($this->sale_price !== null && $this->price !== null) {
             return $this->sale_price < $this->price;
@@ -94,6 +96,11 @@ class ProductVariant extends Model
             return $this->sale_price < $this->product->price;
         }
         return false;
+    }
+
+    public function isOnSale(): bool
+    {
+        return $this->is_on_sale;
     }
 
     /**

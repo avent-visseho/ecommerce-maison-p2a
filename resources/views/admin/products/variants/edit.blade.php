@@ -31,7 +31,7 @@
                 <div class="card-body space-y-4">
                     @foreach($attributes as $attribute)
                         @php
-                            $selectedValue = $variant->attributeValues->where('product_attribute_id', $attribute->id)->first();
+                            $selectedValue = $variant->attributeValues->first(fn($v) => $v->product_attribute_id == $attribute->id);
                         @endphp
                         <div>
                             <label class="label">{{ $attribute->name }}</label>
@@ -43,7 +43,7 @@
                                             <input type="radio" name="attribute_values[{{ $attribute->id }}]"
                                                 value="{{ $value->id }}"
                                                 class="sr-only peer"
-                                                {{ old('attribute_values.' . $attribute->id, $selectedValue?->id) == $value->id ? 'checked' : '' }}>
+                                                {{ (int) old('attribute_values.' . $attribute->id, $selectedValue?->id) === (int) $value->id ? 'checked' : '' }}>
                                             <div class="w-12 h-12 rounded-lg border-2 border-neutral-300 peer-checked:border-primary-500 peer-checked:ring-2 peer-checked:ring-primary-200 transition-all duration-200 flex items-center justify-center"
                                                 style="background-color: {{ $value->color_hex }}">
                                             </div>
@@ -63,7 +63,7 @@
                                     <option value="">Sélectionner {{ $attribute->name }}</option>
                                     @foreach($attribute->activeValues as $value)
                                         <option value="{{ $value->id }}"
-                                            {{ old('attribute_values.' . $attribute->id, $selectedValue?->id) == $value->id ? 'selected' : '' }}>
+                                            @selected((int) old('attribute_values.' . $attribute->id, $selectedValue?->id) === (int) $value->id)>
                                             {{ $value->value }}
                                         </option>
                                     @endforeach

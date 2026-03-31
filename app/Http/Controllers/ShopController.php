@@ -71,7 +71,7 @@ class ShopController extends Controller
     {
         $product = Product::active()
             ->where('slug', $slug)
-            ->with(['category', 'brand', 'activeVariants.attributeValues.attribute', 'checkboxAttributes.activeValues'])
+            ->with(['category', 'brand', 'activeVariants.attributeValues.attribute', 'activeVariants.product'])
             ->firstOrFail();
 
         // Increment views

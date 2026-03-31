@@ -155,18 +155,8 @@ class CheckoutController extends Controller
                         return redirect()->back()->with('error', __('messages.checkout.insufficient_stock', ['name' => $item['name']]));
                     }
 
-                    // Préparer les attributs (variante + options checkbox)
+                    // Préparer les attributs de la variante
                     $attributes = $variant?->attributes_snapshot ?? [];
-                    if (!empty($item['checkbox_options'])) {
-                        foreach ($item['checkbox_options'] as $opt) {
-                            $attributes[] = [
-                                'type' => 'checkbox',
-                                'attribute' => $opt['attribute_name'] ?? '',
-                                'value' => $opt['value'],
-                                'price' => $opt['price'],
-                            ];
-                        }
-                    }
 
                     // Créer l'OrderItem
                     OrderItem::create([
